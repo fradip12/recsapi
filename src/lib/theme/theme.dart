@@ -6,7 +6,7 @@ class MyTheme {
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Clr.primary,
     appBarTheme: AppBarTheme(
-      backgroundColor: Clr.appBarPrimary,
+      backgroundColor: Clr.bluePrimary,
       centerTitle: true,
       actionsIconTheme: const IconThemeData(color: Colors.white),
       iconTheme: const IconThemeData(color: Colors.white),
@@ -43,7 +43,7 @@ class MyTheme {
       ),
     ),
     brightness: Brightness.light,
-    primaryColor: Clr.appBarPrimary,
+    primaryColor: Clr.bluePrimary,
     hintColor: Colors.black54,
   );
 

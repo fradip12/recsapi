@@ -19,7 +19,7 @@ class SignIn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundColor: Clr.appBarPrimary,
+                backgroundColor: Clr.bluePrimary,
                 radius: 55,
                 child: Text('logo'),
               ),
