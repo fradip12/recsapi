@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:src/common/color/colors.dart';
 
 /// Theme for this app
 class MyTheme {
   static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Clr.primary,
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.amber,
+      backgroundColor: Clr.appBarPrimary,
       centerTitle: true,
       actionsIconTheme: const IconThemeData(color: Colors.white),
       iconTheme: const IconThemeData(color: Colors.white),
@@ -42,10 +43,11 @@ class MyTheme {
       ),
     ),
     brightness: Brightness.light,
-    primaryColor: Colors.amber,
+    primaryColor: Clr.appBarPrimary,
     hintColor: Colors.black54,
   );
 
+  // Setup Dark Color here
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.amber,
     appBarTheme: const AppBarTheme(backgroundColor: Colors.amber),

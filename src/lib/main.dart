@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:src/common/widget/keyboard_dismiss.dart';
+import 'package:src/pages/auth/sign_in.dart';
 import 'package:src/routes/routes.dart';
 import 'package:src/theme/theme.dart';
 
@@ -18,7 +20,6 @@ class MyApp extends StatelessWidget {
       transitionDuration: const Duration(milliseconds: 300),
       locale: Get.deviceLocale,
       theme: MyTheme.lightTheme,
-      darkTheme: MyTheme.darkTheme,
       getPages: Routes.routes,
       supportedLocales: const [
         Locale('en', ''), // English
@@ -29,13 +30,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Put Provider here if any
+// Check Session here ( Login/ Not Logged In )
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text('test'),
+    return KeyboardDismissOntap(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: SignIn(),
+        ),
+      ),
     );
   }
 }
