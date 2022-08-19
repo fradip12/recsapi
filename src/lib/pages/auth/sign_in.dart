@@ -48,7 +48,7 @@ class SignIn extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: controller.login,
+                onPressed: () => controller.login(context),
                 child: Text('Masuk'),
               )
             ],

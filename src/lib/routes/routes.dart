@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:src/pages/home/home.dart';
 import '../main.dart';
 
 class Routes {
@@ -10,6 +11,7 @@ class Routes {
 
     ///==========Auth==========///
     ///==========Home==========///
+    GetPage(name: '/home', page: () => Home()),
     ///==========Profile==========///
     ///==========Setting==========///
     ///==========Other==========///

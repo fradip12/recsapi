@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SignInController extends GetxController {
@@ -12,8 +13,11 @@ class SignInController extends GetxController {
 
   /// Function
   
-  Future login() async {
+  Future login(BuildContext context) async {
     print('Masuk gan');
+    Navigator.pushNamed(context, '/home');
+
+
   }
 
 }
