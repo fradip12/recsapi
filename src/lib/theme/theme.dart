@@ -14,6 +14,7 @@ class MyTheme {
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(primary: Colors.black54),
     ),
+    fontFamily: 'Lato',
     inputDecorationTheme: InputDecorationTheme(
       contentPadding:
           const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -28,14 +29,14 @@ class MyTheme {
           borderSide: const BorderSide(width: 1, color: Colors.black54)),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(width: 1, color: Colors.black54)),
+          borderSide: const BorderSide(width: 2, color: Clr.yellowPrimary)),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
         borderSide: const BorderSide(width: 1, color: Colors.red),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(width: 1, color: Colors.red),
+        borderSide: const BorderSide(width: 2, color: Colors.red),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -49,10 +50,11 @@ class MyTheme {
 
   // Setup Dark Color here
   static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.amber,
-    appBarTheme: const AppBarTheme(backgroundColor: Colors.amber),
+    scaffoldBackgroundColor: Clr.yellowPrimary,
+    appBarTheme: const AppBarTheme(backgroundColor: Clr.yellowPrimary),
     textButtonTheme:
         TextButtonThemeData(style: TextButton.styleFrom(primary: Colors.white)),
+    fontFamily: 'Lato',
     inputDecorationTheme: InputDecorationTheme(
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -67,20 +69,20 @@ class MyTheme {
             borderSide: const BorderSide(width: 1, color: Colors.white)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(width: 1, color: Colors.white)),
+            borderSide: const BorderSide(width: 2, color: Colors.white)),
         errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(width: 1, color: Colors.red)),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(width: 1, color: Colors.red),
+          borderSide: const BorderSide(width: 2, color: Colors.red),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(width: 1, color: Colors.grey),
         )),
     brightness: Brightness.dark,
-    primaryColor: Colors.amber,
+    primaryColor: Clr.yellowPrimary,
     hintColor: Colors.white,
   );
 }

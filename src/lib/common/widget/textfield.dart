@@ -61,32 +61,33 @@ class TextField extends StatefulWidget {
   final double? leftPadding;
 
   final GlobalKey<FormState>? formKey;
+  final InputDecorationTheme? decoration;
 
-  const TextField({
-    this.enabled = true,
-    this.label,
-    this.keyboardType = TextInputType.text,
-    this.isPassword = false,
-    this.autofocus = false,
-    this.image,
-    this.imageTapFunction,
-    this.hintText,
-    this.hasFocusedBorder = false,
-    this.inputFormatters,
-    this.maxLines,
-    this.hasBorders = false,
-    this.height = 50,
-    this.smallPadding = false,
-    this.textActionNext,
-    this.suffixText,
-    this.suffixStyle,
-    this.suffix,
-    this.validator,
-    this.isRequired = false,
-    this.customBorder,
-    this.leftPadding = 20.0,
-    this.formKey,
-  });
+  const TextField(
+      {this.enabled = true,
+      this.label,
+      this.keyboardType = TextInputType.text,
+      this.isPassword = false,
+      this.autofocus = false,
+      this.image,
+      this.imageTapFunction,
+      this.hintText,
+      this.hasFocusedBorder = false,
+      this.inputFormatters,
+      this.maxLines,
+      this.hasBorders = false,
+      this.height = 50,
+      this.smallPadding = false,
+      this.textActionNext,
+      this.suffixText,
+      this.suffixStyle,
+      this.suffix,
+      this.validator,
+      this.isRequired = false,
+      this.customBorder,
+      this.leftPadding = 20.0,
+      this.formKey,
+      this.decoration});
 
   @override
   _TextFieldState createState() => _TextFieldState();
@@ -123,48 +124,10 @@ class _TextFieldState extends State<TextField> {
         textInputAction: widget.textActionNext == true
             ? TextInputAction.next
             : TextInputAction.done,
-
+        decoration: InputDecoration(hintText: widget.hintText),
         onChanged: (_) {
           _formKey.currentState?.validate();
         },
-        decoration: InputDecoration(
-          suffixText: widget.suffixText,
-          suffixStyle: widget.suffixStyle,
-          suffix: widget.suffix,
-          filled: true,
-          hintText: widget.hintText,
-          errorMaxLines: 2,
-          contentPadding: !widget.smallPadding!
-              ? EdgeInsets.only(
-                  left: widget.leftPadding ?? 20,
-                  right: 20.0,
-                  top: 12.0,
-                  bottom: 12.0)
-              : EdgeInsets.only(left: 10.0, right: 10.0, top: 0.0, bottom: 0.0),
-          border: widget.customBorder ?? InputBorder.none,
-          errorBorder: widget.hasBorders!
-              ? OutlineInputBorder(
-                  gapPadding: 0.0,
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Color(0xfff5f8fa)))
-              : null,
-          enabledBorder: widget.hasBorders!
-              ? widget.customBorder ??
-                  OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      borderSide: BorderSide(color: Color(0xfff5f8fa)))
-              : null,
-          focusedBorder: widget.hasFocusedBorder!
-              ? OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Color(0xfff5f8fa)))
-              : widget.hasBorders!
-                  ? OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      borderSide: BorderSide(color: Color(0xfff5f8fa)))
-                  : null,
-          suffixIcon: _suffixIcon(),
-        ), // Remove material design decoration.
         obscureText: widget.isPassword!,
         style: Theme.of(context).textTheme.bodyText2,
         maxLines: widget.maxLines,
