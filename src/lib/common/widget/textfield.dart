@@ -63,38 +63,41 @@ class TextField extends StatefulWidget {
   final GlobalKey<FormState>? formKey;
   final InputDecorationTheme? decoration;
 
-  const TextField(
-      {this.enabled = true,
-      this.label,
-      this.keyboardType = TextInputType.text,
-      this.isPassword = false,
-      this.autofocus = false,
-      this.image,
-      this.imageTapFunction,
-      this.hintText,
-      this.hasFocusedBorder = false,
-      this.inputFormatters,
-      this.maxLines,
-      this.hasBorders = false,
-      this.height = 50,
-      this.smallPadding = false,
-      this.textActionNext,
-      this.suffixText,
-      this.suffixStyle,
-      this.suffix,
-      this.validator,
-      this.isRequired = false,
-      this.customBorder,
-      this.leftPadding = 20.0,
-      this.formKey,
-      this.decoration});
+  final TextEditingController? controller;
+
+  const TextField({
+    this.enabled = true,
+    this.label,
+    this.keyboardType = TextInputType.text,
+    this.isPassword = false,
+    this.autofocus = false,
+    this.image,
+    this.imageTapFunction,
+    this.hintText,
+    this.hasFocusedBorder = false,
+    this.inputFormatters,
+    this.maxLines,
+    this.hasBorders = false,
+    this.height = 50,
+    this.smallPadding = false,
+    this.textActionNext,
+    this.suffixText,
+    this.suffixStyle,
+    this.suffix,
+    this.validator,
+    this.isRequired = false,
+    this.customBorder,
+    this.leftPadding = 20.0,
+    this.formKey,
+    this.decoration,
+    this.controller,
+  });
 
   @override
   _TextFieldState createState() => _TextFieldState();
 }
 
 class _TextFieldState extends State<TextField> {
-  final TextEditingController _controller = TextEditingController();
 
   StreamSubscription<String?>? valueSub;
   StreamSubscription<String?>? updateValueSub;
@@ -116,10 +119,11 @@ class _TextFieldState extends State<TextField> {
     return Form(
       key: widget.formKey ?? _formKey,
       child: material.TextFormField(
+        
         enabled: widget.enabled,
         inputFormatters: widget.inputFormatters,
         autofocus: widget.autofocus!,
-        controller: _controller,
+        controller: widget.controller,
         keyboardType: widget.keyboardType,
         textInputAction: widget.textActionNext == true
             ? TextInputAction.next

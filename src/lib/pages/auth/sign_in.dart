@@ -27,10 +27,12 @@ class SignIn extends StatelessWidget {
               Text('Recsapi'),
               SizedBox(height: Spacing.kSpacingHeight),
               TextField(
+                controller: controller.usernameController.value,
                 hintText: 'Username',
               ),
               SizedBox(height: Spacing.kSpacingHeight),
               TextField(
+                controller: controller.passwordController.value,
                 hintText: 'Password',
                 isPassword: true,
                 maxLines: 1,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1026736284596",
+    "project_id": "recsapi",
+    "storage_bucket": "recsapi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026736284596:android:9adc29c4e35773a82848e1",
+        "android_client_info": {
+          "package_name": "com.recsapi.ideon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026736284596-4rsbvc4d49a9glnk6li9gs62jeinbvvn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNiJz-VyhtJNWIA6Zi0WoTGqQ0rsiACHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026736284596-4rsbvc4d49a9glnk6li9gs62jeinbvvn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

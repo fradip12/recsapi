@@ -1,11 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:src/common/helper/initialize.dart';
 import 'package:src/common/widget/keyboard_dismiss.dart';
 import 'package:src/pages/auth/sign_in.dart';
 import 'package:src/routes/routes.dart';
 import 'package:src/theme/theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -40,8 +43,16 @@ class App extends StatelessWidget {
     return KeyboardDismissOntap(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: SignIn(),
+          padding: EdgeInsets.all(32.0),
+          child: FutureBuilder(
+              future: InitHelper().initializeFirebase(),
+              builder: (context, builder) {
+                if (builder.connectionState == ConnectionState.done) {
+                  return SignIn();
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              }),
         ),
       ),
     );
