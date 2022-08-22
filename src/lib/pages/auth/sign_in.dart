@@ -21,7 +21,7 @@ class SignIn extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: Clr.bluePrimary,
                 radius: 55,
-                child: Text('logo'),
+                child: Image(image: AssetImage('asset/images/logo.png')),
               ),
               SizedBox(height: Spacing.kSpacingHeight),
               Text('Recsapi'),
