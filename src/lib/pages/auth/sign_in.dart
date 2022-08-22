@@ -14,17 +14,18 @@ class SignIn extends StatelessWidget {
     return GetBuilder(
       init: SignInController(),
       builder: (SignInController controller) {
-        return Center(
-          child: Column(
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
                 backgroundColor: Clr.bluePrimary,
-                radius: 55,
-                child: Image(image: AssetImage('asset/images/logo.png')),
+                radius: 70,
+                child: Image(image: AssetImage('asset/images/logo/logo.png')),
               ),
               SizedBox(height: Spacing.kSpacingHeight),
-              Text('Recsapi'),
+              Text('SiSapi'),
               SizedBox(height: Spacing.kSpacingHeight),
               TextField(
                 hintText: 'Username',
@@ -50,7 +51,8 @@ class SignIn extends StatelessWidget {
                 ),
                 onPressed: () => controller.login(context),
                 child: Text('Masuk'),
-              )
+              ),
+              Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom))
             ],
           ),
         );
