@@ -2,7 +2,7 @@
     package="com.example.src">
    <application
         android:label="src"
-        android:name="${applicationName}"
+        android:name="SiSapi"
         android:icon="@mipmap/recsapi">
         <activity
             android:name=".MainActivity"
