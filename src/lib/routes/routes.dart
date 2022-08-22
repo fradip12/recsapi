@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:src/pages/home/home.dart';
+import 'package:src/pages/sapi/sapi_saya.dart';
 import '../main.dart';
 
 class Routes {
@@ -12,6 +13,8 @@ class Routes {
     ///==========Auth==========///
     ///==========Home==========///
     GetPage(name: '/home', page: () => Home()),
+    GetPage(name: '/sapi', page: () => SapiSaya()),
+    
     ///==========Profile==========///
     ///==========Setting==========///
     ///==========Other==========///

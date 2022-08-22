@@ -14,9 +14,9 @@ class SignIn extends StatelessWidget {
     return GetBuilder(
       init: SignInController(),
       builder: (SignInController controller) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Column(
+        
+        return Center(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
@@ -28,10 +28,12 @@ class SignIn extends StatelessWidget {
               Text('SiSapi'),
               SizedBox(height: Spacing.kSpacingHeight),
               TextField(
+                controller: controller.usernameController.value,
                 hintText: 'Username',
               ),
               SizedBox(height: Spacing.kSpacingHeight),
               TextField(
+                controller: controller.passwordController.value,
                 hintText: 'Password',
                 isPassword: true,
                 maxLines: 1,
