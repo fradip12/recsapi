@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/common/services/snack.dart';
+import 'package:src/controller/main_controller.dart';
 
 class SignInController extends GetxController {
   //Var
@@ -17,6 +17,8 @@ class SignInController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    usernameController.value.text = 'fradip@yopmail.com';
+    passwordController.value.text = '1234@Qwer';
   }
 
   /// Function
@@ -34,6 +36,7 @@ class SignInController extends GetxController {
         color: Colors.greenAccent,
       );
       Get.offAllNamed('/home');
+      Get.put(MainController()).setupUser(user);
     } else {
       Misc().snackbar(
         title: 'Login Failed',
