@@ -8,6 +8,6 @@ class Spacing {
   }
 
   static getWidth(BuildContext context){
-    return MediaQuery.of(context).size.width;
+    return MediaQuery.of(context).size.width - (2 * 20);
   }
 }

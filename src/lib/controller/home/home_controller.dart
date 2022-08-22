@@ -15,18 +15,22 @@ class HomeController extends GetxController {
     HomeMenu(
       title: 'Sapi Saya',
       route: '/sapi',
+      icon: "asset/images/logo/logo.png",
     ),
     HomeMenu(
       title: 'Tambah Recording',
       route: '/',
+      icon: "asset/images/logo/add-one.png",
     ),
     HomeMenu(
       title: 'Lihat Recording',
       route: '/',
+      icon: "asset/images/logo/notebook.png",
     ),
     HomeMenu(
       title: 'Profile',
       route: '/',
+      icon: "asset/images/logo/account.png",
     ),
   ].obs;
 
