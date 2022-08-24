@@ -4,7 +4,7 @@ import 'package:src/common/color/spacer.dart';
 import 'package:src/controller/auth/sign_in_controller.dart';
 
 import '../../common/color/colors.dart';
-import '../../common/widget/textfield.dart';
+import '../../common/widget/text_field.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -21,11 +21,11 @@ class SignIn extends StatelessWidget {
             children: [
               CircleAvatar(
                 backgroundColor: Clr.bluePrimary,
-                radius: 55,
-                child: Text('logo'),
+                radius: 70,
+                child: Image(image: AssetImage('asset/images/logo/logo.png')),
               ),
               SizedBox(height: Spacing.kSpacingHeight),
-              Text('Recsapi'),
+              Text('SiSapi'),
               SizedBox(height: Spacing.kSpacingHeight),
               TextField(
                 controller: controller.usernameController.value,
@@ -53,7 +53,8 @@ class SignIn extends StatelessWidget {
                 ),
                 onPressed: () => controller.login(context),
                 child: Text('Masuk'),
-              )
+              ),
+              Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom))
             ],
           ),
         );

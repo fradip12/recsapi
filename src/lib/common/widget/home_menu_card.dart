@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../color/colors.dart';
-import '../style/textstyle.dart';
+import '../style/text_style.dart';
 
 class MenuCard extends StatelessWidget {
   final String title;
   final String route;
-  const MenuCard({Key? key, required this.title, required this.route})
+  final String icon;
+  const MenuCard({Key? key, required this.title, required this.route, required this.icon})
       : super(key: key);
 
   @override
@@ -18,12 +17,12 @@ class MenuCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        elevation: 4,
+        elevation: 3,
         child: Container(
-          height: 100,
+          height: 120,
           width: 100,
           alignment: Alignment.center,
-          padding: EdgeInsets.all(18),
+          padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(15)),
           child: Column(
@@ -31,14 +30,14 @@ class MenuCard extends StatelessWidget {
               Expanded(
                 child: CircleAvatar(
                   radius: 45,
-                  backgroundColor: Clr.bluePrimary,
-                  child: Text('logo'),
+                  child: Image(image: AssetImage(icon)),
+                  backgroundColor: Colors.white,
                 ),
               ),
               Text(
                 title,
-                style: kText16StyleBold.copyWith(
-                  color: Colors.black87,
+                style: kText12StyleBold.copyWith(
+                  color: Colors.black87
                 ),
               ),
             ],
