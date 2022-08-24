@@ -16,8 +16,12 @@ class Home extends StatelessWidget {
       init: HomeController(),
       builder: (HomeController controller) {
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Clr.primary,
+            elevation: 0,
+          ),
           body: SafeArea(
-            minimum: const EdgeInsets.all(20),
+            minimum: const EdgeInsets.symmetric(horizontal : 20),
             child: Column(
               children: [
                 HomeProfile(
@@ -40,7 +44,6 @@ class Home extends StatelessWidget {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             summaryOf(controller.total[0], "20"),
                             summaryOf(controller.total[1], "33 L"),
@@ -51,12 +54,18 @@ class Home extends StatelessWidget {
                           child: GridView.builder(
                             gridDelegate:
                                 const SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 200,
-                                    childAspectRatio: 3 / 2,
+                                    maxCrossAxisExtent: 300,
+                                    childAspectRatio: 3,
                                     crossAxisSpacing: 20),
-                            itemCount: 4,
+                            itemCount: 2,
                             itemBuilder: (BuildContext ctx, index) {
-                              return summaryOf(controller.myProducts[index], "5");
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  summaryOf(controller.myProducts[index], "5"),
+                                   summaryOf(controller.myProducts[index+1], "5"),
+                                ],
+                              );
                             },
                           ),
                         ),
@@ -93,13 +102,15 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column summaryOf(String name, String total) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(total, style: kText20StyleBold),
-        Text(name, style: kText12Style)
-      ],
+   summaryOf(String name, String total) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(total, style: kText20StyleBold),
+          Text(name, style: kText12Style)
+        ],
+      ),
     );
   }
 }
