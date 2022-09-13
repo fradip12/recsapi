@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:src/pages/home/home.dart';
+import 'package:src/pages/recording/add_recording.dart';
 import 'package:src/pages/sapi/sapi_saya.dart';
 import '../main.dart';
 
@@ -14,7 +15,8 @@ class Routes {
     ///==========Home==========///
     GetPage(name: '/home', page: () => Home()),
     GetPage(name: '/sapi', page: () => SapiSaya()),
-    
+    GetPage(name: '/add-record', page: () => AddRecording()),
+
     ///==========Profile==========///
     ///==========Setting==========///
     ///==========Other==========///

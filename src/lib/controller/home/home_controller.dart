@@ -19,7 +19,7 @@ class HomeController extends GetxController {
     ),
     HomeMenu(
       title: 'Tambah Recording',
-      route: '/',
+      route: '/add-record',
       icon: "asset/images/logo/add-one.png",
     ),
     HomeMenu(

@@ -98,7 +98,6 @@ class TextField extends StatefulWidget {
 }
 
 class _TextFieldState extends State<TextField> {
-
   StreamSubscription<String?>? valueSub;
   StreamSubscription<String?>? updateValueSub;
 
@@ -119,7 +118,6 @@ class _TextFieldState extends State<TextField> {
     return Form(
       key: widget.formKey ?? _formKey,
       child: material.TextFormField(
-        
         enabled: widget.enabled,
         inputFormatters: widget.inputFormatters,
         autofocus: widget.autofocus!,
@@ -128,7 +126,9 @@ class _TextFieldState extends State<TextField> {
         textInputAction: widget.textActionNext == true
             ? TextInputAction.next
             : TextInputAction.done,
-        decoration: InputDecoration(hintText: widget.hintText),
+        decoration: InputDecoration(
+          hintText: widget.hintText,
+        ),
         onChanged: (_) {
           _formKey.currentState?.validate();
         },

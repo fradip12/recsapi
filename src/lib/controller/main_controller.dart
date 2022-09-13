@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:src/common/model/user_model.dart';
+import 'package:src/common/services/firebase_auth.dart';
 
 /// Main Controller for setting up everythings
 class MainController extends GetxController {
@@ -20,20 +21,6 @@ class MainController extends GetxController {
 
   void setupUser(User _user) async {
     user = _user.obs;
-    _usersCollection.doc(_user.uid).get().then(
-      (value) {
-        if (!value.exists) {
-          _usersCollection.doc(_user.uid).set(
-                UserModel(
-                  id: _user.uid,
-                  displayName: _user.displayName,
-                  email: _user.email,
-                  phoneNumber: _user.phoneNumber,
-                  tenantId: _user.tenantId,
-                ).toJson(),
-              );
-        }
-      },
-    );
+    FireStore().setupUser(_user);
   }
 }

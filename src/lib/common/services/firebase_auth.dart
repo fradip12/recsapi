@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:src/common/model/sapi_model.dart';
+
+import '../model/user_model.dart';
 
 class FireAuth {
   static Future<User?> registerUsingEmailPassword({
@@ -53,5 +57,32 @@ class FireAuth {
     }
 
     return user;
+  }
+}
+
+class FireStore {
+  final CollectionReference _usersCollection =
+      FirebaseFirestore.instance.collection('users');
+
+  Future<void> setupUser(User _user) async {
+    _usersCollection.doc(_user.uid).get().then(
+      (value) {
+        if (!value.exists) {
+          _usersCollection.doc(_user.uid).set(
+                UserModel(
+                  id: _user.uid,
+                  displayName: _user.displayName,
+                  email: _user.email,
+                  phoneNumber: _user.phoneNumber,
+                  tenantId: _user.tenantId,
+                ).toJson(),
+              );
+        }
+      },
+    );
+  }
+
+  Future<void> tambahSapi(CowModel sapi, User _user) async {
+    _usersCollection.doc(_user.uid).collection('sapi').add(sapi.toJson());
   }
 }
