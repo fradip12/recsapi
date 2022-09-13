@@ -234,7 +234,7 @@ class AddRecording extends StatelessWidget {
                     width: Get.width,
                     child: ElevatedButton(
                       onPressed: details
-                          .onStepContinue, // Need to verify the form before continue
+                          .onStepContinue,  
                       child: Text('Selanjutnya'),
                     ),
                   );

@@ -85,4 +85,14 @@ class FireStore {
   Future<void> tambahSapi(CowModel sapi, User _user) async {
     _usersCollection.doc(_user.uid).collection('sapi').add(sapi.toJson());
   }
+
+  Future<List<CowModel>> getSapi(User _user) async {
+    return _usersCollection
+        .doc(_user.uid)
+        .collection('sapi')
+        .get()
+        .then((value) {
+      return value.docs.map((e) => CowModel.fromJson(e.data())).toList();
+    });
+  }
 }

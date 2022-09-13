@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/controller/main_controller.dart';
@@ -6,7 +7,18 @@ import 'package:src/controller/main_controller.dart';
 class SapiSayaController extends GetxController {
   //Var
   final MainController _mainController = Get.find<MainController>();
+  final Rx<List<CowModel>> sapiSaya = Rx<List<CowModel>>([]);
   //Function
+  
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //    getSapiSaya();
+  // }
+
+  void init() async {
+    getSapiSaya();
+  }
 
   Future<void> tambahSapi() async {
     // example
@@ -27,7 +39,13 @@ class SapiSayaController extends GetxController {
       weight1Yo: 1,
       weight4Mo: 1,
       weightBirth: 1,
+
     );
     FireStore().tambahSapi(dataSapi, _mainController.user.value);
+  }
+
+  getSapiSaya() async {
+    var res = await FireStore().getSapi(_mainController.user.value);
+    sapiSaya.value.addAll(res);
   }
 }
