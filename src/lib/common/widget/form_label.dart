@@ -13,18 +13,21 @@ class FormLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      textAlign: TextAlign.left,
-      text: TextSpan(children: <TextSpan>[
-        TextSpan(
-          text: label,
-          style: TextStyle(color: Colors.black),
-        ),
-        TextSpan(
-          text: isRequired == true ? ' *' : '',
-          style: TextStyle(color: Colors.black)
-        ),
-      ]),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4.0),
+      child: RichText(
+        textAlign: TextAlign.left,
+        text: TextSpan(children: <TextSpan>[
+          TextSpan(
+            text: label,
+            style: TextStyle(color: Colors.black),
+          ),
+          TextSpan(
+            text: isRequired == true ? ' *' : '',
+            style: TextStyle(color: Colors.black)
+          ),
+        ]),
+      ),
     );
   }
 }

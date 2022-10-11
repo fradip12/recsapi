@@ -22,26 +22,27 @@ class SapiSayaController extends GetxController {
 
   Future<void> tambahSapi() async {
     // example
-    var dataSapi = CowModel(
-      birthdate: DateTime.now().toIso8601String(),
-      bodyLength1Yo: 1.0,
-      breed: 'rumput',
-      chestCircumference1Yo: 0.1,
-      color: 'Green',
-      gender: 1,
-      gumbaHeight1Yo: 1,
-      id: '1',
-      name: 'bubu',
-      notes: 'ga ada',
-      parentF: 'yatim',
-      parentM: 'yatim',
-      strowNumber: '1',
-      weight1Yo: 1,
-      weight4Mo: 1,
-      weightBirth: 1,
+    // var dataSapi = CowModel(
+    //   birthdate: DateTime.now().toIso8601String(),
+    //   bodyLength1Yo: 1.0,
+    //   breed: 'rumput',
+    //   chestCircumference1Yo: 0.1,
+    //   color: 'Green',
+    //   gender: 1,
+    //   gumbaHeight1Yo: 1,
+    //   id: '1',
+    //   name: 'bubu',
+    //   notes: 'ga ada',
+    //   parentF: 'yatim',
+    //   parentM: 'yatim',
+    //   strowNumber: '1',
+    //   weight1Yo: 1,
+    //   weight4Mo: 1,
+    //   weightBirth: 1,
 
-    );
-    FireStore().tambahSapi(dataSapi, _mainController.user.value);
+    // );
+    // FireStore().tambahSapi(dataSapi, _mainController.user.value);
+    Get.toNamed('/add-sapi');
   }
 
   getSapiSaya() async {

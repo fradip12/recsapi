@@ -24,22 +24,22 @@ class CowModel {
     this.gumbaHeight1Yo,
   });
 
-  final String? id;
-  final String? name;
-  final String? breed;
-  final int? gender;
-  final String? color;
-  final String? birthdate;
-  final String? parentM;
-  final String? parentF;
-  final String? strowNumber;
-  final String? notes;
-  final double? weightBirth;
-  final double? weight4Mo;
-  final double? weight1Yo;
-  final double? chestCircumference1Yo;
-  final double? bodyLength1Yo;
-  final double? gumbaHeight1Yo;
+   String? id;
+   String? name;
+   String? breed;
+   int? gender;
+   String? color;
+   String? birthdate;
+   String? parentM;
+   String? parentF;
+   String? strowNumber;
+   String? notes;
+   double? weightBirth;
+   double? weight4Mo;
+   double? weight1Yo;
+   double? chestCircumference1Yo;
+   double? bodyLength1Yo;
+   double? gumbaHeight1Yo;
 
   CowModel copyWith({
     String? id,

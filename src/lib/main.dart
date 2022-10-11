@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:src/common/helper/initialize.dart';
 import 'package:src/common/widget/keyboard_dismiss.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         Locale('en', ''), // English
         Locale('id', 'ID'), // Indonesia
       ],
+      
       home: App(),
     );
   }
