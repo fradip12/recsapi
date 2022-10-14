@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:src/common/color/colors.dart';
 import 'package:src/common/color/spacer.dart';
@@ -21,7 +22,7 @@ class Home extends StatelessWidget {
             elevation: 0,
           ),
           body: SafeArea(
-            minimum: const EdgeInsets.symmetric(horizontal : 20),
+            minimum: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
                 HomeProfile(
@@ -60,10 +61,12 @@ class Home extends StatelessWidget {
                             itemCount: 2,
                             itemBuilder: (BuildContext ctx, index) {
                               return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   summaryOf(controller.myProducts[index], "5"),
-                                   summaryOf(controller.myProducts[index+1], "5"),
+                                  summaryOf(
+                                      controller.myProducts[index + 1], "5"),
                                 ],
                               );
                             },
@@ -77,22 +80,23 @@ class Home extends StatelessWidget {
 
                 //Menu Card
                 Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 300,
-                            childAspectRatio: 4/5,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
+                  child: MasonryGridView.count(
+                    primary: false,
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 16,
                     itemCount: 4,
-                    itemBuilder: (BuildContext ctx, index) {
+                    itemBuilder: (context, index) {
                       return MenuCard(
                         title: controller.myMenu[index].title ?? '-',
                         route: controller.myMenu[index].route ?? '-',
-                        icon: controller.myMenu[index].icon ?? "asset/images/logo/logo.png",
+                        icon: controller.myMenu[index].icon ??
+                            "asset/images/logo/logo.png",
                       );
                     },
                   ),
+                
                 ),
               ],
             ),
@@ -102,7 +106,7 @@ class Home extends StatelessWidget {
     );
   }
 
-   summaryOf(String name, String total) {
+  summaryOf(String name, String total) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

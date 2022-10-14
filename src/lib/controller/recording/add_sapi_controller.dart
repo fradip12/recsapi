@@ -18,6 +18,14 @@ class AddSapiController extends GetxController {
   final Rx<TextEditingController> bobotLahirController =
       TextEditingController().obs;
   final Rx<TextEditingController> strowController = TextEditingController().obs;
+  final Rx<TextEditingController> weight4MController =
+      TextEditingController().obs;
+  final Rx<TextEditingController> weight1YController =
+      TextEditingController().obs;
+  final Rx<TextEditingController> ld1YController = TextEditingController().obs;
+  final Rx<TextEditingController> pb1YController = TextEditingController().obs;
+  final Rx<TextEditingController> tp1YsController = TextEditingController().obs;
+  final Rx<TextEditingController> notesController = TextEditingController().obs;
   final MainController _mainController = Get.find<MainController>();
 
   Rx<int> activeSteps = 0.obs;
@@ -27,6 +35,8 @@ class AddSapiController extends GetxController {
   Rx<CowModel> selectedPejantan = CowModel.empty().obs;
   Rx<String> dateTime = ''.obs;
 
+  Rx<String?> message = ''.obs;
+
   //Function
 
   void init() async {
@@ -35,6 +45,8 @@ class AddSapiController extends GetxController {
 
   void continueStep() {
     if (activeSteps.value != stepper.length - 1) {
+      activeSteps.value = activeSteps.value += 1;
+    } else {
       //Validate first
       var data = CowModel()
         ..name = usernameController.value.text
@@ -44,10 +56,16 @@ class AddSapiController extends GetxController {
         ..color = warnaController.value.text
         ..parentM = selectedPejantan.value.id
         ..strowNumber = strowController.value.text
-        ..weightBirth = double.tryParse(bobotLahirController.value.text);
+        ..weightBirth = double.tryParse(bobotLahirController.value.text)
+        ..weight4Mo = double.tryParse(weight4MController.value.text)
+        ..weight1Yo = double.tryParse(weight1YController.value.text)
+        ..chestCircumference1Yo = double.tryParse(ld1YController.value.text)
+        ..bodyLength1Yo = double.tryParse(pb1YController.value.text)
+        ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text);
 
-      activeSteps.value = activeSteps.value += 1;
+      //Submit here
       Logger().w(data.toJson());
+      submit(data);
     }
   }
 
@@ -63,6 +81,7 @@ class AddSapiController extends GetxController {
     } else if (selectedGender.value == 1) {
       selectedGender.value = 0;
     }
+    print(selectedGender.value);
   }
 
   void switchHasilKawin() {
@@ -70,6 +89,18 @@ class AddSapiController extends GetxController {
       hasilKawinDg.value = 1;
     } else if (hasilKawinDg.value == 1) {
       hasilKawinDg.value = 0;
+    }
+  }
+
+  Future<void> submit(CowModel data) async {
+    var res = await FireStore().tambahSapi(data, _mainController.user.value);
+    if (res != null) {
+      Get.snackbar('Sukses', 'Berhasil Menambahkan Data', snackPosition: SnackPosition.BOTTOM);
+      Get.toNamed('/home');
+      // Check
+      // Controller hilang disini
+    } else {
+      Get.snackbar('Error', 'Gagal Menambahkan Data', snackPosition: SnackPosition.BOTTOM);
     }
   }
 

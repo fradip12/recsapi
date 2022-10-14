@@ -60,7 +60,7 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Jenis Kelamin',
           ),
           ChipChoices(
-            choices: ['Jantan', 'Betina'],
+            choices: [ 'Betina','Jantan',],
             selectedIndex: controller.selectedGender.value,
             onTap: controller.switchGender,
           ),
@@ -126,7 +126,6 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Tanggal Lahir',
           ),
           TextButton(
-
             onPressed: () {
               DatePicker.showDatePicker(
                 context,
@@ -154,7 +153,7 @@ class _AddSapiState extends State<AddSapi> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal : 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       controller.dateTime.value != ''
                           ? CustomDateFormat.dateDMY
@@ -191,7 +190,8 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Bobot Saat Umur 4 bulan',
           ),
           TextField(
-            controller: controller.usernameController.value,
+            controller: controller.weight4MController.value,
+            keyboardType: TextInputType.phone,
             hintText: 'Bobot Saat Umur 4 bulan',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
@@ -201,7 +201,8 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Bobot Saat Umur 1 tahun',
           ),
           TextField(
-            controller: controller.usernameController.value,
+            controller: controller.weight1YController.value,
+            keyboardType: TextInputType.phone,
             hintText: 'Bobot Saat Umur 1 tahun',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
@@ -211,7 +212,8 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Lingkar Dada saat umur 1 tahun',
           ),
           TextField(
-            controller: controller.usernameController.value,
+            controller: controller.ld1YController.value,
+            keyboardType: TextInputType.phone,
             hintText: 'Lingkar Dada saat umur 1 tahun',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
@@ -221,7 +223,8 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Panjang Badan Saat Umur 1 tahun',
           ),
           TextField(
-            controller: controller.usernameController.value,
+            controller: controller.pb1YController.value,
+            keyboardType: TextInputType.phone,
             hintText: 'Panjang Badan Saat Umur 1 tahun',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
@@ -231,7 +234,8 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Tinggi Pundak Saat Umur 1 tahun',
           ),
           TextField(
-            controller: controller.usernameController.value,
+            controller: controller.tp1YsController.value,
+            keyboardType: TextInputType.phone,
             hintText: 'Tinggi Pundak Saat Umur 1 tahun',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
@@ -246,7 +250,7 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Catatan',
           ),
           TextField(
-            controller: controller.usernameController.value,
+            controller: controller.notesController.value,
             hintText: 'Tambahkan Catatan yang diperlukan untuk recording',
             maxLines: 20,
           ),

@@ -7,13 +7,20 @@ import 'package:src/common/color/spacer.dart';
 import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/style/text_style.dart';
+import 'package:src/common/widget/shimmer.dart';
 import 'package:src/controller/sapi/sapi_saya_controller.dart';
 
 class SapiSaya extends StatelessWidget {
   const SapiSaya({Key? key}) : super(key: key);
 
   Widget _cardSapi(CowModel e) {
-    var age = DateTime.now().difference( DateTime.parse(e.birthdate!)).inDays;
+    var age;
+    if (e.birthdate != null) {
+      age = DateTime.now().difference(DateTime.parse(e.birthdate!)).inDays;
+    } else {
+      age = 0;
+    }
+
     return GestureDetector(
       onTap: () {
         Get.toNamed('/sapi-detail', arguments: DetailSapiArguments(e));
@@ -66,13 +73,11 @@ class SapiSaya extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder(
         init: SapiSayaController(),
-        initState: (_) => Get.put(SapiSayaController()).init(),
         builder: (SapiSayaController controller) {
-        
-          return Obx(() =>  Scaffold(
+          return Scaffold(
             appBar: AppBar(
               title: Text('Sapi Saya'),
-              actions: [Icon(Icons.filter_list)],
+              actions: const [Icon(Icons.filter_list)],
             ),
             bottomNavigationBar: ElevatedButton(
               style: ButtonStyle(
@@ -95,6 +100,8 @@ class SapiSaya extends StatelessWidget {
                       if (_debounce?.isActive ?? false) _debounce?.cancel();
                       _debounce = Timer(const Duration(milliseconds: 500), () {
                         // Do Search here
+                        controller.searchListenerSink.add(text);
+                        controller.init();
                       });
                     },
                     decoration: InputDecoration(
@@ -124,18 +131,54 @@ class SapiSaya extends StatelessWidget {
                     height: Spacing.kSpacingHeight,
                   ),
                   Expanded(
-                    child: SingleChildScrollView(
-                          child: Column(
-                            children: controller.sapiSaya.value
-                                .map((e) => _cardSapi(e))
-                                .toList(),
-                          ),
-                        ),
+                    child: StreamBuilder<List<CowModel>?>(
+                        stream: controller.sapiSayaStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return ListView.builder(
+                                itemCount: 8,
+                                shrinkWrap: true,
+                                primary: true,
+                                itemBuilder: (context, i) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 6.0),
+                                    child: ShimmerWidget.rectRadius(
+                                      height: 65,
+                                      width: double.infinity,
+                                      shapeBorder: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(6),
+                                      ),
+                                    ),
+                                  );
+                                });
+                          }
+                          if (snapshot.hasData) {
+                            if (snapshot.data?.isNotEmpty ?? false) {
+                              return ListView.builder(
+                                  itemCount: snapshot.data?.length,
+                                  shrinkWrap: true,
+                                  primary: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (context, i) {
+                                    return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 6.0),
+                                        child: _cardSapi(snapshot.data![i]));
+                                  });
+                            }
+                            return Container();
+                          } else {
+                            return Center(child: Text('No Data'));
+                          }
+                        }),
                   )
                 ],
               ),
             ),
-          ));
+          );
         });
   }
 }

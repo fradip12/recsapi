@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:src/common/model/sapi_model.dart';
 
+import '../model/breeding_model.dart';
 import '../model/user_model.dart';
 
 class FireAuth {
@@ -64,6 +66,7 @@ class FireStore {
   final CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('users');
 
+  ///User Sections
   Future<void> setupUser(User _user) async {
     _usersCollection.doc(_user.uid).get().then(
       (value) {
@@ -82,17 +85,86 @@ class FireStore {
     );
   }
 
-  Future<void> tambahSapi(CowModel sapi, User _user) async {
-    _usersCollection.doc(_user.uid).collection('sapi').add(sapi.toJson());
-  }
-
-  Future<List<CowModel>> getSapi(User _user) async {
-    return _usersCollection
+  ///Cow Section
+  Future<DocumentReference<Map<String, dynamic>>?> tambahSapi(
+      CowModel sapi, User _user) async {
+    var res = await _usersCollection
         .doc(_user.uid)
         .collection('sapi')
-        .get()
-        .then((value) {
-      return value.docs.map((e) => CowModel.fromJson(e.data())).toList();
-    });
+        .add(sapi.toJson());
+    Logger().w(res);
+    return res;
+  }
+
+  Future<List<CowModel>> getSapi(User _user, {String? keywords}) async {
+    return _usersCollection.doc(_user.uid).collection('sapi').get().then(
+      (value) {
+        if (keywords != null) {
+          return value.docs
+              .map((e) => CowModel.fromJson(e.data()))
+              .where((element) =>
+                  element.name!.toLowerCase().contains(keywords.toLowerCase()))
+              .toList();
+        } else {
+          return value.docs.map((e) => CowModel.fromJson(e.data())).toList();
+        }
+      },
+    );
+  }
+
+  Future<List<CowModel>> getSapiF(User _user, {String? keywords}) async {
+    return _usersCollection.doc(_user.uid).collection('sapi').get().then(
+      (value) {
+        if (keywords != null) {
+          return value.docs
+              .map((e) => CowModel.fromJson(e.data()))
+              .where((element) => (element.name!
+                      .toLowerCase()
+                      .contains(keywords.toLowerCase()) &&
+                  element.gender == 0))
+              .toList();
+        } else {
+          return value.docs
+              .map((e) => CowModel.fromJson(e.data()))
+              .where((element) => element.gender == 0)
+              .toList();
+        }
+      },
+    );
+  }
+
+  Future<CowModel?> getDetailSapi(User _user, String? cowId) async {
+    return _usersCollection.doc(_user.uid).collection('sapi').get().then(
+      (value) {
+        return value.docs.map((e) => CowModel.fromJson(e.data())).firstWhere(
+              (element) => element.id == cowId,
+              orElse: () => CowModel(),
+            );
+      },
+    );
+  }
+
+  ///Breeding Section
+
+  Future<List<BreedingModel>> getBreeding(User _user, String cowId) async {
+    return _usersCollection.doc(_user.uid).collection('tb_breeding').get().then(
+      (value) {
+        Logger().wtf(value.docs);
+        return value.docs
+            .map((e) => BreedingModel.fromJson(e.data()))
+            .where((element) => element.cowId == cowId)
+            .toList();
+      },
+    );
+  }
+
+  Future<DocumentReference<Map<String, dynamic>>?> submitBreeding(
+      User _user, BreedingModel data) async {
+    var res = await _usersCollection
+        .doc(_user.uid)
+        .collection('tb_breeding')
+        .add(data.toJson());
+    Logger().wtf(res);
+    return res;
   }
 }

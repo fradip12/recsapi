@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/controller/main_controller.dart';
@@ -7,46 +8,39 @@ import 'package:src/controller/main_controller.dart';
 class SapiSayaController extends GetxController {
   //Var
   final MainController _mainController = Get.find<MainController>();
-  final Rx<List<CowModel>> sapiSaya = Rx<List<CowModel>>([]);
+
+  final _sapiSaya = BehaviorSubject<List<CowModel>?>.seeded([]);
+  Stream<List<CowModel>?> get sapiSayaStream =>
+      _sapiSaya.stream.delay(Duration(seconds: 2));
+  Sink<List<CowModel>?> get sapiSayaSink => _sapiSaya.sink;
+
+  final _searchListener = BehaviorSubject<String?>.seeded(null);
+  Stream<String?> get searchListenerStream => _searchListener.stream;
+  Sink<String?> get searchListenerSink => _searchListener.sink;
+
   //Function
-  
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  //    getSapiSaya();
-  // }
+
+  @override
+  void onInit() {
+    super.onInit();
+    init();
+  }
 
   void init() async {
     getSapiSaya();
+    refresh();
   }
 
   Future<void> tambahSapi() async {
-    // example
-    // var dataSapi = CowModel(
-    //   birthdate: DateTime.now().toIso8601String(),
-    //   bodyLength1Yo: 1.0,
-    //   breed: 'rumput',
-    //   chestCircumference1Yo: 0.1,
-    //   color: 'Green',
-    //   gender: 1,
-    //   gumbaHeight1Yo: 1,
-    //   id: '1',
-    //   name: 'bubu',
-    //   notes: 'ga ada',
-    //   parentF: 'yatim',
-    //   parentM: 'yatim',
-    //   strowNumber: '1',
-    //   weight1Yo: 1,
-    //   weight4Mo: 1,
-    //   weightBirth: 1,
-
-    // );
-    // FireStore().tambahSapi(dataSapi, _mainController.user.value);
     Get.toNamed('/add-sapi');
   }
 
   getSapiSaya() async {
-    var res = await FireStore().getSapi(_mainController.user.value);
-    sapiSaya.value.addAll(res);
+    if (_sapiSaya.hasValue) {
+      _sapiSaya.value = null;
+    }
+    var res = await FireStore()
+        .getSapi(_mainController.user.value, keywords: _searchListener.value);
+    _sapiSaya.add(res);
   }
 }

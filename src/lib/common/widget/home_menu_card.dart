@@ -19,8 +19,8 @@ class MenuCard extends StatelessWidget {
         ),
         elevation: 3,
         child: Container(
-          height: 120,
-          width: 100,
+          height: 150,
+          width: 150,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(

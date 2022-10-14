@@ -14,3 +14,10 @@ class DetailSapiArguments {
   DetailSapiArguments(this.sapi);
 
 }
+
+class PembiakanDetailArguments {
+  final String cowId;
+
+  PembiakanDetailArguments(this.cowId);
+  
+}

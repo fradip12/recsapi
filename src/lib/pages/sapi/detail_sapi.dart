@@ -53,29 +53,33 @@ class DetailSapi extends StatelessWidget {
               style: kText20StyleBold.copyWith(color: Colors.black),
             ),
             Divider(),
-            body('Kode', e.id!),
-            body('Nama', e.name!),
-            body('Bangsa', e.breed!),
-            body('Jenis Kelamin', gender(e.gender!)),
-            body('Warna', e.color!),
+            body('Kode', e.id ?? '-'),
+            body('Nama', e.name ?? '-'),
+            body('Bangsa', e.breed ?? '-'),
+            body('Jenis Kelamin', e.gender != null ? gender(e.gender!) : '-'),
+            body('Warna', e.color ?? '-'),
             body(
               'Induk',
-              e.parentF!,
+              e.parentF ?? '-',
               onTap: () {
                 print('Navigate to ${e.parentF}');
               },
             ),
             body(
               'Pejantan',
-              e.parentM!,
+              e.parentM ?? '-',
               onTap: () {
                 print('Navigate to ${e.parentM}');
               },
             ),
-            body('Tanggal Lahir',
-                CustomDateFormat.dateDMY.format(DateTime.parse(e.birthdate!))),
-            body('Umur', e.name!),
-            body('Bobot Lahir', e.weightBirth!.toString()),
+            body(
+                'Tanggal Lahir',
+                (e.birthdate != null && e.birthdate != "")
+                    ? CustomDateFormat.dateDMY
+                        .format(DateTime.parse(e.birthdate!))
+                    : '-'),
+            body('Umur', e.name ?? '-'),
+            body('Bobot Lahir', (e.weightBirth ?? 0).toString()),
           ],
         ),
       ),
@@ -98,8 +102,8 @@ class DetailSapi extends StatelessWidget {
               style: kText20StyleBold.copyWith(color: Colors.black),
             ),
             Divider(),
-            body('Bobot Saat umur 4 bulan', e.weight4Mo!.toString()),
-            body('Bobot Saat umur 1 tahun', e.weight1Yo!.toString()),
+            body('Bobot Saat umur 4 bulan', (e.weight4Mo  ?? '-').toString()),
+            body('Bobot Saat umur 1 tahun', (e.weight1Yo  ?? '-').toString()),
             body('Lingkar Dada saat umur 1 tahun',
                 e.chestCircumference1Yo.toString()), // Belum ada di database
             body('Panjang Badan saat umur 1 tahun',
@@ -131,7 +135,7 @@ class DetailSapi extends StatelessWidget {
             SizedBox(
               height: 150,
               child: Text(
-                e.notes!,
+                e.notes ?? '-',
                 style: kText14Style,
                 textAlign: TextAlign.justify,
                 maxLines: 10,
