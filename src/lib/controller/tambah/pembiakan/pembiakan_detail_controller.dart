@@ -13,12 +13,13 @@ class PembiakanDetailController extends GetxController {
   late PembiakanDetailArguments args;
 
   final _breeding = BehaviorSubject<List<BreedingModel>?>.seeded(null);
-  Sink<List<BreedingModel>?> get _inBreeding => _breeding.sink;
+  Sink<List<BreedingModel>?> get inBreeding => _breeding.sink;
   Stream<List<BreedingModel>?> get outBreeding => _breeding.stream.delay(Duration(seconds: 2));
 
   final _cowModel = BehaviorSubject<CowModel?>.seeded(null);
-  Sink<CowModel?> get _inCowModel => _cowModel.sink;
+  Sink<CowModel?> get inCowModel => _cowModel.sink;
   Stream<CowModel?> get outCowModel => _cowModel.stream;
+
 
   @override
   void onInit() {
@@ -44,6 +45,7 @@ class PembiakanDetailController extends GetxController {
     var res =
         await FireStore().getDetailSapi(_mainController.user.value, args.cowId);
     _cowModel.add(res);
+
     Logger().wtf(res);
   }
 }

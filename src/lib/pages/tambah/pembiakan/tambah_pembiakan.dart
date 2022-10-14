@@ -159,6 +159,10 @@ class TambahPembiakanPages extends StatelessWidget {
                     SizedBox(
                       height: 16,
                     ),
+                    FormLabel(
+                      isRequired: true,
+                      label: 'Perkawinan ini membuat induk bunting?',
+                    ),
                     Obx(
                       () => ChipChoices(
                         choices: ['Ya', 'Tidak'],

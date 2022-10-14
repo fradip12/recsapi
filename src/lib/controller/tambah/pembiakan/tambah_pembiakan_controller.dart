@@ -76,7 +76,8 @@ class TambahPembiakanController extends GetxController {
         breeding.breedDate = dateTime.value;
         breeding.cowId = _cowModel.value!.id;
         breeding.id = 'breed_${selectedSC.value}_${_cowModel.value!.id}';
-        breeding.male = _selectedPejantan.value!.id;
+        breeding.maleId = _selectedPejantan.value!.id;
+        breeding.maleName = _selectedPejantan.value!.name;
         breeding.sc = selectedSC.value;
         if (isNotBlank(strowController.value.text)) {
           breeding.strowNumber = strowController.value.text;

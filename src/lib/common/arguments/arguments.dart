@@ -1,3 +1,4 @@
+import 'package:src/common/model/breeding_model.dart';
 import 'package:src/common/model/sapi_model.dart';
 
 class HomeMenu {
@@ -20,4 +21,11 @@ class PembiakanDetailArguments {
 
   PembiakanDetailArguments(this.cowId);
   
+}
+
+class KelahiranPagesArguments {
+  final BreedingModel breedData;
+
+  KelahiranPagesArguments(this.breedData);
+
 }

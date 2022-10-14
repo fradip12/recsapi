@@ -7,6 +7,7 @@ import 'package:src/pages/tambah/pembiakan/pembiakan_detail.dart';
 import 'package:src/pages/tambah/pembiakan/tambah_pembiakan.dart';
 import 'package:src/pages/tambah/tambah_pages.dart';
 import '../main.dart';
+import '../pages/tambah/kelahiran/kelahiran.dart';
 import '../pages/tambah/pembiakan/pembiakan.dart';
 
 class Routes {
@@ -22,10 +23,12 @@ class Routes {
     GetPage(name: '/sapi', page: () => SapiSaya()),
     GetPage(name: '/sapi-detail', page: () => DetailSapi()),
     GetPage(name: '/add-sapi', page: () => AddSapi()),
-    GetPage(name: '/tambah', page:() => TambahPages()),
-    GetPage(name: '/tambah-pembiakan', page:() => PembiakanPages()),
-    GetPage(name: '/tambah-pembiakan-detail', page:() => PembiakanDetail()),
-    GetPage(name: '/tambah-pembiakan-item', page:() => TambahPembiakanPages()),
+    GetPage(name: '/tambah', page: () => TambahPages()),
+    GetPage(name: '/tambah-pembiakan', page: () => PembiakanPages()),
+    GetPage(name: '/tambah-pembiakan-detail', page: () => PembiakanDetail()),
+    GetPage(name: '/tambah-pembiakan-item', page: () => TambahPembiakanPages()),
+    GetPage(name: '/kelahiran', page: () => KelahiranPages()),
+
     ///==========Profile==========///
     ///==========Setting==========///
     ///==========Other==========///

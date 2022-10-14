@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:src/common/model/birth_model.dart';
 import 'package:src/common/model/sapi_model.dart';
 
 import '../model/breeding_model.dart';
@@ -164,6 +165,22 @@ class FireStore {
         .doc(_user.uid)
         .collection('tb_breeding')
         .add(data.toJson());
+    Logger().wtf(res);
+    return res;
+  }
+
+  //Birth Sections
+   Future<List<BirthModel>> getListBirth(User _user, String breedId) async {
+    var res =  await _usersCollection.doc(_user.uid).collection('tb_birth').get().then(
+      (value) {
+        
+    Logger().wtf(value.docs.first.data());
+        return value.docs
+            .map((e) => BirthModel.fromJson(e.data()))
+            .where((element) => element.breedingId == breedId)
+            .toList();
+      },
+    );
     Logger().wtf(res);
     return res;
   }
