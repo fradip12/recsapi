@@ -170,17 +170,28 @@ class FireStore {
   }
 
   //Birth Sections
-   Future<List<BirthModel>> getListBirth(User _user, String breedId) async {
-    var res =  await _usersCollection.doc(_user.uid).collection('tb_birth').get().then(
+  Future<List<BirthModel>> getListBirth(User _user, String breedId) async {
+    var res =
+        await _usersCollection.doc(_user.uid).collection('tb_birth').get().then(
       (value) {
-        
-    Logger().wtf(value.docs.first.data());
+        print(breedId);
+        Logger().wtf(value.docs.first.data());
         return value.docs
             .map((e) => BirthModel.fromJson(e.data()))
             .where((element) => element.breedingId == breedId)
             .toList();
       },
     );
+    Logger().wtf(res);
+    return res;
+  }
+
+  Future<DocumentReference<Map<String, dynamic>>?> submitBirth(
+      User _user, BirthModel data) async {
+    var res = await _usersCollection
+        .doc(_user.uid)
+        .collection('tb_birth')
+        .add(data.toJson());
     Logger().wtf(res);
     return res;
   }

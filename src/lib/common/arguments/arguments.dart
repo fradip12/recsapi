@@ -13,19 +13,22 @@ class DetailSapiArguments {
   final CowModel? sapi;
 
   DetailSapiArguments(this.sapi);
-
 }
 
 class PembiakanDetailArguments {
   final String cowId;
 
   PembiakanDetailArguments(this.cowId);
-  
 }
 
 class KelahiranPagesArguments {
   final BreedingModel breedData;
 
   KelahiranPagesArguments(this.breedData);
+}
 
+class TambahKelahiranArguments {
+  final BreedingModel breedData;
+
+  TambahKelahiranArguments(this.breedData);
 }

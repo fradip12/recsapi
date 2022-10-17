@@ -46,7 +46,7 @@ class KelahiranController extends GetxController {
     if (isNotBlank(_breedModel.value?.id)) {
       var res = await FireStore()
           .getListBirth(_mainController.user.value, _breedModel.value!.id!);
-
+      Logger().w(res);
       _birthModel.add(res);
     }
   }

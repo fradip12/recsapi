@@ -26,7 +26,7 @@ class BirthModel {
 
     factory BirthModel.fromJson(Map<String, dynamic> json) => BirthModel(
         id: json["id"],
-        breedingId: json["breed_id"],
+        breedingId: json["breeding_id"],
         numberOfBirth: json["number_of_birth"],
         condition: json["condition"],
         process: json["process"],

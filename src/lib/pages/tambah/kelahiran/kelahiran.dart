@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
+import 'package:src/common/arguments/arguments.dart';
 import 'package:src/common/color/colors.dart';
 import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/helper/util.dart';
@@ -132,7 +133,7 @@ class KelahiranPages extends StatelessWidget {
                 itemCount: snapshot.data?.length,
                 itemBuilder: (_, i) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical : 8.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -147,7 +148,8 @@ class KelahiranPages extends StatelessWidget {
                             builder: (context, breed) {
                               return Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     flex: 2,
@@ -170,8 +172,8 @@ class KelahiranPages extends StatelessWidget {
                                                     snapshot.data?[i].birthdate)
                                                 ? CustomDateFormat.dateDMYHMS
                                                     .format(DateTime.parse(
-                                                        snapshot
-                                                            .data![i].birthdate!))
+                                                        snapshot.data![i]
+                                                            .birthdate!))
                                                 : '-',
                                           ) +
                                           _itemBirth(
@@ -180,8 +182,8 @@ class KelahiranPages extends StatelessWidget {
                                           ) +
                                           _itemBirth(
                                             'Berat Lahir',
-                                            isNotBlank(
-                                                    snapshot.data?[i].birthWeight)
+                                            isNotBlank(snapshot
+                                                    .data?[i].birthWeight)
                                                 ? '${snapshot.data?[i].birthWeight} Kg'
                                                 : '-',
                                           ),
@@ -206,7 +208,7 @@ class KelahiranPages extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 12.0),
           child: InkWell(
-            onTap: (){
+            onTap: () {
               // go to add birth item
             },
             child: Card(
@@ -264,24 +266,26 @@ class KelahiranPages extends StatelessWidget {
                     );
                   }),
             ),
-            bottomNavigationBar: ElevatedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(
-                  Size(double.infinity, 60),
-                ),
-              ),
-              onPressed: () {
-                Get.toNamed('/tambah-kelahiran');
-              },
-              child: Text('Tambah Kelahiran'),
-            ),
+            bottomNavigationBar: StreamBuilder<BreedingModel?>(
+                stream: state.breedModelStream,
+                builder: (context, breed) {
+                  return ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        Size(double.infinity, 60),
+                      ),
+                    ),
+                    onPressed: () {
+                      Get.toNamed('/tambah-kelahiran',
+                          arguments: TambahKelahiranArguments(breed.data!));
+                    },
+                    child: Text('Tambah Kelahiran'),
+                  );
+                }),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: [
-                  _breedingData(state),
-                  _birthCard(state)
-                ],
+                children: [_breedingData(state), _birthCard(state)],
               ),
             ),
           );
