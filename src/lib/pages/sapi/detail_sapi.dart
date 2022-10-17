@@ -53,7 +53,7 @@ class DetailSapi extends StatelessWidget {
               style: kText20StyleBold.copyWith(color: Colors.black),
             ),
             Divider(),
-            body('Kode', e.id ?? '-'),
+            body('Kode', e.uniqueId ?? '-'),
             body('Nama', e.name ?? '-'),
             body('Bangsa', e.breed ?? '-'),
             body('Jenis Kelamin', e.gender != null ? gender(e.gender!) : '-'),

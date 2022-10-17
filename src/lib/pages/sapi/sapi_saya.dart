@@ -44,13 +44,13 @@ class SapiSaya extends StatelessWidget {
                     style: kText16StyleBold.copyWith(color: Colors.black),
                   ),
                   Text(
-                    e.id!.capitalizeFirst!,
+                    e.uniqueId!.capitalizeFirst!,
                     style: kText16StyleBold.copyWith(color: Colors.black38),
                   ),
                 ],
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     age.toString() + ' hari',

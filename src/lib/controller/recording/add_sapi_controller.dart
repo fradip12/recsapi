@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 
 import '../main_controller.dart';
 
@@ -44,13 +45,16 @@ class AddSapiController extends GetxController {
   }
 
   void continueStep() {
+    var uuid = Uuid();
+
     if (activeSteps.value != stepper.length - 1) {
       activeSteps.value = activeSteps.value += 1;
     } else {
       //Validate first
       var data = CowModel()
         ..name = usernameController.value.text
-        ..id = codeController.value.text
+        ..id = uuid.v5(Uuid.NAMESPACE_URL, usernameController.value.text)
+        ..uniqueId = codeController.value.text
         ..breed = bangsaController.value.text
         ..gender = selectedGender.value == 0 ? 0 : 1
         ..color = warnaController.value.text
@@ -95,12 +99,14 @@ class AddSapiController extends GetxController {
   Future<void> submit(CowModel data) async {
     var res = await FireStore().tambahSapi(data, _mainController.user.value);
     if (res != null) {
-      Get.snackbar('Sukses', 'Berhasil Menambahkan Data', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Sukses', 'Berhasil Menambahkan Data',
+          snackPosition: SnackPosition.BOTTOM);
       Get.toNamed('/home');
       // Check
       // Controller hilang disini
     } else {
-      Get.snackbar('Error', 'Gagal Menambahkan Data', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error', 'Gagal Menambahkan Data',
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 

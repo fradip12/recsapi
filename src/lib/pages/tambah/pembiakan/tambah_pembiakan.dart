@@ -49,6 +49,18 @@ class TambahPembiakanPages extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // FormLabel(
+                    //   isRequired: true,
+                    //   label: 'Id Pembiakan',
+                    // ),
+                    // TextField(
+                    //   controller: state.idPembiakan.value,
+                    //   hintText: 'Id pembiakan',
+                    //   suffix: Text('Kg'),
+                    // ),
+                    // SizedBox(
+                    //   height: 16,
+                    // ),
                     FormLabel(
                       isRequired: true,
                       label: 'Tanggal Kawin',
@@ -75,21 +87,20 @@ class TambahPembiakanPages extends StatelessWidget {
                           width: double.infinity,
                           height: 45,
                           margin: EdgeInsets.zero,
+                          padding: EdgeInsets.zero,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(color: Colors.black54)),
-                          child: Center(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  isNotBlank(state.dateTime.value)
-                                      ? state.dateTime.value!
-                                      : 'Pilih Tanggal',
-                                  style: TextStyle(color: Colors.blue),
-                                ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                isNotBlank(state.dateTime.value)
+                                    ? state.dateTime.value!
+                                    : 'Pilih Tanggal',
+                                style: TextStyle(color: Colors.blue),
                               ),
                             ),
                           ),
@@ -130,30 +141,38 @@ class TambahPembiakanPages extends StatelessWidget {
                           : StreamBuilder<CowModel?>(
                               stream: state.selectedPejantanOut,
                               builder: (context, snapshot) {
-                                return Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: Colors.grey)),
-                                  child: DropdownButton<CowModel>(
-                                    hint: Text('Pilih Pejantan'),
-                                    isExpanded: true,
-                                    underline: SizedBox(),
-                                    value: snapshot.data,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    items: state.listPejantan
-                                        .map((CowModel items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items.name ?? '-'),
+                                return StreamBuilder<List<CowModel>?>(
+                                    stream: state.listPejantanOut,
+                                    builder: (context, listPejantan) {
+                                      return Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            border:
+                                                Border.all(color: Colors.grey)),
+                                        child: DropdownButton<CowModel>(
+                                          hint: Text('Pilih Pejantan'),
+                                          isExpanded: true,
+                                          underline: SizedBox(),
+                                          value: snapshot.data,
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_down),
+                                          items: listPejantan.data!
+                                              .map((CowModel items) {
+                                            return DropdownMenuItem(
+                                              value: items,
+                                              child: Text(items.name ?? '-'),
+                                            );
+                                          }).toList(),
+                                          onChanged: (CowModel? newValue) {
+                                            state.selectedPejantanIn
+                                                .add(newValue);
+                                          },
+                                        ),
                                       );
-                                    }).toList(),
-                                    onChanged: (CowModel? newValue) {
-                                      state.selectedPejantanIn.add(newValue);
-                                    },
-                                  ),
-                                );
+                                    });
                               }),
                     ),
                     SizedBox(
@@ -165,7 +184,10 @@ class TambahPembiakanPages extends StatelessWidget {
                     ),
                     Obx(
                       () => ChipChoices(
-                        choices: ['Ya', 'Tidak'],
+                        choices: [
+                          'Tidak',
+                          'Ya',
+                        ],
                         selectedIndex: state.buntingState.value,
                         onTap: state.switchBuntingState,
                       ),

@@ -22,6 +22,7 @@ class CowModel {
     this.chestCircumference1Yo,
     this.bodyLength1Yo,
     this.gumbaHeight1Yo,
+    this.uniqueId,
   });
 
    String? id;
@@ -40,6 +41,7 @@ class CowModel {
    double? chestCircumference1Yo;
    double? bodyLength1Yo;
    double? gumbaHeight1Yo;
+   String? uniqueId;
 
   CowModel copyWith({
     String? id,
@@ -58,6 +60,7 @@ class CowModel {
     double? chestCircumference1Yo,
     double? bodyLength1Yo,
     double? gumbaHeight1Yo,
+    String? uniqueId,
   }) =>
       CowModel(
         id: id ?? this.id,
@@ -77,6 +80,7 @@ class CowModel {
             chestCircumference1Yo ?? this.chestCircumference1Yo,
         bodyLength1Yo: bodyLength1Yo ?? this.bodyLength1Yo,
         gumbaHeight1Yo: gumbaHeight1Yo ?? this.gumbaHeight1Yo,
+        uniqueId: uniqueId ?? this.uniqueId,
       );
 
   factory CowModel.fromRawJson(String str) =>
@@ -101,6 +105,7 @@ class CowModel {
         chestCircumference1Yo: json["chest_circumference_1yo"],
         bodyLength1Yo: json["body_length_1yo"],
         gumbaHeight1Yo: json["gumba_height_1yo"],
+        uniqueId: json["unique_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,6 +125,7 @@ class CowModel {
         "chest_circumference_1yo": chestCircumference1Yo,
         "body_length_1yo": bodyLength1Yo,
         "gumba_height_1yo": gumbaHeight1Yo,
+        "unique_id": uniqueId,
       };
 
   CowModel.empty()
@@ -138,5 +144,6 @@ class CowModel {
         weight1Yo = null,
         chestCircumference1Yo = null,
         bodyLength1Yo = null,
-        gumbaHeight1Yo = null;
+        gumbaHeight1Yo = null,
+        uniqueId = null;
 }

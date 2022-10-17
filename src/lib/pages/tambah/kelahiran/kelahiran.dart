@@ -264,6 +264,17 @@ class KelahiranPages extends StatelessWidget {
                     );
                   }),
             ),
+            bottomNavigationBar: ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(
+                  Size(double.infinity, 60),
+                ),
+              ),
+              onPressed: () {
+                Get.toNamed('/tambah-kelahiran');
+              },
+              child: Text('Tambah Kelahiran'),
+            ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
