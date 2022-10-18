@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:src/common/model/birth_model.dart';
+import 'package:src/common/model/milk_model.dart';
 import 'package:src/common/model/sapi_model.dart';
 
 import '../model/breeding_model.dart';
@@ -192,6 +193,23 @@ class FireStore {
         .doc(_user.uid)
         .collection('tb_birth')
         .add(data.toJson());
+    Logger().wtf(res);
+    return res;
+  }
+
+  //Milk Sections
+  Future<List<MilkModel>> getListMilk(User _user, String cowId) async {
+    var res =
+        await _usersCollection.doc(_user.uid).collection('tb_milk').get().then(
+      (value) {
+        print(cowId);
+        Logger().wtf(value.docs.first.data());
+        return value.docs
+            .map((e) => MilkModel.fromJson(e.data()))
+            .where((element) => element.cowId == cowId)
+            .toList();
+      },
+    );
     Logger().wtf(res);
     return res;
   }

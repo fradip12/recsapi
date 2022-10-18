@@ -12,7 +12,7 @@ class TambahPagesController extends GetxController {
     ),
     HomeMenu(
       title: 'Produksi Susu',
-      route: '/',
+      route: '/susu',
       icon: "asset/images/logo/icon-park_milk.png",
     ),
     HomeMenu(

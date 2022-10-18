@@ -84,11 +84,16 @@ class TambahPembiakanController extends GetxController {
         var breeding = BreedingModel();
         breeding.breedDate = dateTime.value;
         breeding.cowId = _cowModel.value!.id;
-        breeding.id = uuid.v5(Uuid.NAMESPACE_URL,_cowModel.value!.id,);
-        breeding.maleId = _selectedPejantan.value!.id;
-        breeding.maleName = _selectedPejantan.value!.name;
+        breeding.id = uuid.v5(
+          Uuid.NAMESPACE_URL,
+          _cowModel.value!.id,
+        );
         breeding.pregnantState = buntingState.value == 1 ? true : false;
         breeding.sc = selectedSC.value;
+        if (_selectedPejantan.value != null) {
+          breeding.maleId = _selectedPejantan.value!.id;
+          breeding.maleName = _selectedPejantan.value!.name;
+        }
         if (isNotBlank(strowController.value.text)) {
           breeding.strowNumber = strowController.value.text;
         }

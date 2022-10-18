@@ -32,3 +32,9 @@ class TambahKelahiranArguments {
 
   TambahKelahiranArguments(this.breedData);
 }
+
+class ProduksiSusuArguments {
+  final CowModel cowData;
+
+  ProduksiSusuArguments(this.cowData);
+}

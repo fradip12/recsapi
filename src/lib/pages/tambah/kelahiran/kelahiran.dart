@@ -261,7 +261,7 @@ class KelahiranPages extends StatelessWidget {
                     return Column(
                       children: [
                         Text(snapshot.data?.name ?? '-'),
-                        Text(snapshot.data?.id ?? '-'),
+                        Text(snapshot.data?.id ?? '-')
                       ],
                     );
                   }),
