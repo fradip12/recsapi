@@ -198,12 +198,10 @@ class FireStore {
   }
 
   //Milk Sections
-  Future<List<MilkModel>> getListMilk(User _user, String cowId) async {
+  Future<List<MilkModel>?> getListMilk(User _user, String cowId) async {
     var res =
         await _usersCollection.doc(_user.uid).collection('tb_milk').get().then(
       (value) {
-        print(cowId);
-        Logger().wtf(value.docs.first.data());
         return value.docs
             .map((e) => MilkModel.fromJson(e.data()))
             .where((element) => element.cowId == cowId)
@@ -212,5 +210,33 @@ class FireStore {
     );
     Logger().wtf(res);
     return res;
+  }
+
+  Future<DocumentReference<Map<String, dynamic>>?> submitMilk(
+      User _user, MilkModel data) async {
+    var res = await _usersCollection
+        .doc(_user.uid)
+        .collection('tb_milk')
+        .add(data.toJson());
+    Logger().wtf(res);
+    return res;
+  }
+
+  Future<bool?> updateMilk(User _user, MilkModel data) async {
+    try {
+      await _usersCollection
+          .doc(_user.uid)
+          .collection('tb_milk')
+          .where('id', isEqualTo: data.id)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          value.docs.first.reference.update(data.toJson());
+        }
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

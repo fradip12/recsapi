@@ -1,4 +1,5 @@
 import 'package:src/common/model/breeding_model.dart';
+import 'package:src/common/model/milk_model.dart';
 import 'package:src/common/model/sapi_model.dart';
 
 class HomeMenu {
@@ -37,4 +38,11 @@ class ProduksiSusuArguments {
   final CowModel cowData;
 
   ProduksiSusuArguments(this.cowData);
+}
+
+class TambahProduksiSusuArguments {
+  final CowModel cowData;
+  final String selectedDay;
+  final MilkModel? editData;
+  TambahProduksiSusuArguments(this.cowData, this.selectedDay, {this.editData});
 }

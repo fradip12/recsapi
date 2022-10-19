@@ -8,6 +8,7 @@ import 'package:src/pages/tambah/pembiakan/pembiakan_detail.dart';
 import 'package:src/pages/tambah/pembiakan/tambah_pembiakan.dart';
 import 'package:src/pages/tambah/susu/produksi_susu_pages.dart';
 import 'package:src/pages/tambah/susu/susu_pages.dart';
+import 'package:src/pages/tambah/susu/tambah_produksi_susu.dart';
 import 'package:src/pages/tambah/tambah_pages.dart';
 import '../main.dart';
 import '../pages/tambah/kelahiran/kelahiran.dart';
@@ -34,7 +35,8 @@ class Routes {
     GetPage(name: '/tambah-kelahiran', page: () => TambahKelahiranPages()),
     GetPage(name: '/susu', page: () => SusuPages()),
     GetPage(name: '/susu-produksi', page: () => ProduksiSusu()),
-    
+    GetPage(name: '/tambah-susu', page: () => TambahProduksiSusuPages()),
+
     ///==========Profile==========///
     ///==========Setting==========///
     ///==========Other==========///

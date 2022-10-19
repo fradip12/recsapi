@@ -63,22 +63,36 @@ class ProduksiSusuController extends GetxController {
       args = Get.arguments as ProduksiSusuArguments;
       _cowData.add(args.cowData);
     }
-    getListMilk();
+    getListMilk().then((v) {
+      if (v?.isNotEmpty ?? false) {
+        _kEvents.add(
+          LinkedHashMap<DateTime, MilkModel>(
+              equals: isSameDay,
+              hashCode: (DateTime key) {
+                return key.day * 1000000 + key.month * 10000 + key.year;
+              })
+            ..addAll(
+              {
+                for (var milk in v!) DateTime.parse(milk.date!): milk,
+              },
+            ),
+        );
+      }
+    });
+
+    _selectedDay.add(DateTime.now());
   }
 
-  Future<void> getListMilk() async {
+  Future<List<MilkModel>?> getListMilk() async {
     var res = await FireStore()
         .getListMilk(_mainController.user.value, _cowData.value.id!);
-    _milkList.add(res);
+    if (res != null) {
+      _milkList.add(res);
+    }
     if (_milkList.hasValue) {
-      for (var element in _milkList.value) {
-        _kEvents.add(LinkedHashMap<DateTime, MilkModel>(
-            equals: isSameDay,
-            hashCode: (DateTime key) {
-              return key.day * 1000000 + key.month * 10000 + key.year;
-            })
-          ..addAll({DateTime.parse(element.date!): element}));
-      }
+      return _milkList.value;
+    } else {
+      return [];
     }
   }
 
