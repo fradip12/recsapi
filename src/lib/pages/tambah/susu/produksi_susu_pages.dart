@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:src/common/arguments/arguments.dart';
 import 'package:src/common/color/colors.dart';
 import 'package:src/common/model/milk_model.dart';
@@ -23,6 +24,11 @@ class ProduksiSusu extends StatefulWidget {
 }
 
 class _ProduksiSusuState extends State<ProduksiSusu> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Widget _milkCard(CowModel sapi, MilkModel milk, String selectedDay) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -259,13 +265,13 @@ class _ProduksiSusuState extends State<ProduksiSusu> {
                                         LinkedHashMap<DateTime, MilkModel>>(
                                     stream: controller.outKEvents,
                                     builder: (context, events) {
-                                      // if (events.connectionState ==
-                                      //     ConnectionState.waiting) {
-                                      //   return Padding(
-                                      //     padding: const EdgeInsets.all(8.0),
-                                      //     child: _produksiSusuLoading(),
-                                      //   );
-                                      // }
+                                      if (events.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: _produksiSusuLoading(),
+                                        );
+                                      }
                                       return Column(
                                         children: [
                                           TableCalendar<MilkModel?>(
@@ -307,7 +313,8 @@ class _ProduksiSusuState extends State<ProduksiSusu> {
                                               stream:
                                                   controller.outSelectedEvents,
                                               builder: (context, value) {
-                                                if (!value.hasData) {
+                                                if (value.connectionState ==
+                                                    ConnectionState.waiting) {
                                                   return _noData(
                                                       cow.data!,
                                                       selectedDay.data!

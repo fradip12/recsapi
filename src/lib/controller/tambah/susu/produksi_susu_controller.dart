@@ -58,7 +58,7 @@ class ProduksiSusuController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+    _selectedDay.add(DateTime.now());
     if (Get.arguments != null) {
       args = Get.arguments as ProduksiSusuArguments;
       _cowData.add(args.cowData);
@@ -77,10 +77,11 @@ class ProduksiSusuController extends GetxController {
               },
             ),
         );
+        _selectedEvents.add(getEventsForDay(_selectedDay.value)
+            .firstWhereOrNull((element) => element != null));
+        Logger().w(_selectedEvents.value);
       }
     });
-
-    _selectedDay.add(DateTime.now());
   }
 
   Future<List<MilkModel>?> getListMilk() async {

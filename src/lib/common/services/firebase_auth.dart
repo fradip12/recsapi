@@ -208,7 +208,6 @@ class FireStore {
             .toList();
       },
     );
-    Logger().wtf(res);
     return res;
   }
 
