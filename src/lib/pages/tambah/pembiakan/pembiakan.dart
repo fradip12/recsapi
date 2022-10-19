@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:src/common/arguments/arguments.dart';
@@ -27,13 +29,13 @@ class PembiakanPages extends StatelessWidget {
               children: [
                 TextFormField(
                   onChanged: (text) {
-                    // Timer? _debounce;
-                    // if (_debounce?.isActive ?? false) _debounce?.cancel();
-                    // _debounce = Timer(const Duration(milliseconds: 500), () {
-                    //   // Do Search here
-                    //   controller.searchListenerSink.add(text);
-                    //   controller.init();
-                    // });
+                    Timer? _debounce;
+                    if (_debounce?.isActive ?? false) _debounce?.cancel();
+                    _debounce = Timer(const Duration(milliseconds: 500), () {
+                      // Do Search here
+                      state.searchListenerSink.add(text);
+                      state.init();
+                    });
                   },
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 12),

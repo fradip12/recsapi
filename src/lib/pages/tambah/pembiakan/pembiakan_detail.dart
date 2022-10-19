@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:src/common/arguments/arguments.dart';
 import 'package:src/common/color/colors.dart';
 import 'package:src/common/helper/date_formatter.dart';
@@ -63,7 +64,9 @@ class PembiakanDetail extends StatelessWidget {
                         ? 'Bunting'
                         : 'Tidak Bunting',
                     style: kText16StyleBold.copyWith(
-                      color:  (breed?.pregnantState ?? false) ? Clr.yellowPrimary : Colors.red,
+                      color: (breed?.pregnantState ?? false)
+                          ? Clr.yellowPrimary
+                          : Colors.red,
                     ),
                   ),
                   Row(
@@ -116,7 +119,7 @@ class PembiakanDetail extends StatelessWidget {
                   return Column(
                     children: [
                       Text((snapshot.data?.name ?? '-').capitalizeFirst!),
-                      Text(snapshot.data?.id ?? '-'),
+                      Text(snapshot.data?.uniqueId ?? '-'),
                     ],
                   );
                 }),
@@ -127,8 +130,10 @@ class PembiakanDetail extends StatelessWidget {
                 Size(double.infinity, 60),
               ),
             ),
-            onPressed: () {
-              Get.toNamed('/tambah-pembiakan-item');
+            onPressed: () async {
+              var res = await  Get.toNamed('/tambah-pembiakan-item');
+              Logger().w(res);
+              state.init();
             },
             child: Text('Tambah Pembiakan'),
           ),

@@ -8,6 +8,7 @@ import 'package:src/controller/main_controller.dart';
 import 'package:src/controller/tambah/pembiakan/pembiakan_detail_controller.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../common/arguments/arguments.dart';
 import '../../../common/model/sapi_model.dart';
 import '../../../common/services/firebase_auth.dart';
 
@@ -66,14 +67,13 @@ class TambahPembiakanController extends GetxController {
 
   Future<void> getListPejantan() async {
     var res = await FireStore().getSapi(_mainController.user.value);
+    var _list = <CowModel>[];
     for (var element in res) {
-      var _data = <CowModel>[];
-      Logger().d(element.gender);
       if (element.gender == 1) {
-        _data.add(element);
+        _list.add(element);
       }
-      _listPejantan.add(_data);
     }
+    _listPejantan.add(_list);
   }
 
   Future<void> submitTambahPembiakan() async {
@@ -91,23 +91,37 @@ class TambahPembiakanController extends GetxController {
         breeding.pregnantState = buntingState.value == 1 ? true : false;
         breeding.sc = selectedSC.value;
         if (_selectedPejantan.value != null) {
-          breeding.maleId = _selectedPejantan.value!.id;
+          breeding.maleId = _selectedPejantan.value!.uniqueId;
           breeding.maleName = _selectedPejantan.value!.name;
         }
         if (isNotBlank(strowController.value.text)) {
           breeding.strowNumber = strowController.value.text;
         }
-        Logger().wtf(breeding.toJson());
         var res = await FireStore()
             .submitBreeding(_mainController.user.value, breeding);
+        Get.back(result: true);
         if (res != null) {
-          Get.snackbar('Success', 'Berhasil Menambahkan Data Pembiakan');
+          Get.snackbar(
+            'Success',
+            'Berhasil Menambahkan Data Pembiakan',
+            duration: Duration(seconds: 1),
+          );
         }
       } catch (e) {
-        Get.snackbar('Error', e.toString());
+        Get.back(result: false);
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          duration: Duration(seconds: 1),
+        );
       }
     } else {
-      Get.snackbar('Error', 'Data tidak lengkap');
+      Get.back(result: false);
+      Get.snackbar(
+        'Error',
+        'Data tidak lengkap',
+        duration: Duration(seconds: 1),
+      );
     }
   }
 }

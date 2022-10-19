@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart' hide TextField;
 import 'package:flutter_datetime_picker_bdaya/flutter_datetime_picker_bdaya.dart';
 import 'package:get/get.dart';
+import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/helper/util.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/widget/keyboard_dismiss.dart';
 import 'package:src/controller/tambah/pembiakan/tambah_pembiakan_controller.dart';
 
+import '../../../common/arguments/arguments.dart';
 import '../../../common/widget/chip_choice.dart';
 import '../../../common/widget/form_label.dart';
 import '../../../common/widget/text_field.dart';
@@ -27,7 +29,7 @@ class TambahPembiakanPages extends StatelessWidget {
                       return Column(
                         children: [
                           Text((snapshot.data?.name ?? '-').capitalizeFirst!),
-                          Text(snapshot.data?.id ?? '-'),
+                          Text(snapshot.data?.uniqueId ?? '-'),
                         ],
                       );
                     }),
@@ -38,7 +40,7 @@ class TambahPembiakanPages extends StatelessWidget {
                     Size(double.infinity, 60),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   state.submitTambahPembiakan();
                 },
                 child: Text('Simpan'),
@@ -49,18 +51,6 @@ class TambahPembiakanPages extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // FormLabel(
-                    //   isRequired: true,
-                    //   label: 'Id Pembiakan',
-                    // ),
-                    // TextField(
-                    //   controller: state.idPembiakan.value,
-                    //   hintText: 'Id pembiakan',
-                    //   suffix: Text('Kg'),
-                    // ),
-                    // SizedBox(
-                    //   height: 16,
-                    // ),
                     FormLabel(
                       isRequired: true,
                       label: 'Tanggal Kawin',
@@ -98,7 +88,8 @@ class TambahPembiakanPages extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
                                 isNotBlank(state.dateTime.value)
-                                    ? state.dateTime.value!
+                                    ? CustomDateFormat.dateDMYHMS.format(
+                                        DateTime.parse(state.dateTime.value!))
                                     : 'Pilih Tanggal',
                                 style: TextStyle(color: Colors.blue),
                               ),

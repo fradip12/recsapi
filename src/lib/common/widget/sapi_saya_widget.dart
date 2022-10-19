@@ -48,7 +48,7 @@ class SapiSayaCard extends StatelessWidget {
                     style: kText16StyleBold.copyWith(color: Colors.black),
                   ),
                   Text(
-                    e?.id!.capitalizeFirst ?? '-',
+                    e?.uniqueId!.toUpperCase() ?? '-',
                     style: kText16StyleBold.copyWith(color: Colors.black38),
                   ),
                 ],

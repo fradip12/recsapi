@@ -314,7 +314,9 @@ class _ProduksiSusuState extends State<ProduksiSusu> {
                                                   controller.outSelectedEvents,
                                               builder: (context, value) {
                                                 if (value.connectionState ==
-                                                    ConnectionState.waiting) {
+                                                        ConnectionState
+                                                            .waiting ||
+                                                    !value.hasData) {
                                                   return _noData(
                                                       cow.data!,
                                                       selectedDay.data!

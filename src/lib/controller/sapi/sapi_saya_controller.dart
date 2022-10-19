@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
@@ -42,5 +43,6 @@ class SapiSayaController extends GetxController {
     var res = await FireStore()
         .getSapi(_mainController.user.value, keywords: _searchListener.value);
     _sapiSaya.add(res);
+    Logger().w(res);
   }
 }

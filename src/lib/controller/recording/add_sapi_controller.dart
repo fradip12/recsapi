@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
@@ -32,8 +33,15 @@ class AddSapiController extends GetxController {
   Rx<int> activeSteps = 0.obs;
   Rx<int> selectedGender = 0.obs;
   Rx<int> hasilKawinDg = 0.obs;
-  RxList<CowModel> listPejantan = <CowModel>[].obs;
-  Rx<CowModel> selectedPejantan = CowModel.empty().obs;
+
+  final _listPejantan = BehaviorSubject<List<CowModel>?>();
+  Sink<List<CowModel>?> get listPejantanIn => _listPejantan.sink;
+  Stream<List<CowModel>?> get listPejantanOut => _listPejantan.stream;
+
+  final _selectedPejantan = BehaviorSubject<CowModel?>();
+  Sink<CowModel?> get selectedPejantanIn => _selectedPejantan.sink;
+  Stream<CowModel?> get selectedPejantanOut => _selectedPejantan.stream;
+
   Rx<String> dateTime = ''.obs;
 
   Rx<String?> message = ''.obs;
@@ -58,15 +66,19 @@ class AddSapiController extends GetxController {
         ..breed = bangsaController.value.text
         ..gender = selectedGender.value == 0 ? 0 : 1
         ..color = warnaController.value.text
-        ..parentM = selectedPejantan.value.id
         ..strowNumber = strowController.value.text
         ..weightBirth = double.tryParse(bobotLahirController.value.text)
         ..weight4Mo = double.tryParse(weight4MController.value.text)
         ..weight1Yo = double.tryParse(weight1YController.value.text)
         ..chestCircumference1Yo = double.tryParse(ld1YController.value.text)
         ..bodyLength1Yo = double.tryParse(pb1YController.value.text)
-        ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text);
-
+        ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text)
+        ..birthdate = dateTime.value;
+        
+      if (_selectedPejantan.hasValue &&
+          _selectedPejantan.value?.uniqueId != null) {
+        data.parentM = _selectedPejantan.value?.uniqueId;
+      }
       //Submit here
       Logger().w(data.toJson());
       submit(data);
@@ -99,9 +111,10 @@ class AddSapiController extends GetxController {
   Future<void> submit(CowModel data) async {
     var res = await FireStore().tambahSapi(data, _mainController.user.value);
     if (res != null) {
+      Get.back();
+      Get.back();
       Get.snackbar('Sukses', 'Berhasil Menambahkan Data',
           snackPosition: SnackPosition.BOTTOM);
-      Get.toNamed('/home');
       // Check
       // Controller hilang disini
     } else {
@@ -112,11 +125,12 @@ class AddSapiController extends GetxController {
 
   Future<void> getListPejantan() async {
     var res = await FireStore().getSapi(_mainController.user.value);
+    var _list = <CowModel>[];
     for (var element in res) {
-      Logger().d(element.gender);
       if (element.gender == 1) {
-        listPejantan.add(element);
+        _list.add(element);
       }
     }
+    _listPejantan.add(_list);
   }
 }

@@ -60,7 +60,10 @@ class _AddSapiState extends State<AddSapi> {
             label: 'Jenis Kelamin',
           ),
           ChipChoices(
-            choices: [ 'Betina','Jantan',],
+            choices: [
+              'Betina',
+              'Jantan',
+            ],
             selectedIndex: controller.selectedGender.value,
             onTap: controller.switchGender,
           ),
@@ -98,27 +101,36 @@ class _AddSapiState extends State<AddSapi> {
               suffix: Text('Kg'),
             )
           else
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey)),
-              child: DropdownButton<CowModel>(
-                hint: Text('Pilih Pejantan'),
-                isExpanded: true,
-                value: null,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                items: controller.listPejantan.map((CowModel items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(items.name ?? '-'),
-                  );
-                }).toList(),
-                onChanged: (CowModel? newValue) {
-                  controller.selectedPejantan.value = newValue!;
-                },
-              ),
-            ),
+            StreamBuilder<List<CowModel>?>(
+                stream: controller.listPejantanOut,
+                builder: (context, listData) {
+                  return StreamBuilder<CowModel?>(
+                      stream: controller.selectedPejantanOut,
+                      builder: (context, selected) {
+                        return Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey)),
+                          child: DropdownButton<CowModel>(
+                            hint: Text('Pilih Pejantan'),
+                            isExpanded: true,
+                            value: selected.data,
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            items: listData.data?.map((CowModel items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items.name ?? '-'),
+                              );
+                            }).toList(),
+                            onChanged: (CowModel? newValue) {
+                              controller.selectedPejantanIn.add(newValue);
+                            },
+                          ),
+                        );
+                      });
+                }),
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
@@ -177,6 +189,7 @@ class _AddSapiState extends State<AddSapi> {
             controller: controller.bobotLahirController.value,
             hintText: 'Bobot Lahir',
             suffix: Text('Kg'),
+            keyboardType: TextInputType.phone,
           ),
           SizedBox(height: Spacing.kSpacingHeight),
         ],

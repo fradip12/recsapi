@@ -14,21 +14,23 @@ class PembiakanDetailController extends GetxController {
 
   final _breeding = BehaviorSubject<List<BreedingModel>?>.seeded(null);
   Sink<List<BreedingModel>?> get inBreeding => _breeding.sink;
-  Stream<List<BreedingModel>?> get outBreeding => _breeding.stream.delay(Duration(seconds: 2));
+  Stream<List<BreedingModel>?> get outBreeding =>
+      _breeding.stream.delay(Duration(seconds: 2));
 
   final _cowModel = BehaviorSubject<CowModel?>.seeded(null);
   Sink<CowModel?> get inCowModel => _cowModel.sink;
   Stream<CowModel?> get outCowModel => _cowModel.stream;
 
-
   @override
   void onInit() {
     super.onInit();
-
     if (Get.arguments != null) {
       args = Get.arguments;
     }
-    Logger().w(args.cowId);
+    init();
+  }
+
+  void init() async {
     getBreedingList();
     getDetailSapi();
   }

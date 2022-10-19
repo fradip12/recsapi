@@ -70,10 +70,6 @@ class TambahProduksiSusuController extends GetxController {
 
         if (res != null) {
           Get.snackbar('Success', 'Berhasil Menambahkan Data');
-          await Future.delayed(Duration(seconds: 1), () {
-            Get.back();
-            Get.back();
-          });
         }
       } catch (e) {
         Get.snackbar('Error', e.toString());
@@ -99,14 +95,11 @@ class TambahProduksiSusuController extends GetxController {
 
         if (res != null) {
           Get.snackbar('Success', 'Berhasil Menambahkan Data');
-          await Future.delayed(Duration(seconds: 1), () {
-            Get.back();
-            Get.back();
-          });
         }
       } catch (e) {
         Get.snackbar('Error', e.toString());
       }
     }
+
   }
 }
