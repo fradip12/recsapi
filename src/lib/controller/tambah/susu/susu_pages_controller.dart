@@ -20,6 +20,7 @@ class SusuPagesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    init();
   }
 
   void init() async {

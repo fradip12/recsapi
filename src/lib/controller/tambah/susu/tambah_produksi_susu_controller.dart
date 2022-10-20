@@ -69,9 +69,11 @@ class TambahProduksiSusuController extends GetxController {
             await FireStore().submitMilk(_mainController.user.value, data);
 
         if (res != null) {
+          Get.back(result: true);
           Get.snackbar('Success', 'Berhasil Menambahkan Data');
         }
       } catch (e) {
+        Get.back(result: false);
         Get.snackbar('Error', e.toString());
       }
     } else {
@@ -94,12 +96,13 @@ class TambahProduksiSusuController extends GetxController {
             await FireStore().updateMilk(_mainController.user.value, data);
 
         if (res != null) {
+          Get.back(result: true);
           Get.snackbar('Success', 'Berhasil Menambahkan Data');
         }
       } catch (e) {
+        Get.back(result: false);
         Get.snackbar('Error', e.toString());
       }
     }
-
   }
 }

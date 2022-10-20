@@ -67,7 +67,7 @@ class _ProduksiSusuState extends State<ProduksiSusu> {
                           Flexible(
                             flex: 1,
                             child: Text(
-                              (sapi.id ?? '-').toUpperCase(),
+                              (sapi.uniqueId ?? '-').toUpperCase(),
                               style: kText20StyleBold.copyWith(
                                 color: Colors.black54,
                               ),
@@ -169,10 +169,13 @@ class _ProduksiSusuState extends State<ProduksiSusu> {
     return Column(
       children: [
         InkWell(
-          onTap: () {
+          onTap: () async {
             // go to add birth item
-            Get.toNamed('/tambah-susu',
+            var res = await Get.toNamed('/tambah-susu',
                 arguments: TambahProduksiSusuArguments(data, selectedDay));
+                if(res != null && res){
+                  Get.find<ProduksiSusuController>().init();
+                }
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -262,9 +265,10 @@ class _ProduksiSusuState extends State<ProduksiSusu> {
                               return Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: StreamBuilder<
-                                        LinkedHashMap<DateTime, MilkModel>>(
+                                        LinkedHashMap<DateTime, MilkModel>?>(
                                     stream: controller.outKEvents,
                                     builder: (context, events) {
+                                      print(events.connectionState);
                                       if (events.connectionState ==
                                           ConnectionState.waiting) {
                                         return Padding(

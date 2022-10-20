@@ -73,9 +73,11 @@ class TambahKelahiranController extends GetxController {
     try {
       var res = await FireStore().submitBirth(mainController.user.value, data);
       if (res != null) {
+        Get.back(result: true);
         Get.snackbar('Success', 'Berhasil Menambahkan Data');
       }
     } catch (e) {
+      Get.back(result: false);
       Get.snackbar('Error', e.toString());
     }
   }

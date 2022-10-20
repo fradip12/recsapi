@@ -44,8 +44,8 @@ class ProduksiSusuController extends GetxController {
   final _kLastDay = BehaviorSubject<DateTime>.seeded(DateTime.utc(2030, 3, 14));
   Stream<DateTime> get outKLastDay => _kLastDay.stream;
 
-  final _kEvents = BehaviorSubject<LinkedHashMap<DateTime, MilkModel>>();
-  Stream<LinkedHashMap<DateTime, MilkModel>> get outKEvents => _kEvents.stream;
+  final _kEvents = BehaviorSubject<LinkedHashMap<DateTime, MilkModel>?>();
+  Stream<LinkedHashMap<DateTime, MilkModel>?> get outKEvents => _kEvents.stream;
 
   final _selectedEvents = BehaviorSubject<MilkModel?>.seeded(null);
   Sink<MilkModel?> get inSelectedEvents => _selectedEvents.sink;
@@ -58,6 +58,10 @@ class ProduksiSusuController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    init();
+  }
+
+  void init() async {
     _selectedDay.add(DateTime.now());
     if (Get.arguments != null) {
       args = Get.arguments as ProduksiSusuArguments;
@@ -77,9 +81,8 @@ class ProduksiSusuController extends GetxController {
               },
             ),
         );
-        _selectedEvents.add(getEventsForDay(_selectedDay.value)
-            .firstWhereOrNull((element) => element != null));
-        Logger().w(_selectedEvents.value);
+      } else {
+        _kEvents.add(null);
       }
     });
   }
@@ -99,8 +102,8 @@ class ProduksiSusuController extends GetxController {
 
   List<MilkModel?> getEventsForDay(DateTime? day) {
     // Implementation example
-    if (_kEvents.hasValue && _kEvents.value[day] != null) {
-      return [_kEvents.value[day]!];
+    if (_kEvents.hasValue && _kEvents.value?[day] != null) {
+      return [_kEvents.value?[day]!];
     } else {
       return [];
     }

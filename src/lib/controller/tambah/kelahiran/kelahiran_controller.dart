@@ -30,6 +30,10 @@ class KelahiranController extends GetxController {
     super.onInit();
     args = Get.arguments as KelahiranPagesArguments;
     _breedModel.add(args.breedData);
+    init();
+  }
+
+  void init() async {
     getDetailSapi();
     getBirthList();
   }

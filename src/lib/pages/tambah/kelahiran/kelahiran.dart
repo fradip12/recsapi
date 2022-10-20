@@ -97,7 +97,7 @@ class KelahiranPages extends StatelessWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: _item('Induk', cow.data?.name ?? '-',
-                                    cow.data?.id ?? '-') +
+                                    cow.data?.uniqueId ?? '-') +
                                 _item(
                                     'Di kawinkan dengan',
                                     breed.data?.maleName ?? '-',
@@ -109,13 +109,7 @@ class KelahiranPages extends StatelessWidget {
                           );
                         }),
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: Icon(
-                      FontAwesome5.edit,
-                      color: Clr.yellowPrimary,
-                    ),
-                  )
+                 
                 ],
               );
             }),
@@ -207,42 +201,50 @@ class KelahiranPages extends StatelessWidget {
         }
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 12.0),
-          child: InkWell(
-            onTap: () {
-              // go to add birth item
-            },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              clipBehavior: Clip.hardEdge,
-              child: Container(
-                height: 45,
-                width: double.infinity,
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Belum Ada Data Kelahiran',
-                      style: kText12Style.copyWith(
-                        color: Colors.black54,
+          child: StreamBuilder<BreedingModel?>(
+              stream: state.breedModelStream,
+              builder: (context, breed) {
+                return InkWell(
+                  onTap: () async {
+                    var res = await Get.toNamed('/tambah-kelahiran',
+                        arguments: TambahKelahiranArguments(breed.data!));
+                    if (res != null && res) {
+                      state.init();
+                    }
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Container(
+                      height: 45,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Belum Ada Data Kelahiran',
+                            style: kText12Style.copyWith(
+                              color: Colors.black54,
+                            ),
+                          ),
+                          CircleAvatar(
+                            backgroundColor: Clr.yellowPrimary,
+                            radius: 10,
+                            child: Icon(
+                              FontAwesome5.plus,
+                              color: Colors.white,
+                              size: 10,
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    CircleAvatar(
-                      backgroundColor: Clr.yellowPrimary,
-                      radius: 10,
-                      child: Icon(
-                        FontAwesome5.plus,
-                        color: Colors.white,
-                        size: 10,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+                  ),
+                );
+              }),
         );
       },
     );
@@ -261,7 +263,7 @@ class KelahiranPages extends StatelessWidget {
                     return Column(
                       children: [
                         Text(snapshot.data?.name ?? '-'),
-                        Text(snapshot.data?.id ?? '-')
+                        Text(snapshot.data?.uniqueId ?? '-')
                       ],
                     );
                   }),
@@ -275,9 +277,12 @@ class KelahiranPages extends StatelessWidget {
                         Size(double.infinity, 60),
                       ),
                     ),
-                    onPressed: () {
-                      Get.toNamed('/tambah-kelahiran',
+                    onPressed: () async {
+                      var res = await Get.toNamed('/tambah-kelahiran',
                           arguments: TambahKelahiranArguments(breed.data!));
+                      if (res != null && res) {
+                        state.init();
+                      }
                     },
                     child: Text('Tambah Kelahiran'),
                   );
