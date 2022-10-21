@@ -46,7 +46,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Bangsa',
           ),
           TextField(
@@ -70,7 +70,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Warna',
           ),
           TextField(
@@ -118,6 +118,7 @@ class _AddSapiState extends State<AddSapi> {
                             isExpanded: true,
                             value: selected.data,
                             icon: const Icon(Icons.keyboard_arrow_down),
+                            underline: SizedBox(),
                             items: listData.data?.map((CowModel items) {
                               return DropdownMenuItem(
                                 value: items,
@@ -154,6 +155,11 @@ class _AddSapiState extends State<AddSapi> {
                 locale: LocaleType.en,
               );
             },
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
             child: Container(
               width: double.infinity,
               height: 45,
@@ -182,7 +188,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Bobot Lahir',
           ),
           TextField(
@@ -280,50 +286,60 @@ class _AddSapiState extends State<AddSapi> {
           init: AddSapiController(),
           initState: (_) => Get.put(AddSapiController()).init(),
           builder: (AddSapiController controller) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text('Tambah Sapi'),
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    if (controller.activeSteps.value == 0) {
-                      Get.back();
-                    } else {
-                      controller.backStep();
-                    }
-                  },
+            return WillPopScope(
+              onWillPop: () async {
+                if (controller.activeSteps.value == 0) {
+                  Get.back();
+                } else {
+                  controller.backStep();
+                }
+                return false;
+              },
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text('Tambah Sapi'),
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      if (controller.activeSteps.value == 0) {
+                        Get.back();
+                      } else {
+                        controller.backStep();
+                      }
+                    },
+                  ),
                 ),
-              ),
-              body: Obx(
-                () => Stepper(
-                  type: StepperType.horizontal,
-                  currentStep: controller.activeSteps.value,
-                  steps: controller.stepper
-                      .asMap()
-                      .map((i, element) => MapEntry(
-                            i,
-                            Step(
-                                title: Text(element),
-                                // TODO : State urus nanti, butuh validator form
-                                // state: controller.activeSteps.value == i
-                                //     ? StepState.complete
-                                //     : StepState.indexed,
-                                isActive: controller.activeSteps.value == i,
-                                content: widgetStep1(controller)[i]),
-                          ))
-                      .values
-                      .toList(),
-                  onStepContinue: controller.continueStep,
-                  onStepCancel: controller.backStep,
-                  controlsBuilder: (context, ControlsDetails details) {
-                    return SizedBox(
-                      width: Get.width,
-                      child: ElevatedButton(
-                        onPressed: details.onStepContinue,
-                        child: Text('Selanjutnya'),
-                      ),
-                    );
-                  },
+                body: Obx(
+                  () => Stepper(
+                    type: StepperType.horizontal,
+                    currentStep: controller.activeSteps.value,
+                    steps: controller.stepper
+                        .asMap()
+                        .map((i, element) => MapEntry(
+                              i,
+                              Step(
+                                  title: Text(element),
+                                  // TODO : State urus nanti, butuh validator form
+                                  // state: controller.activeSteps.value == i
+                                  //     ? StepState.complete
+                                  //     : StepState.indexed,
+                                  isActive: controller.activeSteps.value == i,
+                                  content: widgetStep1(controller)[i]),
+                            ))
+                        .values
+                        .toList(),
+                    onStepContinue: controller.continueStep,
+                    onStepCancel: controller.backStep,
+                    controlsBuilder: (context, ControlsDetails details) {
+                      return SizedBox(
+                        width: Get.width,
+                        child: ElevatedButton(
+                          onPressed: details.onStepContinue,
+                          child: Text('Selanjutnya'),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:src/common/helper/util.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
@@ -52,11 +53,37 @@ class AddSapiController extends GetxController {
     getListPejantan();
   }
 
+  void _showWarning() {
+    Get.snackbar(
+      'Warning!',
+      'Mohon melengkapi data yang bertanda *',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+  }
+
+  bool isValid() {
+    return isNotBlank(codeController.value.text) &&
+        isNotBlank(usernameController.value.text) &&
+        dateTime.value != '' &&
+        ((_selectedPejantan.hasValue && _selectedPejantan.value != null) ||
+            isNotBlank(strowController.value.text));
+  }
+
   void continueStep() {
     var uuid = Uuid();
 
     if (activeSteps.value != stepper.length - 1) {
-      activeSteps.value = activeSteps.value += 1;
+      if (activeSteps.value == 0) {
+        if (!isValid()) {
+          _showWarning();
+        } else {
+          activeSteps.value = activeSteps.value += 1;
+        }
+      } else {
+        activeSteps.value = activeSteps.value += 1;
+      }
     } else {
       //Validate first
       var data = CowModel()
@@ -74,12 +101,11 @@ class AddSapiController extends GetxController {
         ..bodyLength1Yo = double.tryParse(pb1YController.value.text)
         ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text)
         ..birthdate = dateTime.value;
-        
+
       if (_selectedPejantan.hasValue &&
           _selectedPejantan.value?.uniqueId != null) {
         data.parentM = _selectedPejantan.value?.uniqueId;
       }
-      //Submit here
       Logger().w(data.toJson());
       submit(data);
     }
