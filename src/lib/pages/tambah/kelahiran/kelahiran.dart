@@ -103,10 +103,12 @@ class KelahiranPages extends StatelessWidget {
                                     breed.data?.maleName ?? 'Inseminasi Buatan',
                                     breed.data?.maleId ??
                                         breed.data!.strowNumber!) +
-                                _item('Jumlah Kawin/ IB Hingga Bunting',
-                                    '${breed.data?.sc} kali', '') +
                                 _item(
-                                    'SC', (breed.data?.sc ?? 0).toString(), ''),
+                                    'SC',
+                                    breed.data?.sc != 0
+                                        ? breed.data!.sc.toString()
+                                        : '-',
+                                    ''),
                           );
                         }),
                   ),
@@ -217,54 +219,50 @@ class KelahiranPages extends StatelessWidget {
           child: StreamBuilder<BreedingModel?>(
               stream: state.breedModelStream,
               builder: (context, breed) {
-                return InkWell(
-                  onTap: (breed.data?.pregnantState ?? false)
-                      ? () async {
-                          var res = await Get.toNamed('/tambah-kelahiran',
-                              arguments: TambahKelahiranArguments(breed.data!));
-                          if (res != null && res) {
-                            state.init();
-                          }
-                        }
-                      : () {
-                          Get.snackbar(
-                            'Info',
-                            'Sapi Tidak Bunting',
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
-                        },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Container(
-                      height: 45,
-                      width: double.infinity,
-                      padding: EdgeInsets.all(12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Belum Ada Data Kelahiran',
-                            style: kText12Style.copyWith(
-                              color: Colors.black54,
+                if (breed.data?.pregnantState ?? false) {
+                  return InkWell(
+                    onTap: () async {
+                      var res = await Get.toNamed('/tambah-kelahiran',
+                          arguments: TambahKelahiranArguments(breed.data!));
+                      if (res != null && res) {
+                        state.init();
+                      }
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Container(
+                        height: 45,
+                        width: double.infinity,
+                        padding: EdgeInsets.all(12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Belum Ada Data Kelahiran',
+                              style: kText12Style.copyWith(
+                                color: Colors.black54,
+                              ),
                             ),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Clr.yellowPrimary,
-                            radius: 10,
-                            child: Icon(
-                              FontAwesome5.plus,
-                              color: Colors.white,
-                              size: 10,
-                            ),
-                          )
-                        ],
+                            CircleAvatar(
+                              backgroundColor: Clr.yellowPrimary,
+                              radius: 10,
+                              child: Icon(
+                                FontAwesome5.plus,
+                                color: Colors.white,
+                                size: 10,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return SizedBox();
+                }
               }),
         );
       },
@@ -294,30 +292,25 @@ class KelahiranPages extends StatelessWidget {
             bottomNavigationBar: StreamBuilder<BreedingModel?>(
                 stream: state.breedModelStream,
                 builder: (context, breed) {
-                  return ElevatedButton(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                        Size(double.infinity, 60),
+                  if ((breed.data?.pregnantState ?? false)) {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                          Size(double.infinity, 60),
+                        ),
                       ),
-                    ),
-                    onPressed: (breed.data?.pregnantState ?? false)
-                        ? () async {
-                            var res = await Get.toNamed('/tambah-kelahiran',
-                                arguments:
-                                    TambahKelahiranArguments(breed.data!));
-                            if (res != null && res) {
-                              state.init();
-                            }
-                          }
-                        : () {
-                            Get.snackbar(
-                              'Info',
-                              'Sapi Tidak Bunting',
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
-                          },
-                    child: Text('Tambah Kelahiran'),
-                  );
+                      onPressed: () async {
+                        var res = await Get.toNamed('/tambah-kelahiran',
+                            arguments: TambahKelahiranArguments(breed.data!));
+                        if (res != null && res) {
+                          state.init();
+                        }
+                      },
+                      child: Text('Tambah Kelahiran'),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
                 }),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
