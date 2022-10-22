@@ -60,7 +60,7 @@ class TambahKelahiranController extends GetxController {
     var uuid = Uuid();
 
     var data = BirthModel();
-    data.id = uuid.v5(Uuid.NAMESPACE_URL, args.breedData.id);
+    data.id = uuid.v5(Uuid.NAMESPACE_URL, (args.breedData.id! + uuid.v1()));
     data.numberOfBirth = int.tryParse(kelahiranKe.value.text);
     data.birthType = _selectedJenisKelahiran.value;
     data.birthWeight = beratLahir.value.text;

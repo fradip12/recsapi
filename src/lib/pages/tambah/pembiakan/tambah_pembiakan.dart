@@ -144,7 +144,10 @@ class TambahPembiakanPages extends StatelessWidget {
                                             border:
                                                 Border.all(color: Colors.grey)),
                                         child: DropdownButton<CowModel>(
-                                          hint: Text('Pilih Pejantan'),
+                                          hint: Text(
+                                              (listPejantan.data?.isNotEmpty ?? false)
+                                                  ? 'Pilih Pejantan'
+                                                  : 'Pejantan Tidak ditemukan'),
                                           isExpanded: true,
                                           underline: SizedBox(),
                                           value: snapshot.data,
@@ -182,18 +185,6 @@ class TambahPembiakanPages extends StatelessWidget {
                         selectedIndex: state.buntingState.value,
                         onTap: state.switchBuntingState,
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    FormLabel(
-                      isRequired: true,
-                      label: 'Jumlah Kawin/IB hingga bunting',
-                    ),
-                    TextField(
-                      controller: state.jumlahKawin.value,
-                      hintText: 'Jumlah Kawin/IB hingga bunting',
-                      keyboardType: TextInputType.phone,
                     ),
                     SizedBox(
                       height: 16,

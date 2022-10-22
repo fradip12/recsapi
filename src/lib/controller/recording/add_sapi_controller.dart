@@ -88,7 +88,8 @@ class AddSapiController extends GetxController {
       //Validate first
       var data = CowModel()
         ..name = usernameController.value.text
-        ..id = uuid.v5(Uuid.NAMESPACE_URL, usernameController.value.text)
+        ..id = uuid.v5(
+            Uuid.NAMESPACE_URL, (usernameController.value.text + uuid.v1()))
         ..uniqueId = codeController.value.text
         ..breed = bangsaController.value.text
         ..gender = selectedGender.value == 0 ? 0 : 1

@@ -78,23 +78,42 @@ class PembiakanDetail extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            (breed?.maleName ?? '-').capitalizeFirst!,
-                            style: kText16StyleBold.copyWith(
-                              color: Colors.black87,
+                      if (breed?.maleName != null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              (breed?.maleName ?? '-').capitalizeFirst!,
+                              style: kText16StyleBold.copyWith(
+                                color: Colors.black87,
+                              ),
                             ),
-                          ),
-                          Text(
-                            breed?.maleId ?? '-',
-                            style: kText16StyleBold.copyWith(
-                              color: Colors.black87,
+                            Text(
+                              breed?.maleId ?? '-',
+                              style: kText16StyleBold.copyWith(
+                                color: Colors.black87,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        )
+                      else
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Strow Number',
+                              style: kText14Style.copyWith(
+                                color: Colors.black87,
+                              ),
+                            ),
+                            Text(
+                              breed?.strowNumber ?? '-',
+                              style: kText16StyleBold.copyWith(
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        )
                     ],
                   ),
                 ],
@@ -131,7 +150,7 @@ class PembiakanDetail extends StatelessWidget {
               ),
             ),
             onPressed: () async {
-              var res = await  Get.toNamed('/tambah-pembiakan-item');
+              var res = await Get.toNamed('/tambah-pembiakan-item');
               Logger().w(res);
               state.init();
             },

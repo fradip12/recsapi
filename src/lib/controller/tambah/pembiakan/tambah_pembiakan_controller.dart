@@ -32,7 +32,6 @@ class TambahPembiakanController extends GetxController {
   RxList<int> listSC = [1, 2, 3, 4].obs;
 
   final Rx<TextEditingController> strowController = TextEditingController().obs;
-  final Rx<TextEditingController> jumlahKawin = TextEditingController().obs;
   final Rx<TextEditingController> idPembiakan = TextEditingController().obs;
 
   final _cowModel = BehaviorSubject<CowModel?>.seeded(null);
@@ -86,11 +85,11 @@ class TambahPembiakanController extends GetxController {
         breeding.cowId = _cowModel.value!.id;
         breeding.id = uuid.v5(
           Uuid.NAMESPACE_URL,
-          _cowModel.value!.id,
+          (_cowModel.value!.id! + uuid.v1()),
         );
         breeding.pregnantState = buntingState.value == 1 ? true : false;
         breeding.sc = selectedSC.value;
-        if (_selectedPejantan.value != null) {
+        if (_selectedPejantan.hasValue && _selectedPejantan.value != null) {
           breeding.maleId = _selectedPejantan.value!.uniqueId;
           breeding.maleName = _selectedPejantan.value!.name;
         }
