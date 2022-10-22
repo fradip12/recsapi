@@ -93,7 +93,7 @@ class TambahPembiakanPages extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
                                 isNotBlank(state.dateTime.value)
-                                    ? CustomDateFormat.dateDMYHMS.format(
+                                    ? CustomDateFormat.dateYMD.format(
                                         DateTime.parse(state.dateTime.value!))
                                     : 'Pilih Tanggal',
                                 style: TextStyle(color: Colors.blue),
