@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:src/common/style/text_style.dart';
 
 /// TextField wraps a material text field with streams that can be used for
 /// state management. The stream is used to set the current value, and also to
@@ -127,8 +128,13 @@ class _TextFieldState extends State<TextField> {
             ? TextInputAction.next
             : TextInputAction.done,
         decoration: InputDecoration(
-          hintText: widget.hintText,
-        ),
+            hintText: widget.hintText,
+            suffixIcon: IconButton(
+                icon: Text(
+                  widget.suffixText ?? '',
+                  style: kText12Style.copyWith(color: Colors.black54),
+                ),
+                onPressed: () {})),
         onChanged: (_) {
           _formKey.currentState?.validate();
         },

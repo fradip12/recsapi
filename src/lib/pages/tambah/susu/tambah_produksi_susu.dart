@@ -95,6 +95,7 @@ class TambahProduksiSusuPages extends StatelessWidget {
                     hintText: 'Produksi Susu Pagi',
                     keyboardType: TextInputType.phone,
                     enabled: true,
+                    suffixText: 'liter',
                   ),
                   SizedBox(
                     height: 16,
@@ -108,6 +109,7 @@ class TambahProduksiSusuPages extends StatelessWidget {
                     hintText: 'Produksi Susu Sore',
                     keyboardType: TextInputType.phone,
                     enabled: true,
+                    suffixText: 'liter',
                   ),
                   SizedBox(
                     height: 16,

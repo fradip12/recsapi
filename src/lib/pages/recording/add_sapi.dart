@@ -231,7 +231,7 @@ class _AddSapiState extends State<AddSapi> {
           TextField(
             controller: controller.bobotLahirController.value,
             hintText: 'Bobot Lahir',
-            suffix: Text('Kg'),
+            suffixText: 'Kg',
             keyboardType: TextInputType.phone,
           ),
           SizedBox(height: Spacing.kSpacingHeight),
@@ -249,6 +249,7 @@ class _AddSapiState extends State<AddSapi> {
             controller: controller.weight4MController.value,
             keyboardType: TextInputType.phone,
             hintText: 'Bobot Saat Umur 4 bulan',
+            suffixText: 'Kg',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
           //
@@ -260,6 +261,7 @@ class _AddSapiState extends State<AddSapi> {
             controller: controller.weight1YController.value,
             keyboardType: TextInputType.phone,
             hintText: 'Bobot Saat Umur 1 tahun',
+            suffixText: 'Kg',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
           //
@@ -271,6 +273,7 @@ class _AddSapiState extends State<AddSapi> {
             controller: controller.ld1YController.value,
             keyboardType: TextInputType.phone,
             hintText: 'Lingkar Dada saat umur 1 tahun',
+            suffixText: 'Cm',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
           //
@@ -282,6 +285,7 @@ class _AddSapiState extends State<AddSapi> {
             controller: controller.pb1YController.value,
             keyboardType: TextInputType.phone,
             hintText: 'Panjang Badan Saat Umur 1 tahun',
+            suffixText: 'Cm',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
           //
@@ -293,6 +297,7 @@ class _AddSapiState extends State<AddSapi> {
             controller: controller.tp1YsController.value,
             keyboardType: TextInputType.phone,
             hintText: 'Tinggi Pundak Saat Umur 1 tahun',
+            suffixText: 'Cm',
           ),
           SizedBox(height: Spacing.kSpacingHeight),
         ],
