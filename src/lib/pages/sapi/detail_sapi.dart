@@ -68,9 +68,7 @@ class DetailSapi extends StatelessWidget {
             body(
               'Pejantan',
               e.parentM ?? '-',
-              onTap: () {
-                print('Navigate to ${e.parentM}');
-              },
+              onTap: () {},
             ),
             body(
                 'Tanggal Lahir',
@@ -102,14 +100,23 @@ class DetailSapi extends StatelessWidget {
               style: kText20StyleBold.copyWith(color: Colors.black),
             ),
             Divider(),
-            body('Bobot Saat umur 4 bulan', (e.weight4Mo  ?? '-').toString()),
-            body('Bobot Saat umur 1 tahun', (e.weight1Yo  ?? '-').toString()),
-            body('Lingkar Dada saat umur 1 tahun',
-                e.chestCircumference1Yo.toString()), // Belum ada di database
-            body('Panjang Badan saat umur 1 tahun',
-                e.bodyLength1Yo.toString()), // Belum ada di database
-            body('Tinggi Pundak saat umur 1 tahun',
-                e.gumbaHeight1Yo.toString()), // Belum ada di database
+            body('Bobot Saat umur 4 bulan', (e.weight4Mo ?? '-').toString()),
+            body('Bobot Saat umur 1 tahun', (e.weight1Yo ?? '-').toString()),
+            body(
+                'Lingkar Dada saat umur 1 tahun',
+                e.chestCircumference1Yo != null
+                    ? (e.chestCircumference1Yo.toString() + ' Kg')
+                    : '-'),
+            body(
+                'Panjang Badan saat umur 1 tahun',
+                e.bodyLength1Yo != null
+                    ? (e.bodyLength1Yo.toString() + ' Kg')
+                    : '-'),
+            body(
+                'Tinggi Pundak saat umur 1 tahun',
+                e.gumbaHeight1Yo != null
+                    ? (e.gumbaHeight1Yo.toString() + ' Kg')
+                    : '-'),
           ],
         ),
       ),
