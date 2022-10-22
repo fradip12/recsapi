@@ -80,6 +80,43 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           FormLabel(
             isRequired: true,
+            label: 'Induk',
+          ),
+          //---
+          StreamBuilder<List<CowModel>?>(
+              stream: controller.listIndukOut,
+              builder: (context, listData) {
+                return StreamBuilder<CowModel?>(
+                    stream: controller.selectedIndukOut,
+                    builder: (context, selected) {
+                      return Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey)),
+                        child: DropdownButton<CowModel>(
+                          hint: Text('Pilih Induk'),
+                          isExpanded: true,
+                          value: selected.data,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          underline: SizedBox(),
+                          items: listData.data?.map((CowModel items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items.name ?? '-'),
+                            );
+                          }).toList(),
+                          onChanged: (CowModel? newValue) {
+                            controller.selectedIndukIn.add(newValue);
+                          },
+                        ),
+                      );
+                    });
+              }),
+          SizedBox(height: Spacing.kSpacingHeight),
+          FormLabel(
+            isRequired: true,
             label: 'Hasil Kawin dengan',
           ),
           ChipChoices(

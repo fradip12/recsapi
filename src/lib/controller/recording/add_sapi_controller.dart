@@ -40,9 +40,17 @@ class AddSapiController extends GetxController {
   Sink<List<CowModel>?> get listPejantanIn => _listPejantan.sink;
   Stream<List<CowModel>?> get listPejantanOut => _listPejantan.stream;
 
+  final _listInduk = BehaviorSubject<List<CowModel>?>();
+  Sink<List<CowModel>?> get listIndukIn => _listInduk.sink;
+  Stream<List<CowModel>?> get listIndukOut => _listInduk.stream;
+
   final _selectedPejantan = BehaviorSubject<CowModel?>();
   Sink<CowModel?> get selectedPejantanIn => _selectedPejantan.sink;
   Stream<CowModel?> get selectedPejantanOut => _selectedPejantan.stream;
+
+  final _selectedInduk = BehaviorSubject<CowModel?>();
+  Sink<CowModel?> get selectedIndukIn => _selectedInduk.sink;
+  Stream<CowModel?> get selectedIndukOut => _selectedInduk.stream;
 
   Rx<String> dateTime = ''.obs;
 
@@ -52,6 +60,7 @@ class AddSapiController extends GetxController {
 
   void init() async {
     getListPejantan();
+    getListInduk();
   }
 
   void _showWarning() {
@@ -68,6 +77,7 @@ class AddSapiController extends GetxController {
     return isNotBlank(codeController.value.text) &&
         isNotBlank(usernameController.value.text) &&
         dateTime.value != '' &&
+        (_selectedInduk.hasValue && _selectedInduk.value != null) &&
         ((_selectedPejantan.hasValue && _selectedPejantan.value != null) ||
             isNotBlank(strowController.value.text));
   }
@@ -102,6 +112,7 @@ class AddSapiController extends GetxController {
         ..chestCircumference1Yo = double.tryParse(ld1YController.value.text)
         ..bodyLength1Yo = double.tryParse(pb1YController.value.text)
         ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text)
+        ..parentF = _selectedInduk.value?.uniqueId
         ..birthdate = dateTime.value;
 
       if (_selectedPejantan.hasValue &&
@@ -159,5 +170,11 @@ class AddSapiController extends GetxController {
       }
     }
     _listPejantan.add(_list);
+  }
+
+  Future<void> getListInduk() async {
+    var res = await FireStore().getSapiF(_mainController.user.value);
+
+    _listInduk.add(res);
   }
 }
