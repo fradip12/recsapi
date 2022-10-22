@@ -43,7 +43,7 @@ class PembiakanDetail extends StatelessWidget {
                   ),
                   Text(
                     isNotBlank(breed?.breedDate)
-                        ? CustomDateFormat.dateDMYHMS
+                        ? CustomDateFormat.dateYMD
                             .format(DateTime.parse(breed!.breedDate!))
                         : '-',
                     style: kText12StyleBold.copyWith(
