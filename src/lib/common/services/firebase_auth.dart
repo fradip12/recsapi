@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:src/common/model/birth_model.dart';
 import 'package:src/common/model/milk_model.dart';
 import 'package:src/common/model/sapi_model.dart';
+import 'package:src/common/model/summary_model.dart';
 
 import '../model/breeding_model.dart';
 import '../model/user_model.dart';
@@ -85,6 +86,58 @@ class FireStore {
         }
       },
     );
+  }
+
+  // Dashboard Sectuibs
+  Future<SummaryModel> getSummary(User _user) async {
+    var _data = SummaryModel();
+    try {
+      await _usersCollection.doc(_user.uid).collection('sapi').get().then(
+        (value) {
+          // Total Sapi
+          _data.cowCount = value.docs.length;
+          // Induk Betina & Anak Betina
+          value.docs
+              .map((e) => CowModel.fromJson(e.data()))
+              .where((element) => element.gender == 0)
+              .forEach((element) {
+            DateTime.now()
+                        .difference(DateTime.parse(element.birthdate!))
+                        .inDays >
+                    243
+                ? _data.indukCount = (_data.indukCount ?? 0) + 1
+                : _data.anakBetinaCount = (_data.anakBetinaCount ?? 0) + 1;
+          });
+          // Induk Jantan & Anak Jantan
+          value.docs
+              .map((e) => CowModel.fromJson(e.data()))
+              .where((element) => element.gender == 1)
+              .forEach((element) {
+            DateTime.now()
+                        .difference(DateTime.parse(element.birthdate!))
+                        .inDays >
+                    243
+                ? _data.jantanCount = (_data.jantanCount ?? 0) + 1
+                : _data.anakJantanCount = (_data.anakJantanCount ?? 0) + 1;
+          });
+        },
+      );
+      await _usersCollection.doc(_user.uid).collection('tb_milk').get().then(
+        (value) {
+          return value.docs
+              .map((e) => MilkModel.fromJson(e.data()))
+              .forEach((element) {
+            _data.milkCount = (_data.milkCount ?? 0) +
+                (element.morningMilk ?? 0) +
+                (element.afternoonMilk ?? 0);
+          });
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+    Logger().wtf(_data.indukCount);
+    return _data;
   }
 
   ///Cow Section

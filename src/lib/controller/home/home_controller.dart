@@ -1,9 +1,14 @@
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:src/common/arguments/arguments.dart';
+import 'package:src/common/model/summary_model.dart';
+import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/controller/main_controller.dart';
 
 class HomeController extends GetxController {
   final MainController mainController = Get.find<MainController>();
+  final _summary = BehaviorSubject<SummaryModel?>.seeded(null);
+  Stream<SummaryModel?> get summary => _summary.stream;
   final List<String> myProducts = [
     'Induk',
     'Pejantan',
@@ -38,10 +43,18 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+    refreshPages();
+  }
+
+  Future<void> refreshPages() async {
+    getSummary();
   }
 
   /// Function
-
+  ///
+  Future<void> getSummary() async {
+    var res = await FireStore().getSummary(mainController.user.value);
+    _summary.add(res);
+  }
 }

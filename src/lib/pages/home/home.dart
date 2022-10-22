@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:src/common/color/colors.dart';
 import 'package:src/common/color/spacer.dart';
+import 'package:src/common/model/summary_model.dart';
 import 'package:src/common/widget/home_menu_card.dart';
 import 'package:src/common/widget/home_profile_area.dart';
 import 'package:src/controller/home/home_controller.dart';
@@ -40,40 +41,68 @@ class Home extends StatelessWidget {
                     width: Spacing.getWidth(context),
                     padding: const EdgeInsets.all(20),
                     color: Clr.bluePrimary,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            summaryOf(controller.total[0], "20"),
-                            summaryOf(controller.total[1], "33 L"),
-                          ],
-                        ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 300,
-                                    childAspectRatio: 3,
-                                    crossAxisSpacing: 20),
-                            itemCount: 2,
-                            itemBuilder: (BuildContext ctx, index) {
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                    child: StreamBuilder<SummaryModel?>(
+                        stream: controller.summary,
+                        builder: (context, snapshot) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  summaryOf(controller.myProducts[index], "5"),
                                   summaryOf(
-                                      controller.myProducts[index + 1], "5"),
+                                      controller.total[0],
+                                      (snapshot.data!.cowCount ?? 0)
+                                          .toString()),
+                                  summaryOf(
+                                      controller.total[1],
+                                      (snapshot.data!.milkCount ?? 0)
+                                              .toString() +
+                                          ' L'),
                                 ],
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                              ),
+                              SizedBox(width: 20),
+                              Expanded(
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 300,
+                                          childAspectRatio: 3,
+                                          crossAxisSpacing: 20),
+                                  itemCount: 2,
+                                  itemBuilder: (BuildContext ctx, index) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        summaryOf(
+                                            controller.myProducts[index],
+                                            (index == 0
+                                                    ? (snapshot
+                                                            .data!.indukCount ??
+                                                        0)
+                                                    : (snapshot.data!
+                                                            .jantanCount ??
+                                                        0))
+                                                .toString()),
+                                        summaryOf(
+                                            controller.myProducts[index + 2],
+                                            (index == 0
+                                                    ? (snapshot.data!
+                                                            .anakJantanCount ??
+                                                        0)
+                                                    : (snapshot.data!
+                                                            .anakBetinaCount ??
+                                                        0))
+                                                .toString()),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
                   ),
                 ),
                 SizedBox(height: Spacing.kSpacingHeight),
@@ -96,7 +125,6 @@ class Home extends StatelessWidget {
                       );
                     },
                   ),
-                
                 ),
               ],
             ),

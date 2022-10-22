@@ -5,6 +5,7 @@ import 'package:rxdart/subjects.dart';
 import 'package:src/common/helper/util.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
+import 'package:src/controller/home/home_controller.dart';
 import 'package:uuid/uuid.dart';
 
 import '../main_controller.dart';
@@ -142,8 +143,7 @@ class AddSapiController extends GetxController {
       Get.back();
       Get.snackbar('Sukses', 'Berhasil Menambahkan Data',
           snackPosition: SnackPosition.BOTTOM);
-      // Check
-      // Controller hilang disini
+      Get.find<HomeController>().refreshPages();
     } else {
       Get.snackbar('Error', 'Gagal Menambahkan Data',
           snackPosition: SnackPosition.BOTTOM);
