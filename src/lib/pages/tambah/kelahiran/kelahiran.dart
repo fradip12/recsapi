@@ -19,7 +19,7 @@ class KelahiranPages extends StatelessWidget {
     return [
       Text(
         title,
-        style: kText10StyleBold.copyWith(color: Colors.black),
+        style: kText12Style.copyWith(color: Colors.black,fontSize: 10),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +28,7 @@ class KelahiranPages extends StatelessWidget {
             flex: 1,
             child: Text(
               value,
-              style: kText20StyleBold.copyWith(
+              style: kText16Style.copyWith(
                 color: Colors.black,
               ),
             ),
@@ -37,7 +37,7 @@ class KelahiranPages extends StatelessWidget {
             flex: 1,
             child: Text(
               idValue,
-              style: kText20StyleBold.copyWith(
+              style: kText16Style.copyWith(
                 color: Colors.black54,
               ),
             ),
@@ -52,7 +52,7 @@ class KelahiranPages extends StatelessWidget {
     return [
       Text(
         title,
-        style: kText10StyleBold.copyWith(color: Colors.black),
+        style: kText10Style.copyWith(color: Colors.black),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +61,7 @@ class KelahiranPages extends StatelessWidget {
             flex: 1,
             child: Text(
               value,
-              style: kText20StyleBold.copyWith(
+              style: kText16Style.copyWith(
                 color: Colors.black,
               ),
             ),
