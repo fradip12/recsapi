@@ -88,7 +88,7 @@ class TambahPembiakanController extends GetxController {
           (_cowModel.value!.id! + uuid.v1()),
         );
         breeding.pregnantState = buntingState.value == 1 ? true : false;
-        breeding.sc = selectedSC.value;
+        breeding.sc = buntingState.value == 0 ? 0 : selectedSC.value;
         if (_selectedPejantan.hasValue && _selectedPejantan.value != null) {
           breeding.maleId = _selectedPejantan.value!.uniqueId;
           breeding.maleName = _selectedPejantan.value!.name;

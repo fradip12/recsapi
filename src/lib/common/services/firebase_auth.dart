@@ -175,7 +175,6 @@ class FireStore {
     var res =
         await _usersCollection.doc(_user.uid).collection('tb_birth').get().then(
       (value) {
-        print(breedId);
         Logger().wtf(value.docs.first.data());
         return value.docs
             .map((e) => BirthModel.fromJson(e.data()))
@@ -195,6 +194,24 @@ class FireStore {
         .add(data.toJson());
     Logger().wtf(res);
     return res;
+  }
+
+  Future<bool?> updateBirth(User _user, BirthModel data) async {
+    try {
+      await _usersCollection
+          .doc(_user.uid)
+          .collection('tb_birth')
+          .where('id', isEqualTo: data.id)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          value.docs.first.reference.update(data.toJson());
+        }
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   //Milk Sections

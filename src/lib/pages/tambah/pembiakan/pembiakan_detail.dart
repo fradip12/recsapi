@@ -36,7 +36,7 @@ class PembiakanDetail extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Kawin Ke : ' + (breed?.sc ?? 0).toString(),
+                    'Kawin Ke : ${breed?.sc == 0 ? '-' : breed!.sc.toString()} ',
                     style: kText12StyleBold.copyWith(
                       color: Colors.black87,
                     ),

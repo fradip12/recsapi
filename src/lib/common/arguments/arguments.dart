@@ -1,3 +1,4 @@
+import 'package:src/common/model/birth_model.dart';
 import 'package:src/common/model/breeding_model.dart';
 import 'package:src/common/model/milk_model.dart';
 import 'package:src/common/model/sapi_model.dart';
@@ -30,8 +31,8 @@ class KelahiranPagesArguments {
 
 class TambahKelahiranArguments {
   final BreedingModel breedData;
-
-  TambahKelahiranArguments(this.breedData);
+  final BirthModel? editData;
+  TambahKelahiranArguments(this.breedData, {this.editData});
 }
 
 class ProduksiSusuArguments {

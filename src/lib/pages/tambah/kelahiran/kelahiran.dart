@@ -100,8 +100,9 @@ class KelahiranPages extends StatelessWidget {
                                     cow.data?.uniqueId ?? '-') +
                                 _item(
                                     'Di kawinkan dengan',
-                                    breed.data?.maleName ?? '-',
-                                    breed.data?.maleId ?? '-') +
+                                    breed.data?.maleName ?? 'Inseminasi Buatan',
+                                    breed.data?.maleId ??
+                                        breed.data!.strowNumber!) +
                                 _item('Jumlah Kawin/ IB Hingga Bunting',
                                     '${breed.data?.sc} kali', '') +
                                 _item(
@@ -109,7 +110,6 @@ class KelahiranPages extends StatelessWidget {
                           );
                         }),
                   ),
-                 
                 ],
               );
             }),
@@ -185,9 +185,22 @@ class KelahiranPages extends StatelessWidget {
                                   ),
                                   Flexible(
                                     flex: 1,
-                                    child: Icon(
-                                      FontAwesome5.edit,
-                                      color: Clr.yellowPrimary,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        var res = await Get.toNamed(
+                                          '/tambah-kelahiran',
+                                          arguments: TambahKelahiranArguments(
+                                              breed.data!,
+                                              editData: snapshot.data![i]),
+                                        );
+                                        if (res != null && res) {
+                                          state.init();
+                                        }
+                                      },
+                                      child: Icon(
+                                        FontAwesome5.edit,
+                                        color: Clr.yellowPrimary,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -205,13 +218,21 @@ class KelahiranPages extends StatelessWidget {
               stream: state.breedModelStream,
               builder: (context, breed) {
                 return InkWell(
-                  onTap: () async {
-                    var res = await Get.toNamed('/tambah-kelahiran',
-                        arguments: TambahKelahiranArguments(breed.data!));
-                    if (res != null && res) {
-                      state.init();
-                    }
-                  },
+                  onTap: (breed.data?.pregnantState ?? false)
+                      ? () async {
+                          var res = await Get.toNamed('/tambah-kelahiran',
+                              arguments: TambahKelahiranArguments(breed.data!));
+                          if (res != null && res) {
+                            state.init();
+                          }
+                        }
+                      : () {
+                          Get.snackbar(
+                            'Info',
+                            'Sapi Tidak Bunting',
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
+                        },
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -257,13 +278,15 @@ class KelahiranPages extends StatelessWidget {
         builder: (KelahiranController state) {
           return Scaffold(
             appBar: AppBar(
-              title: StreamBuilder<CowModel?>(
-                  stream: state.cowModelStream,
-                  builder: (context, snapshot) {
+              title: StreamBuilder<BreedingModel?>(
+                  stream: state.breedModelStream,
+                  builder: (context, breed) {
                     return Column(
                       children: [
-                        Text(snapshot.data?.name ?? '-'),
-                        Text(snapshot.data?.uniqueId ?? '-')
+                        Text(breed.data?.breedDate?.isNotEmpty ?? false
+                            ? CustomDateFormat.dateDMY
+                                .format(DateTime.parse(breed.data!.breedDate!))
+                            : '-'),
                       ],
                     );
                   }),
@@ -277,13 +300,22 @@ class KelahiranPages extends StatelessWidget {
                         Size(double.infinity, 60),
                       ),
                     ),
-                    onPressed: () async {
-                      var res = await Get.toNamed('/tambah-kelahiran',
-                          arguments: TambahKelahiranArguments(breed.data!));
-                      if (res != null && res) {
-                        state.init();
-                      }
-                    },
+                    onPressed: (breed.data?.pregnantState ?? false)
+                        ? () async {
+                            var res = await Get.toNamed('/tambah-kelahiran',
+                                arguments:
+                                    TambahKelahiranArguments(breed.data!));
+                            if (res != null && res) {
+                              state.init();
+                            }
+                          }
+                        : () {
+                            Get.snackbar(
+                              'Info',
+                              'Sapi Tidak Bunting',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          },
                     child: Text('Tambah Kelahiran'),
                   );
                 }),

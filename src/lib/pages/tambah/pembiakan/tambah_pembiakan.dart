@@ -145,7 +145,8 @@ class TambahPembiakanPages extends StatelessWidget {
                                                 Border.all(color: Colors.grey)),
                                         child: DropdownButton<CowModel>(
                                           hint: Text(
-                                              (listPejantan.data?.isNotEmpty ?? false)
+                                              (listPejantan.data?.isNotEmpty ??
+                                                      false)
                                                   ? 'Pilih Pejantan'
                                                   : 'Pejantan Tidak ditemukan'),
                                           isExpanded: true,
@@ -189,34 +190,44 @@ class TambahPembiakanPages extends StatelessWidget {
                     SizedBox(
                       height: 16,
                     ),
-                    FormLabel(
-                      isRequired: true,
-                      label: 'SC',
-                    ),
                     Obx(
-                      () => Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.grey)),
-                        child: DropdownButton<int>(
-                          hint: Text('SC'),
-                          isExpanded: true,
-                          value: state.selectedSC.value,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          underline: SizedBox(),
-                          items: state.listSC.map((int items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (int? newValue) {
-                            state.selectedSC.value = newValue!;
-                          },
-                        ),
-                      ),
+                      () => state.buntingState.value == 1
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FormLabel(
+                                  isRequired: true,
+                                  label: 'SC',
+                                ),
+                                Obx(
+                                  () => Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 5),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: Colors.grey)),
+                                    child: DropdownButton<int>(
+                                      hint: Text('SC'),
+                                      isExpanded: true,
+                                      value: state.selectedSC.value,
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                      underline: SizedBox(),
+                                      items: state.listSC.map((int items) {
+                                        return DropdownMenuItem(
+                                          value: items,
+                                          child: Text(items.toString()),
+                                        );
+                                      }).toList(),
+                                      onChanged: (int? newValue) {
+                                        state.selectedSC.value = newValue!;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                     ),
                   ],
                 ),

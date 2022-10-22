@@ -48,37 +48,77 @@ class TambahKelahiranController extends GetxController {
   Rx<String?> dateTime = ''.obs;
 
   late TambahKelahiranArguments args;
+  late bool? isEdit;
+  final _isEdit = BehaviorSubject<bool?>.seeded(null);
+  Stream<bool?> get outIsEdit => _isEdit.stream;
 
   @override
   void onInit() {
-    print('initState: Tambah Kelahiran');
     super.onInit();
     args = Get.arguments as TambahKelahiranArguments;
+    _isEdit.add(args.editData != null);
+    if (_isEdit.value ?? false) {
+      kelahiranKe.value.text = args.editData!.numberOfBirth.toString();
+      beratLahir.value.text = args.editData!.birthWeight.toString();
+      _selectedKondisiKelahiran.add(_listKondisiKelahiran.value
+          .firstWhere((element) => element == args.editData!.condition));
+      _selectedProsesKelahiran.add(_listProsesKelahiran.value
+          .firstWhere((element) => element == args.editData!.process));
+      dateTime.value = args.editData!.birthdate;
+      _selectedJenisKelahiran.add(_listJenisKelahiran.value
+          .firstWhere((element) => element == args.editData!.birthType));
+    }
   }
 
   Future<void> simpanKelahiran() async {
-    var uuid = Uuid();
+    if (_isEdit.value ?? false) {
+      var data = BirthModel();
+      data.id = args.editData!.id;
+      data.numberOfBirth = int.tryParse(kelahiranKe.value.text);
+      data.birthType = _selectedJenisKelahiran.value;
+      data.birthWeight = beratLahir.value.text;
+      data.birthdate = dateTime.value;
+      data.breedingId = args.breedData.id;
+      data.condition = _selectedKondisiKelahiran.value;
+      data.process = _selectedProsesKelahiran.value;
 
-    var data = BirthModel();
-    data.id = uuid.v5(Uuid.NAMESPACE_URL, (args.breedData.id! + uuid.v1()));
-    data.numberOfBirth = int.tryParse(kelahiranKe.value.text);
-    data.birthType = _selectedJenisKelahiran.value;
-    data.birthWeight = beratLahir.value.text;
-    data.birthdate = dateTime.value;
-    data.breedingId = args.breedData.id;
-    data.condition = _selectedKondisiKelahiran.value;
-    data.process = _selectedProsesKelahiran.value;
-
-    Logger().wtf(data.toJson());
-    try {
-      var res = await FireStore().submitBirth(mainController.user.value, data);
-      if (res != null) {
-        Get.back(result: true);
-        Get.snackbar('Success', 'Berhasil Menambahkan Data');
+      try {
+        print(data.toJson());
+        var res =
+            await FireStore().updateBirth(mainController.user.value, data);
+        if (res != null) {
+          Get.back(result: true);
+          Get.snackbar('Success', 'Berhasil Mengubah Data');
+        }
+      } catch (e) {
+        Get.back(result: false);
+        Get.snackbar('Error', e.toString());
       }
-    } catch (e) {
-      Get.back(result: false);
-      Get.snackbar('Error', e.toString());
+    } else {
+      var uuid = Uuid();
+
+      var data = BirthModel();
+      data.id = uuid.v5(Uuid.NAMESPACE_URL, (args.breedData.id! + uuid.v1()));
+      data.numberOfBirth = int.tryParse(kelahiranKe.value.text);
+      data.birthType = _selectedJenisKelahiran.value;
+      data.birthWeight = beratLahir.value.text;
+      data.birthdate = dateTime.value;
+      data.breedingId = args.breedData.id;
+      data.condition = _selectedKondisiKelahiran.value;
+      data.process = _selectedProsesKelahiran.value;
+
+      Logger().wtf(data.toJson());
+      try {
+        var res =
+            await FireStore().submitBirth(mainController.user.value, data);
+        if (res != null) {
+          Get.back(result: true);
+          Get.snackbar('Success', 'Berhasil Menambahkan Data');
+        }
+      } catch (e) {
+        Get.back(result: false);
+        Get.snackbar('Error', e.toString());
+      }
     }
   }
 }
