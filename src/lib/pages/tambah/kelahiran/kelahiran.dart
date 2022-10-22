@@ -289,28 +289,36 @@ class KelahiranPages extends StatelessWidget {
                     );
                   }),
             ),
-            bottomNavigationBar: StreamBuilder<BreedingModel?>(
-                stream: state.breedModelStream,
-                builder: (context, breed) {
-                  if ((breed.data?.pregnantState ?? false)) {
-                    return ElevatedButton(
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                          Size(double.infinity, 60),
-                        ),
-                      ),
-                      onPressed: () async {
-                        var res = await Get.toNamed('/tambah-kelahiran',
-                            arguments: TambahKelahiranArguments(breed.data!));
-                        if (res != null && res) {
-                          state.init();
+            bottomNavigationBar: StreamBuilder<List<BirthModel>?>(
+                stream: state.birthModelStream,
+                builder: (context, birth) {
+                  return StreamBuilder<BreedingModel?>(
+                      stream: state.breedModelStream,
+                      builder: (context, breed) {
+                        if ((breed.data?.pregnantState ?? false)) {
+                          if ((birth.data?.isNotEmpty ?? false)) {
+                            return SizedBox();
+                          }
+                          return ElevatedButton(
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(double.infinity, 60),
+                              ),
+                            ),
+                            onPressed: () async {
+                              var res = await Get.toNamed('/tambah-kelahiran',
+                                  arguments:
+                                      TambahKelahiranArguments(breed.data!));
+                              if (res != null && res) {
+                                state.init();
+                              }
+                            },
+                            child: Text('Tambah Kelahiran'),
+                          );
+                        } else {
+                          return SizedBox();
                         }
-                      },
-                      child: Text('Tambah Kelahiran'),
-                    );
-                  } else {
-                    return SizedBox();
-                  }
+                      });
                 }),
             body: Padding(
               padding: const EdgeInsets.all(16.0),

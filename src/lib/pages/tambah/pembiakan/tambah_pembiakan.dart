@@ -57,6 +57,11 @@ class TambahPembiakanPages extends StatelessWidget {
                     ),
                     Obx(
                       () => TextButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                            EdgeInsets.zero,
+                          ),
+                        ),
                         onPressed: () {
                           DatePicker.showDatePicker(
                             context,
