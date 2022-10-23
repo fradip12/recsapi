@@ -6,6 +6,8 @@ import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/controller/main_controller.dart';
 
+import '../recording/add_sapi_controller.dart';
+
 class SapiSayaController extends GetxController {
   //Var
   final MainController _mainController = Get.find<MainController>();
@@ -33,7 +35,9 @@ class SapiSayaController extends GetxController {
   }
 
   Future<void> tambahSapi() async {
-    Get.toNamed('/add-sapi');
+    Get.toNamed(
+      '/add-sapi',
+    );
   }
 
   getSapiSaya() async {

@@ -151,6 +151,30 @@ class FireStore {
     return res;
   }
 
+  Future<bool> updateSapi(CowModel sapi, User _user) async {
+    // var res = await _usersCollection
+    //     .doc(_user.uid)
+    //     .collection('sapi')
+    //     .add(sapi.toJson());
+    // Logger().w(res);
+    // return res;
+    try {
+      await _usersCollection
+          .doc(_user.uid)
+          .collection('sapi')
+          .where('id', isEqualTo: sapi.id)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          value.docs.first.reference.update(sapi.toJson());
+        }
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<List<CowModel>> getSapi(User _user, {String? keywords}) async {
     return _usersCollection.doc(_user.uid).collection('sapi').get().then(
       (value) {

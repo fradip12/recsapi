@@ -10,6 +10,11 @@ import 'package:uuid/uuid.dart';
 
 import '../main_controller.dart';
 
+class AddSapiArguments {
+  final CowModel? editData;
+  AddSapiArguments({this.editData});
+}
+
 class AddSapiController extends GetxController {
   final List<String> stepper = ['Kelahiran', 'Tubuh', 'Catatan'].obs;
 
@@ -53,14 +58,46 @@ class AddSapiController extends GetxController {
   Stream<CowModel?> get selectedIndukOut => _selectedInduk.stream;
 
   Rx<String> dateTime = ''.obs;
-
   Rx<String?> message = ''.obs;
+
+  late AddSapiArguments? args;
+
+  final _isEdit = BehaviorSubject<bool?>();
+  Stream<bool?> get isEditOut => _isEdit.stream;
 
   //Function
 
   void init() async {
     getListPejantan();
     getListInduk();
+    if (Get.arguments != null && Get.arguments is AddSapiArguments) {
+      args = Get.arguments as AddSapiArguments;
+      _isEdit.add(args!.editData != null);
+    }
+    if (_isEdit.value ?? false) {
+      initEdit();
+    }
+  }
+
+  void initEdit() {
+    usernameController.value.text = args?.editData?.name ?? '';
+    codeController.value.text = args?.editData?.uniqueId ?? '';
+    bangsaController.value.text = args?.editData?.breed ?? '';
+    warnaController.value.text = args?.editData?.color ?? '';
+    bobotLahirController.value.text =
+        (args?.editData?.weightBirth ?? 0).toString();
+    strowController.value.text = args?.editData?.strowNumber ?? '';
+    weight4MController.value.text = (args?.editData?.weight4Mo ?? 0).toString();
+    weight1YController.value.text = (args?.editData?.weight1Yo ?? 0).toString();
+    ld1YController.value.text =
+        (args?.editData?.chestCircumference1Yo ?? 0).toString();
+    pb1YController.value.text = (args?.editData?.bodyLength1Yo ?? 0).toString();
+    tp1YsController.value.text =
+        (args?.editData?.gumbaHeight1Yo ?? 0).toString();
+    notesController.value.text = args?.editData?.notes ?? '';
+    dateTime.value = args?.editData?.birthdate ?? '';
+    selectedGender.value = args?.editData?.gender ?? 0;
+    hasilKawinDg.value = isNotBlank(args?.editData?.strowNumber) ? 1 : 0;
   }
 
   void _showWarning() {
@@ -99,8 +136,6 @@ class AddSapiController extends GetxController {
       //Validate first
       var data = CowModel()
         ..name = usernameController.value.text
-        ..id = uuid.v5(
-            Uuid.NAMESPACE_URL, (usernameController.value.text + uuid.v1()))
         ..uniqueId = codeController.value.text
         ..breed = bangsaController.value.text
         ..gender = selectedGender.value == 0 ? 0 : 1
@@ -113,11 +148,18 @@ class AddSapiController extends GetxController {
         ..bodyLength1Yo = double.tryParse(pb1YController.value.text)
         ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text)
         ..parentF = _selectedInduk.value?.uniqueId
+        ..notes = notesController.value.text
         ..birthdate = dateTime.value;
 
       if (_selectedPejantan.hasValue &&
           _selectedPejantan.value?.uniqueId != null) {
         data.parentM = _selectedPejantan.value?.uniqueId;
+      }
+      if (_isEdit.value ?? false) {
+        data.id = args!.editData!.id;
+      } else {
+        data.id = uuid.v5(
+            Uuid.NAMESPACE_URL, (usernameController.value.text + uuid.v1()));
       }
       Logger().w(data.toJson());
       submit(data);
@@ -148,16 +190,30 @@ class AddSapiController extends GetxController {
   }
 
   Future<void> submit(CowModel data) async {
-    var res = await FireStore().tambahSapi(data, _mainController.user.value);
-    if (res != null) {
-      Get.back();
-      Get.back();
-      Get.snackbar('Sukses', 'Berhasil Menambahkan Data',
-          snackPosition: SnackPosition.BOTTOM);
-      Get.find<HomeController>().refreshPages();
+    if (_isEdit.value ?? false) {
+      var res = await FireStore().updateSapi(data, _mainController.user.value);
+      if (res == true) {
+        Get.back(result: true);
+        Get.back(result: true);
+        Get.snackbar('Sukses', 'Berhasil Mengubah Data',
+            snackPosition: SnackPosition.BOTTOM);
+        Get.find<HomeController>().refreshPages();
+      } else {
+        Get.snackbar('Error', 'Gagal Mengubah Data',
+            snackPosition: SnackPosition.BOTTOM);
+      }
     } else {
-      Get.snackbar('Error', 'Gagal Menambahkan Data',
-          snackPosition: SnackPosition.BOTTOM);
+      var res = await FireStore().tambahSapi(data, _mainController.user.value);
+      if (res != null) {
+        Get.back();
+        Get.back();
+        Get.snackbar('Sukses', 'Berhasil Menambahkan Data',
+            snackPosition: SnackPosition.BOTTOM);
+        Get.find<HomeController>().refreshPages();
+      } else {
+        Get.snackbar('Error', 'Gagal Menambahkan Data',
+            snackPosition: SnackPosition.BOTTOM);
+      }
     }
   }
 
@@ -170,11 +226,22 @@ class AddSapiController extends GetxController {
       }
     }
     _listPejantan.add(_list);
+    if (_isEdit.value ?? false) {
+      if (isNotBlank(args?.editData?.parentM)) {
+        _selectedPejantan.add(_list.firstWhere(
+            (element) => element.uniqueId == args?.editData?.parentM));
+      }
+    }
   }
 
   Future<void> getListInduk() async {
     var res = await FireStore().getSapiF(_mainController.user.value);
-
     _listInduk.add(res);
+    if (_isEdit.value ?? false) {
+      if (isNotBlank(args?.editData?.parentF) && _listInduk.hasValue) {
+        _selectedInduk.add(_listInduk.value?.firstWhere(
+            (element) => element.uniqueId == args?.editData?.parentF));
+      }
+    }
   }
 }

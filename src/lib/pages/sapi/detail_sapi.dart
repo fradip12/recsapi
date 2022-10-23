@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/helper/gender.dart';
 import 'package:src/common/style/text_style.dart';
+import 'package:src/common/widget/sapi_saya_widget.dart';
+import 'package:src/controller/recording/add_sapi_controller.dart';
+import 'package:src/controller/sapi/sapi_saya_controller.dart';
 
 import '../../common/model/sapi_model.dart';
 import '../../controller/sapi/detail_sapi_controller.dart';
@@ -163,9 +166,19 @@ class DetailSapi extends StatelessWidget {
         return Scaffold(
             appBar: AppBar(
               title: Text((data.name ?? '-').capitalizeFirst!),
-              actions: const [
+              actions: [
                 IconButton(
-                  onPressed: null,
+                  onPressed: () async {
+                    var res = await Get.toNamed(
+                      '/add-sapi',
+                      arguments: AddSapiArguments(editData: data),
+                    );
+                    print('res is $res');
+                    if (res != null) {
+                      Get.find<SapiSayaController>().init();
+                    }
+
+                  },
                   icon: Icon(
                     Icons.edit_sharp,
                     color: Colors.white,

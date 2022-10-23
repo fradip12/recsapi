@@ -339,7 +339,13 @@ class _AddSapiState extends State<AddSapi> {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('Tambah Sapi'),
+                  title: StreamBuilder<bool?>(
+                      stream: controller.isEditOut,
+                      builder: (context, snapshot) {
+                        return Text((snapshot.data ?? false)
+                            ? 'Edit Sapi'
+                            : 'Tambah Sapi');
+                      }),
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
