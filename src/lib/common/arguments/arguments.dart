@@ -35,6 +35,11 @@ class TambahKelahiranArguments {
   TambahKelahiranArguments(this.breedData, {this.editData});
 }
 
+class TambahPembiakanArguments {
+  final BreedingModel? editData;
+  TambahPembiakanArguments({this.editData});
+}
+
 class ProduksiSusuArguments {
   final CowModel cowData;
 

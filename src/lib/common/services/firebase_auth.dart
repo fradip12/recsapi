@@ -247,6 +247,24 @@ class FireStore {
     return res;
   }
 
+  Future<bool?> updateBreeding(User _user, BreedingModel data) async {
+    try {
+      await _usersCollection
+          .doc(_user.uid)
+          .collection('tb_breeding')
+          .where('id', isEqualTo: data.id)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          value.docs.first.reference.update(data.toJson());
+        }
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   //Birth Sections
   Future<List<BirthModel>> getListBirth(User _user, String breedId) async {
     var res =

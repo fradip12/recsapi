@@ -48,193 +48,195 @@ class TambahPembiakanPages extends StatelessWidget {
               body: Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 32.0, horizontal: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FormLabel(
-                      isRequired: true,
-                      label: 'Tanggal Kawin',
-                    ),
-                    Obx(
-                      () => TextButton(
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                            EdgeInsets.zero,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FormLabel(
+                        isRequired: true,
+                        label: 'Tanggal Kawin',
+                      ),
+                      Obx(
+                        () => TextButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                              EdgeInsets.zero,
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          DatePicker.showDatePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime(1900, 3, 5),
-                            maxTime: DateTime.now(),
-                            onChanged: (date) {
-                              state.dateTime.value = date.toIso8601String();
-                            },
-                            onConfirm: (date) {
-                              state.dateTime.value = date.toIso8601String();
-                            },
-                            currentTime: DateTime.now(),
-                            locale: LocaleType.en,
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 45,
-                          margin: EdgeInsets.zero,
-                          padding: EdgeInsets.zero,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.black54)),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                isNotBlank(state.dateTime.value)
-                                    ? CustomDateFormat.dateYMD.format(
-                                        DateTime.parse(state.dateTime.value!))
-                                    : 'Pilih Tanggal',
-                                style: TextStyle(color: Colors.blue),
+                          onPressed: () {
+                            DatePicker.showDatePicker(
+                              context,
+                              showTitleActions: true,
+                              minTime: DateTime(1900, 3, 5),
+                              maxTime: DateTime.now(),
+                              onChanged: (date) {
+                                state.dateTime.value = date.toIso8601String();
+                              },
+                              onConfirm: (date) {
+                                state.dateTime.value = date.toIso8601String();
+                              },
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.en,
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 45,
+                            margin: EdgeInsets.zero,
+                            padding: EdgeInsets.zero,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: Colors.black54)),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  isNotBlank(state.dateTime.value)
+                                      ? CustomDateFormat.dateYMD.format(
+                                          DateTime.parse(state.dateTime.value!))
+                                      : 'Pilih Tanggal',
+                                  style: TextStyle(color: Colors.blue),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Obx(
-                      () => ChipChoices(
-                        choices: ['Pejantan', 'Inseminasi Buatan'],
-                        selectedIndex: state.hasilKawinDg.value,
-                        onTap: state.switchHasilKawin,
+                      SizedBox(
+                        height: 16,
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Obx(
-                      () => FormLabel(
-                        isRequired: true,
-                        label: state.hasilKawinDg.value == 0
-                            ? 'Pejantan'
-                            : 'Nomor Strow',
+                      Obx(
+                        () => ChipChoices(
+                          choices: ['Pejantan', 'Inseminasi Buatan'],
+                          selectedIndex: state.hasilKawinDg.value,
+                          onTap: state.switchHasilKawin,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Obx(
-                      () => (state.hasilKawinDg.value == 1)
-                          ? TextField(
-                              controller: state.strowController.value,
-                              hintText: 'Nomor Strow',
-                              suffix: Text('kg'),
-                            )
-                          : StreamBuilder<CowModel?>(
-                              stream: state.selectedPejantanOut,
-                              builder: (context, snapshot) {
-                                return StreamBuilder<List<CowModel>?>(
-                                    stream: state.listPejantanOut,
-                                    builder: (context, listPejantan) {
-                                      return Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 5),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border:
-                                                Border.all(color: Colors.grey)),
-                                        child: DropdownButton<CowModel>(
-                                          hint: Text(
-                                              (listPejantan.data?.isNotEmpty ??
-                                                      false)
-                                                  ? 'Pilih Pejantan'
-                                                  : 'Pejantan Tidak ditemukan'),
-                                          isExpanded: true,
-                                          underline: SizedBox(),
-                                          value: snapshot.data,
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down),
-                                          items: listPejantan.data!
-                                              .map((CowModel items) {
-                                            return DropdownMenuItem(
-                                              value: items,
-                                              child: Text(items.name ?? '-'),
-                                            );
-                                          }).toList(),
-                                          onChanged: (CowModel? newValue) {
-                                            state.selectedPejantanIn
-                                                .add(newValue);
-                                          },
-                                        ),
-                                      );
-                                    });
-                              }),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    FormLabel(
-                      isRequired: true,
-                      label: 'Perkawinan ini membuat induk bunting?',
-                    ),
-                    Obx(
-                      () => ChipChoices(
-                        choices: [
-                          'Tidak',
-                          'Ya',
-                        ],
-                        selectedIndex: state.buntingState.value,
-                        onTap: state.switchBuntingState,
+                      SizedBox(
+                        height: 16,
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Obx(
-                      () => state.buntingState.value == 1
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                FormLabel(
-                                  isRequired: true,
-                                  label: 'SC',
-                                ),
-                                Obx(
-                                  () => Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: Colors.grey)),
-                                    child: DropdownButton<int>(
-                                      hint: Text('SC'),
-                                      isExpanded: true,
-                                      value: state.selectedSC.value,
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                      underline: SizedBox(),
-                                      items: state.listSC.map((int items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(items.toString()),
+                      Obx(
+                        () => FormLabel(
+                          isRequired: true,
+                          label: state.hasilKawinDg.value == 0
+                              ? 'Pejantan'
+                              : 'Nomor Strow',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Obx(
+                        () => (state.hasilKawinDg.value == 1)
+                            ? TextField(
+                                controller: state.strowController.value,
+                                hintText: 'Nomor Strow',
+                                suffix: Text('kg'),
+                              )
+                            : StreamBuilder<CowModel?>(
+                                stream: state.selectedPejantanOut,
+                                builder: (context, snapshot) {
+                                  return StreamBuilder<List<CowModel>?>(
+                                      stream: state.listPejantanOut,
+                                      builder: (context, listPejantan) {
+                                        return Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border:
+                                                  Border.all(color: Colors.grey)),
+                                          child: DropdownButton<CowModel>(
+                                            hint: Text(
+                                                (listPejantan.data?.isNotEmpty ??
+                                                        false)
+                                                    ? 'Pilih Pejantan'
+                                                    : 'Pejantan Tidak ditemukan'),
+                                            isExpanded: true,
+                                            underline: SizedBox(),
+                                            value: snapshot.data,
+                                            icon: const Icon(
+                                                Icons.keyboard_arrow_down),
+                                            items: listPejantan.data!
+                                                .map((CowModel items) {
+                                              return DropdownMenuItem(
+                                                value: items,
+                                                child: Text(items.name ?? '-'),
+                                              );
+                                            }).toList(),
+                                            onChanged: (CowModel? newValue) {
+                                              state.selectedPejantanIn
+                                                  .add(newValue);
+                                            },
+                                          ),
                                         );
-                                      }).toList(),
-                                      onChanged: (int? newValue) {
-                                        state.selectedSC.value = newValue!;
-                                      },
+                                      });
+                                }),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      FormLabel(
+                        isRequired: true,
+                        label: 'Perkawinan ini membuat induk bunting?',
+                      ),
+                      Obx(
+                        () => ChipChoices(
+                          choices: [
+                            'Tidak',
+                            'Ya',
+                          ],
+                          selectedIndex: state.buntingState.value,
+                          onTap: state.switchBuntingState,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Obx(
+                        () => state.buntingState.value == 1
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FormLabel(
+                                    isRequired: true,
+                                    label: 'SC',
+                                  ),
+                                  Obx(
+                                    () => Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 5),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(color: Colors.grey)),
+                                      child: DropdownButton<int>(
+                                        hint: Text('SC'),
+                                        isExpanded: true,
+                                        value: state.selectedSC.value,
+                                        icon:
+                                            const Icon(Icons.keyboard_arrow_down),
+                                        underline: SizedBox(),
+                                        items: state.listSC.map((int items) {
+                                          return DropdownMenuItem(
+                                            value: items,
+                                            child: Text(items.toString()),
+                                          );
+                                        }).toList(),
+                                        onChanged: (int? newValue) {
+                                          state.selectedSC.value = newValue!;
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          : SizedBox(),
-                    ),
-                  ],
+                                ],
+                              )
+                            : SizedBox(),
+                      ),
+                    ],
+                  ),
                 ),
               )),
         );

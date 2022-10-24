@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:src/common/arguments/arguments.dart';
 import 'package:src/common/color/colors.dart';
 import 'package:src/common/helper/date_formatter.dart';
@@ -90,7 +91,7 @@ class KelahiranPages extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    flex: 2,
+                    flex: 9,
                     child: StreamBuilder<CowModel?>(
                         stream: state.cowModelStream,
                         builder: (context, cow) {
@@ -113,6 +114,27 @@ class KelahiranPages extends StatelessWidget {
                           );
                         }),
                   ),
+                  Flexible(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () async {
+                        var res = await Get.toNamed(
+                          '/tambah-pembiakan-item',
+                          arguments:
+                              TambahPembiakanArguments(editData: breed.data),
+                        );
+                        Logger().w(res);
+                        if (res != null && res) {
+                          state.init();
+                        }
+                      },
+                      child: Icon(
+                        FontAwesome5.edit,
+                        color: Clr.yellowPrimary,
+                        size: 18,
+                      ),
+                    ),
+                  )
                 ],
               );
             }),
