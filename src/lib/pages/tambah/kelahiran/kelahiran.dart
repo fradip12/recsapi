@@ -167,7 +167,7 @@ class KelahiranPages extends StatelessWidget {
                                             'Tanggal Kelahiran',
                                             isNotBlank(
                                                     snapshot.data?[i].birthdate)
-                                                ? CustomDateFormat.dateDMYHMS
+                                                ? CustomDateFormat.dateYMD
                                                     .format(DateTime.parse(
                                                         snapshot.data![i]
                                                             .birthdate!))
