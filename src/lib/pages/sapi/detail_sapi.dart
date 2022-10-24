@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/helper/gender.dart';
+import 'package:src/common/helper/util.dart';
 import 'package:src/common/style/text_style.dart';
 import 'package:src/common/widget/sapi_saya_widget.dart';
 import 'package:src/controller/recording/add_sapi_controller.dart';
@@ -103,22 +104,24 @@ class DetailSapi extends StatelessWidget {
               style: kText20StyleBold.copyWith(color: Colors.black),
             ),
             Divider(),
-            body('Bobot Saat umur 4 bulan', (e.weight4Mo ?? '-').toString()),
-            body('Bobot Saat umur 1 tahun', (e.weight1Yo ?? '-').toString()),
+            body('Bobot Saat umur 4 bulan',
+                (e.weight4Mo != null ? e.weight4Mo! : '-').toString() + ' kg'),
+            body('Bobot Saat umur 1 tahun',
+                (e.weight1Yo != null ? e.weight1Yo! : '-').toString() + ' kg'),
             body(
                 'Lingkar Dada saat umur 1 tahun',
                 e.chestCircumference1Yo != null
-                    ? (e.chestCircumference1Yo.toString() + ' Kg')
+                    ? (e.chestCircumference1Yo.toString() + ' cm')
                     : '-'),
             body(
                 'Panjang Badan saat umur 1 tahun',
                 e.bodyLength1Yo != null
-                    ? (e.bodyLength1Yo.toString() + ' Kg')
+                    ? (e.bodyLength1Yo.toString() + ' cm')
                     : '-'),
             body(
                 'Tinggi Pundak saat umur 1 tahun',
                 e.gumbaHeight1Yo != null
-                    ? (e.gumbaHeight1Yo.toString() + ' Kg')
+                    ? (e.gumbaHeight1Yo.toString() + ' cm')
                     : '-'),
           ],
         ),
@@ -177,7 +180,6 @@ class DetailSapi extends StatelessWidget {
                     if (res != null) {
                       Get.find<SapiSayaController>().init();
                     }
-
                   },
                   icon: Icon(
                     Icons.edit_sharp,
