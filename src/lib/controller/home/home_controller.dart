@@ -29,7 +29,7 @@ class HomeController extends GetxController {
     ),
     HomeMenu(
       title: 'Lihat Recording',
-      route: '/',
+      route: '/lihat',
       icon: "asset/images/logo/notebook.png",
     ),
     HomeMenu(

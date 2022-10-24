@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:src/pages/home/home.dart';
+import 'package:src/pages/lihat%20recording/lihat_pages.dart';
 import 'package:src/pages/recording/add_sapi.dart';
 import 'package:src/pages/sapi/detail_sapi.dart';
 import 'package:src/pages/sapi/sapi_saya.dart';
@@ -36,6 +37,7 @@ class Routes {
     GetPage(name: '/susu', page: () => SusuPages()),
     GetPage(name: '/susu-produksi', page: () => ProduksiSusu()),
     GetPage(name: '/tambah-susu', page: () => TambahProduksiSusuPages()),
+    GetPage(name: '/lihat', page: () => LihatRecordingPages()),
 
     ///==========Profile==========///
     ///==========Setting==========///

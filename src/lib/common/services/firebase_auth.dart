@@ -225,6 +225,23 @@ class FireStore {
 
   ///Breeding Section
 
+  Future<List<BreedingModel>> getAllBreeding(User _user,
+      {String? keywords}) async {
+    return _usersCollection.doc(_user.uid).collection('tb_breeding').get().then(
+      (value) {
+        if (keywords != null) {
+          return value.docs
+              .map((e) => BreedingModel.fromJson(e.data()))
+              .toList();
+        } else {
+          return value.docs
+              .map((e) => BreedingModel.fromJson(e.data()))
+              .toList();
+        }
+      },
+    );
+  }
+
   Future<List<BreedingModel>> getBreeding(User _user, String cowId) async {
     return _usersCollection.doc(_user.uid).collection('tb_breeding').get().then(
       (value) {
@@ -281,6 +298,18 @@ class FireStore {
     return res;
   }
 
+  Future<List<BirthModel>> getAllBirth(User _user, {String? keywords}) async {
+    return _usersCollection.doc(_user.uid).collection('tb_birth').get().then(
+      (value) {
+        if (keywords != null) {
+          return value.docs.map((e) => BirthModel.fromJson(e.data())).toList();
+        } else {
+          return value.docs.map((e) => BirthModel.fromJson(e.data())).toList();
+        }
+      },
+    );
+  }
+
   Future<DocumentReference<Map<String, dynamic>>?> submitBirth(
       User _user, BirthModel data) async {
     var res = await _usersCollection
@@ -310,6 +339,19 @@ class FireStore {
   }
 
   //Milk Sections
+
+  Future<List<MilkModel>> getAllMilk(User _user, {String? keywords}) async {
+    return _usersCollection.doc(_user.uid).collection('tb_milk').get().then(
+      (value) {
+        if (keywords != null) {
+          return value.docs.map((e) => MilkModel.fromJson(e.data())).toList();
+        } else {
+          return value.docs.map((e) => MilkModel.fromJson(e.data())).toList();
+        }
+      },
+    );
+  }
+
   Future<List<MilkModel>?> getListMilk(User _user, String cowId) async {
     var res =
         await _usersCollection.doc(_user.uid).collection('tb_milk').get().then(
