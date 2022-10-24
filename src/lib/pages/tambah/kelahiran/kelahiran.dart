@@ -19,7 +19,7 @@ class KelahiranPages extends StatelessWidget {
     return [
       Text(
         title,
-        style: kText12Style.copyWith(color: Colors.black,fontSize: 10),
+        style: kText12Style.copyWith(color: Colors.black, fontSize: 10),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,8 +101,9 @@ class KelahiranPages extends StatelessWidget {
                                 _item(
                                     'Di kawinkan dengan',
                                     breed.data?.maleName ?? 'Inseminasi Buatan',
-                                    breed.data?.maleId ??
-                                        breed.data!.strowNumber!) +
+                                    isNotBlank(breed.data?.maleId)
+                                        ? breed.data!.maleId!
+                                        : breed.data!.strowNumber!) +
                                 _item(
                                     'SC',
                                     breed.data?.sc != 0

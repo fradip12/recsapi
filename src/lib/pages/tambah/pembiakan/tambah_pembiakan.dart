@@ -132,7 +132,7 @@ class TambahPembiakanPages extends StatelessWidget {
                           ? TextField(
                               controller: state.strowController.value,
                               hintText: 'Nomor Strow',
-                              suffix: Text('Kg'),
+                              suffix: Text('kg'),
                             )
                           : StreamBuilder<CowModel?>(
                               stream: state.selectedPejantanOut,
