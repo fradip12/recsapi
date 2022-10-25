@@ -128,13 +128,19 @@ class _TextFieldState extends State<TextField> {
             ? TextInputAction.next
             : TextInputAction.done,
         decoration: InputDecoration(
-            hintText: widget.hintText,
-            suffixIcon: IconButton(
-                icon: Text(
-                  widget.suffixText ?? '',
-                  style: kText12Style.copyWith(color: Colors.black54),
-                ),
-                onPressed: () {})),
+          hintText: widget.hintText,
+          errorBorder: OutlineInputBorder(
+              gapPadding: 0.0,
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              borderSide: BorderSide(color: Color(0xfff5f8fa))),
+          suffixIcon: IconButton(
+            icon: Text(
+              widget.suffixText ?? '',
+              style: kText12Style.copyWith(color: Colors.black54),
+            ),
+            onPressed: () {},
+          ),
+        ),
         onChanged: (_) {
           _formKey.currentState?.validate();
         },

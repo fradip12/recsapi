@@ -23,6 +23,7 @@ class FireAuth {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
+        
       );
       user = userCredential.user;
       await user!.updateDisplayName(name);
@@ -51,6 +52,7 @@ class FireAuth {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
+
       );
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {

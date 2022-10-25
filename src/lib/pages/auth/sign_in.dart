@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:src/common/color/spacer.dart';
 import 'package:src/common/services/firebase_auth.dart';
+import 'package:src/common/style/text_style.dart';
 import 'package:src/controller/auth/sign_in_controller.dart';
 
 import '../../common/color/colors.dart';
@@ -19,11 +20,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
- 
   @override
   void initState() {
-   
     super.initState();
   }
 
@@ -72,18 +70,33 @@ class _SignInState extends State<SignIn> {
                 child: Text('Masuk'),
               ),
               SizedBox(height: Spacing.kSpacingHeight),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/signup');
+                },
+                child: RichText(
+                  textAlign: TextAlign.left,
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                      text: 'Belum Punya Akun? Daftar ',
+                      style: kText10Style.copyWith(color: Colors.black87),
+                    ),
+                    TextSpan(
+                      text: 'disini',
+                      style: kText10Style.copyWith(color: Colors.blue),
+                    ),
+                  ]),
+                ),
+              ),
+              SizedBox(height: 5),
+              Text('atau', style: kText10Style.copyWith(color: Colors.black87)),
+              SizedBox(height: 5),
               SignInButton(
                 Buttons.google,
                 text: 'Masuk dengan Google',
                 onPressed: () {
                   controller.loginGoogle(context);
                 },
-              ),
-              SizedBox(height: 5),
-              SignInButton(
-                Buttons.facebook,
-                text: 'Masuk dengan Facebook',
-                onPressed: () {},
               ),
               Padding(
                   padding: EdgeInsets.only(

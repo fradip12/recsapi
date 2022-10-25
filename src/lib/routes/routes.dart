@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:src/pages/auth/sign_up.dart';
 import 'package:src/pages/home/home.dart';
 import 'package:src/pages/lihat%20recording/lihat_pages.dart';
 import 'package:src/pages/recording/add_sapi.dart';
@@ -23,6 +24,8 @@ class Routes {
     GetPage(name: '/', page: () => App()),
 
     ///==========Auth==========///
+    GetPage(name: '/signup', page: () => SignUpPages()),
+
     ///==========Home==========///
     GetPage(name: '/home', page: () => Home()),
     GetPage(name: '/sapi', page: () => SapiSaya()),
