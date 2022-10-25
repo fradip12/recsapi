@@ -33,7 +33,7 @@ class SignupController extends GetxController {
           Get.toNamed('/');
           Get.snackbar(
             'Success',
-            'Silahkan Periksa Email Konfirmasi',
+            'Silahkan Login menggunakan email',
             snackPosition: SnackPosition.BOTTOM,
           );
         }

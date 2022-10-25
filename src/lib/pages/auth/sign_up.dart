@@ -80,7 +80,7 @@ class _SignUpPagesState extends State<SignUpPages> {
                     onPressed: () {
                       controller.signUp();
                     },
-                    child: Text('Sign Up'),
+                    child: Text('Daftar'),
                   ),
                   SizedBox(height: Spacing.kSpacingHeight),
                   GestureDetector(
