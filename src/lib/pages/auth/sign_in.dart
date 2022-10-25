@@ -1,20 +1,37 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide TextField;
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 import 'package:src/common/color/spacer.dart';
+import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/controller/auth/sign_in_controller.dart';
 
 import '../../common/color/colors.dart';
 import '../../common/widget/text_field.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+
+ 
+  @override
+  void initState() {
+   
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
       init: SignInController(),
       builder: (SignInController controller) {
-        
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +71,23 @@ class SignIn extends StatelessWidget {
                 onPressed: () => controller.login(context),
                 child: Text('Masuk'),
               ),
-              Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom))
+              SizedBox(height: Spacing.kSpacingHeight),
+              SignInButton(
+                Buttons.google,
+                text: 'Masuk dengan Google',
+                onPressed: () {
+                  controller.loginGoogle(context);
+                },
+              ),
+              SizedBox(height: 5),
+              SignInButton(
+                Buttons.facebook,
+                text: 'Masuk dengan Facebook',
+                onPressed: () {},
+              ),
+              Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom))
             ],
           ),
         );

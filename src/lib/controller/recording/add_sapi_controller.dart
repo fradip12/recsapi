@@ -114,7 +114,6 @@ class AddSapiController extends GetxController {
     return isNotBlank(codeController.value.text) &&
         isNotBlank(usernameController.value.text) &&
         dateTime.value != '' &&
-        (_selectedInduk.hasValue && _selectedInduk.value != null) &&
         ((_selectedPejantan.hasValue && _selectedPejantan.value != null) ||
             isNotBlank(strowController.value.text));
   }
@@ -147,7 +146,6 @@ class AddSapiController extends GetxController {
         ..chestCircumference1Yo = double.tryParse(ld1YController.value.text)
         ..bodyLength1Yo = double.tryParse(pb1YController.value.text)
         ..gumbaHeight1Yo = double.tryParse(tp1YsController.value.text)
-        ..parentF = _selectedInduk.value?.uniqueId
         ..notes = notesController.value.text
         ..birthdate = dateTime.value;
 
@@ -155,7 +153,10 @@ class AddSapiController extends GetxController {
           _selectedPejantan.value?.uniqueId != null) {
         data.parentM = _selectedPejantan.value?.uniqueId;
       }
-      if (_isEdit.value ?? false) {
+      if (_selectedInduk.hasValue && _selectedInduk.value?.uniqueId != null) {
+        data.parentF = _selectedInduk.value?.uniqueId;
+      }
+      if (_isEdit.hasValue && (_isEdit.value ?? false)) {
         data.id = args!.editData!.id;
       } else {
         data.id = uuid.v5(
@@ -190,7 +191,7 @@ class AddSapiController extends GetxController {
   }
 
   Future<void> submit(CowModel data) async {
-    if (_isEdit.value ?? false) {
+    if (_isEdit.hasValue && (_isEdit.value ?? false)) {
       var res = await FireStore().updateSapi(data, _mainController.user.value);
       if (res == true) {
         Get.back(result: true);

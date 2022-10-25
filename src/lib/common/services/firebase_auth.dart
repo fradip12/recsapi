@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 import 'package:src/common/model/birth_model.dart';
 import 'package:src/common/model/milk_model.dart';
@@ -39,11 +40,10 @@ class FireAuth {
     return user;
   }
 
-  static Future<User?> signInUsingEmailPassword({
-    required String email,
-    required String password,
-    required BuildContext context,
-  }) async {
+  static Future<User?> signInUsingEmailPassword(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -61,6 +61,33 @@ class FireAuth {
       }
     }
 
+    return user;
+  }
+
+  static Future<User?> signInWithGoogle() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+
+    final GoogleSignInAccount? googleUser =
+        await GoogleSignIn(scopes: <String>['email']).signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    try {
+      var _user = await auth.signInWithCredential(credential);
+      Logger().wtf(_user);
+      user = _user.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided.');
+      }
+    }
     return user;
   }
 }
