@@ -19,8 +19,6 @@ class SignInController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    usernameController.value.text = 'fradip@yopmail.com';
-    passwordController.value.text = '123456asd';
   }
 
   /// Function
