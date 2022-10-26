@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../style/text_style.dart';
 
@@ -6,7 +7,8 @@ class MenuCard extends StatelessWidget {
   final String title;
   final String route;
   final String icon;
-  const MenuCard({Key? key, required this.title, required this.route, required this.icon})
+  const MenuCard(
+      {Key? key, required this.title, required this.route, required this.icon})
       : super(key: key);
 
   @override
@@ -30,15 +32,16 @@ class MenuCard extends StatelessWidget {
               Expanded(
                 child: CircleAvatar(
                   radius: 45,
-                  child: Image(image: AssetImage(icon)),
+                  child: SvgPicture.asset(
+                    icon,
+                    semanticsLabel: 'A red up arrow',
+                  ),
                   backgroundColor: Colors.white,
                 ),
               ),
               Text(
                 title,
-                style: kText12StyleBold.copyWith(
-                  color: Colors.black87
-                ),
+                style: kText12StyleBold.copyWith(color: Colors.black87),
               ),
             ],
           ),

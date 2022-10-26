@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/iconic_icons.dart';
 import 'package:src/common/color/colors.dart';
 
 import '../color/spacer.dart';
@@ -13,12 +14,12 @@ class HomeProfile extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25,
-          backgroundColor: Clr.yellowPrimary,
+          child: Icon(Iconic.user),
         ),
         SizedBox(
           width: Spacing.kSpacingHeight,
         ),
-        Text('Halo $name !'),
+        Text('Halo, $name !'),
       ],
     );
   }
