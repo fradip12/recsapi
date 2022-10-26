@@ -28,12 +28,12 @@ class HomeController extends GetxController {
       icon: "asset/images/logo/new-recording.svg",
     ),
     HomeMenu(
-      title: 'Unduh Recording',
+      title: 'Unduh Data',
       route: '/lihat',
       icon: "asset/images/logo/new-unduh.svg",
     ),
     HomeMenu(
-      title: 'Profile',
+      title: 'Profil',
       route: '/',
       icon: "asset/images/logo/new-profile.svg",
     ),
