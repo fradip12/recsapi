@@ -79,7 +79,7 @@ class _AddSapiState extends State<AddSapi> {
           ),
           SizedBox(height: Spacing.kSpacingHeight),
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Induk',
           ),
           //---
@@ -127,7 +127,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label:
                 controller.hasilKawinDg.value == 0 ? 'Pejantan' : 'Nomor Strow',
           ),
@@ -135,7 +135,6 @@ class _AddSapiState extends State<AddSapi> {
             TextField(
               controller: controller.strowController.value,
               hintText: 'Nomor Strow',
-              suffix: Text('kg'),
             )
           else
             StreamBuilder<List<CowModel>?>(

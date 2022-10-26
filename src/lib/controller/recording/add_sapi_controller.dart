@@ -113,9 +113,7 @@ class AddSapiController extends GetxController {
   bool isValid() {
     return isNotBlank(codeController.value.text) &&
         isNotBlank(usernameController.value.text) &&
-        dateTime.value != '' &&
-        ((_selectedPejantan.hasValue && _selectedPejantan.value != null) ||
-            isNotBlank(strowController.value.text));
+        dateTime.value != '';
   }
 
   void continueStep() {
