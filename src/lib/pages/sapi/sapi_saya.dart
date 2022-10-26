@@ -89,7 +89,7 @@ class SapiSaya extends StatelessWidget {
               onPressed: () {
                 controller.tambahSapi();
               },
-              child: Text('Tambah'),
+              child: Text('Tambah Sapi'),
             ),
             body: Padding(
               padding: const EdgeInsets.all(24.0),
