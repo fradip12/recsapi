@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide TextField;
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
@@ -47,13 +48,27 @@ class _SignInState extends State<SignIn> {
                 hintText: 'Username',
               ),
               SizedBox(height: Spacing.kSpacingHeight),
-              TextField(
-                controller: controller.passwordController.value,
-                hintText: 'Password',
-                isPassword: true,
-                maxLines: 1,
-                suffix: Icon(Icons.remove_red_eye),
-              ),
+              StreamBuilder<bool>(
+                  stream: controller.obsecure,
+                  builder: (context, snapshot) {
+                    return TextField(
+                      controller: controller.passwordController.value,
+                      hintText: 'Password',
+                      isPassword: snapshot.data ?? false,
+                      maxLines: 1,
+                      suffix: InkWell(
+                        onTap: () {
+                          controller.obsecureSink.add(!snapshot.data!);
+                        },
+                        child: Icon(
+                          (snapshot.data ?? false)
+                              ? FontAwesome5.eye
+                              : FontAwesome5.eye_slash,
+                          size: 18,
+                        ),
+                      ),
+                    );
+                  }),
               SizedBox(height: Spacing.kSpacingHeight),
               ElevatedButton(
                 style: ButtonStyle(

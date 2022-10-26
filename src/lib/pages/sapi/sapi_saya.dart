@@ -7,6 +7,7 @@ import 'package:src/common/color/spacer.dart';
 import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/model/sapi_model.dart';
 import 'package:src/common/style/text_style.dart';
+import 'package:src/common/widget/no_data.dart';
 import 'package:src/common/widget/shimmer.dart';
 import 'package:src/controller/sapi/sapi_saya_controller.dart';
 
@@ -148,8 +149,7 @@ class SapiSaya extends StatelessWidget {
                                       height: 65,
                                       width: double.infinity,
                                       shapeBorder: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(6),
+                                        borderRadius: BorderRadius.circular(6),
                                       ),
                                     ),
                                   );
@@ -169,7 +169,20 @@ class SapiSaya extends StatelessWidget {
                                         child: _cardSapi(snapshot.data![i]));
                                   });
                             }
-                            return Container();
+                            return Center(
+                              child: NoData(
+                                message:
+                                    'Belum Ada data sapi\nTambahkan Recording Sekarang',
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundColor: Colors.grey[200],
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.black26,
+                                  ),
+                                ),
+                              ),
+                            );
                           } else {
                             return Center(child: Text('No Data'));
                           }

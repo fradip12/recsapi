@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide TextField;
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/route_manager.dart';
 import 'package:src/common/color/colors.dart';
@@ -59,7 +60,27 @@ class _SignUpPagesState extends State<SignUpPages> {
                     hintText: 'Password',
                     isPassword: true,
                     maxLines: 1,
-                    suffix: Icon(Icons.remove_red_eye),
+                    suffix: StreamBuilder<bool>(
+                        stream: controller.obsecure,
+                        builder: (context, snapshot) {
+                          return TextField(
+                            controller: controller.passwordController.value,
+                            hintText: 'Password',
+                            isPassword: snapshot.data ?? false,
+                            maxLines: 1,
+                            suffix: InkWell(
+                              onTap: () {
+                                controller.obsecureSink.add(!snapshot.data!);
+                              },
+                              child: Icon(
+                                (snapshot.data ?? false)
+                                    ? FontAwesome5.eye
+                                    : FontAwesome5.eye_slash,
+                                size: 18,
+                              ),
+                            ),
+                          );
+                        }),
                   ),
                   SizedBox(height: Spacing.kSpacingHeight),
                   TextField(
@@ -68,6 +89,27 @@ class _SignUpPagesState extends State<SignUpPages> {
                     formKey: _formKey,
                     isPassword: true,
                     maxLines: 1,
+                    suffix: StreamBuilder<bool>(
+                        stream: controller.obsecure2,
+                        builder: (context, snapshot) {
+                          return TextField(
+                            controller: controller.repeatPasswordController.value,
+                            hintText: 'Password',
+                            isPassword: snapshot.data ?? false,
+                            maxLines: 1,
+                            suffix: InkWell(
+                              onTap: () {
+                                controller.obsecureSink2.add(!snapshot.data!);
+                              },
+                              child: Icon(
+                                (snapshot.data ?? false)
+                                    ? FontAwesome5.eye
+                                    : FontAwesome5.eye_slash,
+                                size: 18,
+                              ),
+                            ),
+                          );
+                        }),
                   ),
                   SizedBox(height: Spacing.kSpacingHeight),
                   ElevatedButton(

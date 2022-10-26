@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:src/common/color/spacer.dart';
 import 'package:src/common/style/text_style.dart';
 
 class NoData extends StatelessWidget {
@@ -14,6 +15,7 @@ class NoData extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           child ?? Container(),
+          SizedBox(height: Spacing.kSpacingHeight),
           Text(
             message ?? 'No Data Available',
             textAlign: TextAlign.center,

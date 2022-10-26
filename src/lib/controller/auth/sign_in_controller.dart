@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:src/common/services/firebase_auth.dart';
 import 'package:src/common/services/snack.dart';
 import 'package:src/controller/main_controller.dart';
@@ -14,11 +14,17 @@ class SignInController extends GetxController {
       TextEditingController().obs;
   final Rx<TextEditingController> passwordController =
       TextEditingController().obs;
+    
+  final _obsecure = BehaviorSubject.seeded(true);
+  Stream<bool> get obsecure => _obsecure.stream;
+  Sink<bool> get obsecureSink => _obsecure.sink;
 
   /// Put All logic on controller
   @override
   void onInit() {
     super.onInit();
+    usernameController.value.text = 'fradip@yopmail.com';
+    passwordController.value.text = 'sarahbusuk';
   }
 
   /// Function

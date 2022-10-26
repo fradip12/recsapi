@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:src/common/services/firebase_auth.dart';
 
 class SignupController extends GetxController {
@@ -10,6 +11,15 @@ class SignupController extends GetxController {
       TextEditingController().obs;
   final Rx<TextEditingController> repeatPasswordController =
       TextEditingController().obs;
+
+  final _obsecure = BehaviorSubject.seeded(true);
+  Stream<bool> get obsecure => _obsecure.stream;
+  Sink<bool> get obsecureSink => _obsecure.sink;
+
+  final _obsecure2 = BehaviorSubject.seeded(true);
+  Stream<bool> get obsecure2 => _obsecure2.stream;
+  Sink<bool> get obsecureSink2 => _obsecure2.sink;
+
   @override
   void onInit() {
     nameController.value.text = 'Test buat akun';

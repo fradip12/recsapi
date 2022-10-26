@@ -6,6 +6,7 @@ import 'package:src/common/arguments/arguments.dart';
 
 import '../../../common/color/spacer.dart';
 import '../../../common/model/sapi_model.dart';
+import '../../../common/widget/no_data.dart';
 import '../../../common/widget/sapi_saya_widget.dart';
 import '../../../common/widget/shimmer.dart';
 import '../../../controller/tambah/susu/susu_pages_controller.dart';
@@ -107,7 +108,20 @@ class SusuPages extends StatelessWidget {
                                     );
                                   });
                             }
-                            return Container();
+                            return Center(
+                              child: NoData(
+                                message:
+                                    'Belum Ada data sapi\nTambahkan Recording Sekarang',
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundColor: Colors.grey[200],
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.black26,
+                                  ),
+                                ),
+                              ),
+                            );
                           } else {
                             return Center(child: Text('No Data'));
                           }

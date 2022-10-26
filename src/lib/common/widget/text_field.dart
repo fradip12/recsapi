@@ -133,7 +133,7 @@ class _TextFieldState extends State<TextField> {
               gapPadding: 0.0,
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xfff5f8fa))),
-          suffixIcon: IconButton(
+          suffixIcon: widget.suffix ??  IconButton(
             icon: Text(
               widget.suffixText ?? '',
               style: kText12Style.copyWith(color: Colors.black54),

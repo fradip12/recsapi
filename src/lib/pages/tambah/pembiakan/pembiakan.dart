@@ -8,6 +8,7 @@ import 'package:src/pages/sapi/sapi_saya.dart';
 
 import '../../../common/color/spacer.dart';
 import '../../../common/model/sapi_model.dart';
+import '../../../common/widget/no_data.dart';
 import '../../../common/widget/shimmer.dart';
 import '../../../controller/tambah/pembiakan/pembiakan_controller.dart';
 
@@ -108,7 +109,20 @@ class PembiakanPages extends StatelessWidget {
                                   );
                                 });
                           }
-                          return Container();
+                          return Center(
+                            child: NoData(
+                              message:
+                                  'Belum Ada data sapi\nTambahkan Recording Sekarang',
+                              child: CircleAvatar(
+                                radius: 22,
+                                backgroundColor: Colors.grey[200],
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.black26,
+                                ),
+                              ),
+                            ),
+                          );
                         } else {
                           return Center(child: Text('No Data'));
                         }
