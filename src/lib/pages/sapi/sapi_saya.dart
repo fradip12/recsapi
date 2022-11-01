@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttericon/elusive_icons.dart';
 import 'package:get/get.dart';
 import 'package:src/common/arguments/arguments.dart';
+import 'package:src/common/color/colors.dart';
 import 'package:src/common/color/spacer.dart';
 import 'package:src/common/helper/date_formatter.dart';
 import 'package:src/common/model/sapi_model.dart';
@@ -13,6 +15,33 @@ import 'package:src/controller/sapi/sapi_saya_controller.dart';
 
 class SapiSaya extends StatelessWidget {
   const SapiSaya({Key? key}) : super(key: key);
+
+  _gender(int index) {
+    switch (index) {
+      case 0:
+        return 'Betina';
+      case 1:
+        return 'Jantan';
+      default:
+        return 'Undefined';
+    }
+  }
+
+  _genderIcon(int index) {
+    if (index == 0) {
+      return Icon(
+        Elusive.female,
+        size: 15,
+        color: Colors.pinkAccent,
+      );
+    } else if (index == 1) {
+      return Icon(
+        Elusive.male,
+        size: 15,
+        color: Clr.yellowPrimary,
+      );
+    }
+  }
 
   Widget _cardSapi(CowModel e) {
     var age;
@@ -32,7 +61,7 @@ class SapiSaya extends StatelessWidget {
         ),
         child: Container(
           width: double.infinity,
-          height: 75,
+          height: 100,
           padding: const EdgeInsets.all(12.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,6 +76,17 @@ class SapiSaya extends StatelessWidget {
                   Text(
                     e.uniqueId!.capitalizeFirst!,
                     style: kText16StyleBold.copyWith(color: Colors.black38),
+                  ),
+                  SizedBox(height: Spacing.kSpacingHeight),
+                  Row(
+                    children: [
+                      _genderIcon(e.gender!),
+                      SizedBox(width: Spacing.kSpacingHeight / 2),
+                      Text(
+                        _gender(e.gender!),
+                        style: kText16StyleBold.copyWith(color: Colors.black38),
+                      ),
+                    ],
                   ),
                 ],
               ),
