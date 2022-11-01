@@ -12,6 +12,15 @@ import '../../common/style/text_style.dart';
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
+  _seeder(SummaryModel data) {
+    List _value = <String>[];
+    _value.add((data.indukCount ?? 0).toString());
+    _value.add((data.jantanCount ?? 0).toString());
+    _value.add((data.anakJantanCount ?? 0).toString());
+    _value.add((data.anakBetinaCount ?? 0).toString());
+    return _value;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -37,68 +46,94 @@ class Home extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
                   child: Container(
-                    height: 210,
+                    height: Get.height * 0.28,
                     width: Spacing.getWidth(context),
                     padding: const EdgeInsets.all(20),
                     color: Clr.bluePrimary,
                     child: StreamBuilder<SummaryModel?>(
                         stream: controller.summary,
                         builder: (context, snapshot) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
+                              Text(
+                                'Sapi',
+                                style: kText20StyleBold.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(height: 3),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  summaryOf(
-                                      controller.total[0],
-                                      (snapshot.data!.cowCount ?? 0)
-                                          .toString()),
-                                  summaryOf(
-                                      controller.total[1],
-                                      (snapshot.data!.milkCount ?? 0)
-                                              .toString() +
-                                          ' L'),
+                                  Flexible(
+                                    flex: 2,
+                                    child: summaryOf(
+                                        controller.total[0],
+                                        (snapshot.data?.cowCount ?? 0)
+                                            .toString()),
+                                  ),
+                                  Flexible(
+                                    flex: 6,
+                                    child: MasonryGridView.count(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 10,
+                                      crossAxisSpacing: 16,
+                                      itemCount: 4,
+                                      itemBuilder: (context, index) {
+                                        return summaryOf(
+                                          controller.myProducts[index],
+                                          _seeder(snapshot.data!)[index],
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
-                              SizedBox(width: 20),
-                              Expanded(
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 300,
-                                          childAspectRatio: 3,
-                                          crossAxisSpacing: 20),
-                                  itemCount: 2,
-                                  itemBuilder: (BuildContext ctx, index) {
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        summaryOf(
-                                            controller.myProducts[index],
-                                            (index == 0
-                                                    ? (snapshot
-                                                            .data!.indukCount ??
-                                                        0)
-                                                    : (snapshot.data!
-                                                            .jantanCount ??
-                                                        0))
-                                                .toString()),
-                                        summaryOf(
-                                            controller.myProducts[index + 2],
-                                            (index == 0
-                                                    ? (snapshot.data!
-                                                            .anakJantanCount ??
-                                                        0)
-                                                    : (snapshot.data!
-                                                            .anakBetinaCount ??
-                                                        0))
-                                                .toString()),
-                                      ],
-                                    );
-                                  },
+                              SizedBox(height: Spacing.kSpacingHeight),
+                              //SUSU
+                              Text(
+                                'Produksi Susu',
+                                style: kText20StyleBold.copyWith(
+                                  color: Colors.white,
                                 ),
+                              ),
+                              SizedBox(height: 3),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                      flex: 2,
+                                      child: summaryOf(
+                                         'Total',
+                                          ((snapshot.data?.milkCount ?? 0))
+                                              .toString())),
+                                  Flexible(
+                                    flex: 6,
+                                    child: MasonryGridView.count(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 10,
+                                      crossAxisSpacing: 16,
+                                      itemCount: 1,
+                                      itemBuilder: (context, index) {
+                                        return summaryOf(
+                                          'Rata-Rata',
+                                          ((snapshot.data?.milkCount ?? 0) /
+                                                  (snapshot.data!.indukCount!))
+                                              .toStringAsFixed(1),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           );
@@ -135,14 +170,12 @@ class Home extends StatelessWidget {
   }
 
   summaryOf(String name, String total) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(total, style: kText20StyleBold),
-          Text(name, style: kText12Style)
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(total, style: kText20StyleBold),
+        Text(name, style: kText12Style)
+      ],
     );
   }
 }
