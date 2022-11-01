@@ -133,7 +133,6 @@ class TambahPembiakanPages extends StatelessWidget {
                             ? TextField(
                                 controller: state.strowController.value,
                                 hintText: 'Nomor Strow',
-                                suffix: Text('kg'),
                               )
                             : StreamBuilder<CowModel?>(
                                 stream: state.selectedPejantanOut,
@@ -147,14 +146,14 @@ class TambahPembiakanPages extends StatelessWidget {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(12),
-                                              border:
-                                                  Border.all(color: Colors.grey)),
+                                              border: Border.all(
+                                                  color: Colors.grey)),
                                           child: DropdownButton<CowModel>(
-                                            hint: Text(
-                                                (listPejantan.data?.isNotEmpty ??
-                                                        false)
-                                                    ? 'Pilih Pejantan'
-                                                    : 'Pejantan Tidak ditemukan'),
+                                            hint: Text((listPejantan
+                                                        .data?.isNotEmpty ??
+                                                    false)
+                                                ? 'Pilih Pejantan'
+                                                : 'Pejantan Tidak ditemukan'),
                                             isExpanded: true,
                                             underline: SizedBox(),
                                             value: snapshot.data,
@@ -210,14 +209,16 @@ class TambahPembiakanPages extends StatelessWidget {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 8, vertical: 5),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(color: Colors.grey)),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border:
+                                              Border.all(color: Colors.grey)),
                                       child: DropdownButton<int>(
                                         hint: Text('SC'),
                                         isExpanded: true,
                                         value: state.selectedSC.value,
-                                        icon:
-                                            const Icon(Icons.keyboard_arrow_down),
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down),
                                         underline: SizedBox(),
                                         items: state.listSC.map((int items) {
                                           return DropdownMenuItem(

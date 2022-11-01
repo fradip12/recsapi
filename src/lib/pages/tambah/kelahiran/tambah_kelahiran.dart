@@ -243,6 +243,7 @@ class TambahKelahiranPages extends StatelessWidget {
                         controller: controller.beratLahir.value,
                         hintText: 'Berat Lahir',
                         keyboardType: TextInputType.phone,
+                        suffixText: 'kg',
                       ),
                       SizedBox(
                         height: 16,

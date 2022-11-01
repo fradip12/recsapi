@@ -32,14 +32,14 @@ class TambahProduksiSusuController extends GetxController {
       kodeSapiController =
           TextEditingController(text: args!.cowData.uniqueId).obs;
       laktasiController =
-          TextEditingController(text: args!.editData!.nBirth.toString()).obs;
+          TextEditingController(text: (args!.editData?.nBirth ?? 0).toString()).obs;
       hariProduksiSusu =
-          TextEditingController(text: args!.editData!.nDay.toString()).obs;
+          TextEditingController(text: (args!.editData?.nDay ?? 0).toString()).obs;
       susuPagiController =
-          TextEditingController(text: args!.editData!.morningMilk.toString())
+          TextEditingController(text: (args!.editData?.morningMilk ?? 0).toString())
               .obs;
       susuSoreController =
-          TextEditingController(text: args!.editData!.afternoonMilk.toString())
+          TextEditingController(text: (args!.editData?.afternoonMilk ?? 0).toString())
               .obs;
     }
   }
