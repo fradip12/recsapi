@@ -241,7 +241,7 @@ class _AddSapiState extends State<AddSapi> {
         children: [
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Bobot Saat Umur 4 bulan',
           ),
           TextField(
@@ -253,7 +253,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Bobot Saat Umur 1 tahun',
           ),
           TextField(
@@ -265,7 +265,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Lingkar Dada saat umur 1 tahun',
           ),
           TextField(
@@ -277,7 +277,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Panjang Badan Saat Umur 1 tahun',
           ),
           TextField(
@@ -289,7 +289,7 @@ class _AddSapiState extends State<AddSapi> {
           SizedBox(height: Spacing.kSpacingHeight),
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Tinggi Pundak Saat Umur 1 tahun',
           ),
           TextField(
@@ -306,7 +306,7 @@ class _AddSapiState extends State<AddSapi> {
         children: [
           //
           FormLabel(
-            isRequired: true,
+            isRequired: false,
             label: 'Catatan',
           ),
           TextField(
