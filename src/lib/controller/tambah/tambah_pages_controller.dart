@@ -8,22 +8,22 @@ class TambahPagesController extends GetxController {
     HomeMenu(
       title: 'Pembiakan',
       route: '/tambah-pembiakan',
-      icon: "asset/images/logo/Group 33.png",
+      icon: "asset/images/logo/new-pembiakan.svg",
     ),
     HomeMenu(
       title: 'Produksi Susu',
       route: '/susu',
-      icon: "asset/images/logo/icon-park_milk.png",
+      icon: "asset/images/logo/new-susu.svg",
     ),
     HomeMenu(
       title: 'Pakan',
       route: '/',
-      icon: "asset/images/logo/mdi_grass.png",
+      icon: "asset/images/logo/new-pakan.svg",
     ),
     HomeMenu(
       title: 'Kesehatan',
       route: '/',
-      icon: "asset/images/logo/account.png",
+      icon: "asset/images/logo/new-kesehatan.svg",
     ),
   ].obs;
 
