@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1026736284596:android:9adc29c4e35773a82848e1",
+        "mobilesdk_app_id": "1:1026736284596:android:388562bfcc4cf2252848e1",
         "android_client_info": {
-          "package_name": "com.recsapi.ideon"
+          "package_name": "com.sisapi.ideon"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1026736284596-jqccuhifrfgj7sonukof7pcplf3241km.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sisapi.ideon",
+            "certificate_hash": "87010fbba5608c246586dc2ef8bb96ce147982e0"
+          }
+        },
         {
           "client_id": "1026736284596-4rsbvc4d49a9glnk6li9gs62jeinbvvn.apps.googleusercontent.com",
           "client_type": 3

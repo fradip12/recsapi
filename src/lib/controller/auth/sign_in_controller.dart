@@ -23,8 +23,6 @@ class SignInController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    usernameController.value.text = 'fradip@yopmail.com';
-    passwordController.value.text = 'sarahbusuk';
   }
 
   /// Function
@@ -35,9 +33,6 @@ class SignInController extends GetxController {
       password: passwordController.value.text,
       context: context,
     );
-    Logger().wtf(usernameController.value.text);
-    Logger().wtf(passwordController.value.text);
-    Logger().wtf(user);
     if (user != null) {
       Misc().snackbar(
         title: 'Login Detected',

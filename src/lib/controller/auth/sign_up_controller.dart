@@ -20,14 +20,6 @@ class SignupController extends GetxController {
   Stream<bool> get obsecure2 => _obsecure2.stream;
   Sink<bool> get obsecureSink2 => _obsecure2.sink;
 
-  @override
-  void onInit() {
-    nameController.value.text = 'Test buat akun';
-    emailController.value.text = 'testcreateakun2@yopmail.com';
-    passwordController.value.text = '1234@Qwer';
-    repeatPasswordController.value.text = '1234@Qwer';
-    super.onInit();
-  }
 
   Future<void> signUp() async {
     if (validateEmail(emailController.value.text)) {

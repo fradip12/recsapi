@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:src/common/services/firebase_auth.dart';
@@ -74,7 +73,7 @@ class LihatRecordingController extends GetxController {
       File f = await _localFile;
       String csv = const ListToCsvConverter().convert(rows);
       f.writeAsString(csv);
-      var res = await OpenFile.open(f.path);
+      var res = await OpenFilex.open(f.path);
       if (res.message == 'done') {
         Get.snackbar('Success', 'Data berhasil di export');
       } else {
@@ -113,7 +112,7 @@ class LihatRecordingController extends GetxController {
       File f = await _localFile;
       String csv = const ListToCsvConverter().convert(rows);
       f.writeAsString(csv);
-      var res = await OpenFile.open(f.path);
+      var res = await OpenFilex.open(f.path);
       if (res.message == 'done') {
         Get.snackbar('Success', 'Data berhasil di export');
       } else {
@@ -152,7 +151,7 @@ class LihatRecordingController extends GetxController {
       File f = await _localFile;
       String csv = const ListToCsvConverter().convert(rows);
       f.writeAsString(csv);
-      var res = await OpenFile.open(f.path);
+      var res = await OpenFilex.open(f.path);
       if (res.message == 'done') {
         Get.snackbar('Success', 'Data berhasil di export');
       } else {
@@ -189,7 +188,7 @@ class LihatRecordingController extends GetxController {
       File f = await _localFile;
       String csv = const ListToCsvConverter().convert(rows);
       f.writeAsString(csv);
-      var res = await OpenFile.open(f.path);
+      var res = await OpenFilex.open(f.path);
       if (res.message == 'done') {
         Get.snackbar('Success', 'Data berhasil di export');
       } else {
